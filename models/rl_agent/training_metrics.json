@@ -1,0 +1,202 @@
+[
+  {
+    "step": 5000,
+    "total_reward": -23611.787839169072,
+    "mean_reward": -7.251777591882374,
+    "final_accuracy": 0.663083538083538,
+    "final_dpr": 5.999999999999999,
+    "intervention_rate": 0.23556511056511056,
+    "total_interventions": 767,
+    "total_samples": 3256
+  },
+  {
+    "step": 10000,
+    "total_reward": -8029.559010535263,
+    "mean_reward": -2.466080777191432,
+    "final_accuracy": 0.7410933660933661,
+    "final_dpr": 1.7142857142857142,
+    "intervention_rate": 0.14895577395577395,
+    "total_interventions": 485,
+    "total_samples": 3256
+  },
+  {
+    "step": 15000,
+    "total_reward": -4064.9117040154865,
+    "mean_reward": -1.248437255533017,
+    "final_accuracy": 0.6314496314496314,
+    "final_dpr": 2.954545454545454,
+    "intervention_rate": 0.2868550368550369,
+    "total_interventions": 934,
+    "total_samples": 3256
+  },
+  {
+    "step": 20000,
+    "total_reward": -425.463025898891,
+    "mean_reward": -0.1306704624996594,
+    "final_accuracy": 0.6277641277641277,
+    "final_dpr": 0.7222222222222221,
+    "intervention_rate": 0.2856265356265356,
+    "total_interventions": 930,
+    "total_samples": 3256
+  },
+  {
+    "step": 25000,
+    "total_reward": -24.670215997099533,
+    "mean_reward": -0.007576847664957357,
+    "final_accuracy": 0.6339066339066339,
+    "final_dpr": 1.0625,
+    "intervention_rate": 0.31142506142506143,
+    "total_interventions": 1014,
+    "total_samples": 3256
+  },
+  {
+    "step": 30000,
+    "total_reward": 308.45386069450626,
+    "mean_reward": 0.09473398669978642,
+    "final_accuracy": 0.6363636363636364,
+    "final_dpr": 0.6904761904761905,
+    "intervention_rate": 0.3108108108108108,
+    "total_interventions": 1012,
+    "total_samples": 3256
+  },
+  {
+    "step": 35000,
+    "total_reward": 595.4929136184444,
+    "mean_reward": 0.18289094398601174,
+    "final_accuracy": 0.6652334152334153,
+    "final_dpr": 1.3725490196078431,
+    "intervention_rate": 0.2727272727272727,
+    "total_interventions": 888,
+    "total_samples": 3256
+  },
+  {
+    "step": 40000,
+    "total_reward": 393.71020321453983,
+    "mean_reward": 0.12091836708063203,
+    "final_accuracy": 0.6686117936117936,
+    "final_dpr": 1.035294117647059,
+    "intervention_rate": 0.261977886977887,
+    "total_interventions": 853,
+    "total_samples": 3256
+  },
+  {
+    "step": 45000,
+    "total_reward": 1409.1618430657072,
+    "mean_reward": 0.43278926384082145,
+    "final_accuracy": 0.6188574938574939,
+    "final_dpr": 0.9705882352941176,
+    "intervention_rate": 0.3356879606879607,
+    "total_interventions": 1093,
+    "total_samples": 3256
+  },
+  {
+    "step": 50000,
+    "total_reward": 384.2159383061563,
+    "mean_reward": 0.11800243805471601,
+    "final_accuracy": 0.6314496314496314,
+    "final_dpr": 0.6256684491978609,
+    "intervention_rate": 0.31388206388206386,
+    "total_interventions": 1022,
+    "total_samples": 3256
+  },
+  {
+    "step": 55000,
+    "total_reward": 1378.5750364183314,
+    "mean_reward": 0.4233952814552645,
+    "final_accuracy": 0.6421990171990172,
+    "final_dpr": 0.9243697478991597,
+    "intervention_rate": 0.31726044226044225,
+    "total_interventions": 1033,
+    "total_samples": 3256
+  },
+  {
+    "step": 60000,
+    "total_reward": 1692.827264905289,
+    "mean_reward": 0.5199100936441292,
+    "final_accuracy": 0.6111793611793612,
+    "final_dpr": 1.004524886877828,
+    "intervention_rate": 0.34828009828009826,
+    "total_interventions": 1134,
+    "total_samples": 3256
+  },
+  {
+    "step": 65000,
+    "total_reward": 1712.329346766543,
+    "mean_reward": 0.5258996765253509,
+    "final_accuracy": 0.6517199017199017,
+    "final_dpr": 0.8785425101214575,
+    "intervention_rate": 0.2893120393120393,
+    "total_interventions": 942,
+    "total_samples": 3256
+  },
+  {
+    "step": 70000,
+    "total_reward": 2089.9668467883916,
+    "mean_reward": 0.6418817097015886,
+    "final_accuracy": 0.6750614250614251,
+    "final_dpr": 1.0588235294117647,
+    "intervention_rate": 0.2616707616707617,
+    "total_interventions": 852,
+    "total_samples": 3256
+  },
+  {
+    "step": 75000,
+    "total_reward": 2108.027977174654,
+    "mean_reward": 0.647428739918497,
+    "final_accuracy": 0.7217444717444718,
+    "final_dpr": 1.0,
+    "intervention_rate": 0.19901719901719903,
+    "total_interventions": 648,
+    "total_samples": 3256
+  },
+  {
+    "step": 80000,
+    "total_reward": 2196.5470917500675,
+    "mean_reward": 0.6746152001689296,
+    "final_accuracy": 0.7444717444717445,
+    "final_dpr": 0.8571428571428571,
+    "intervention_rate": 0.16277641277641278,
+    "total_interventions": 530,
+    "total_samples": 3256
+  },
+  {
+    "step": 85000,
+    "total_reward": 2165.7971000713874,
+    "mean_reward": 0.665171099530515,
+    "final_accuracy": 0.7457002457002457,
+    "final_dpr": 1.0158730158730158,
+    "intervention_rate": 0.16646191646191646,
+    "total_interventions": 542,
+    "total_samples": 3256
+  },
+  {
+    "step": 90000,
+    "total_reward": 2233.7518605764462,
+    "mean_reward": 0.6860417262212573,
+    "final_accuracy": 0.7426289926289926,
+    "final_dpr": 1.058823529411765,
+    "intervention_rate": 0.1683046683046683,
+    "total_interventions": 548,
+    "total_samples": 3256
+  },
+  {
+    "step": 95000,
+    "total_reward": 2253.4063845524192,
+    "mean_reward": 0.6920781279337777,
+    "final_accuracy": 0.7238943488943489,
+    "final_dpr": 0.9642857142857143,
+    "intervention_rate": 0.1858108108108108,
+    "total_interventions": 605,
+    "total_samples": 3256
+  },
+  {
+    "step": 100000,
+    "total_reward": 2324.9095140411955,
+    "mean_reward": 0.7140385485384373,
+    "final_accuracy": 0.73495085995086,
+    "final_dpr": 0.9058823529411765,
+    "intervention_rate": 0.1772113022113022,
+    "total_interventions": 577,
+    "total_samples": 3256
+  }
+]

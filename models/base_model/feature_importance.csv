@@ -1,0 +1,14 @@
+feature,importance
+relationship,0.40711525
+education.num,0.13786505
+marital.status,0.12213885
+capital.gain,0.10567721
+capital.loss,0.054437898
+age,0.035487708
+occupation,0.032094467
+sex,0.028711617
+hours.per.week,0.027256591
+workclass,0.017069694
+race,0.013253183
+native.country,0.010755107
+education,0.008137373

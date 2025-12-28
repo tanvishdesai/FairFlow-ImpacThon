@@ -1,0 +1,4 @@
+Dataset: Adult Census
+Protected Attribute: sex
+Training Samples: 22792
+Features: 13
