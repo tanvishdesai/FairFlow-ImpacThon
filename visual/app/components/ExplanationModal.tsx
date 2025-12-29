@@ -34,9 +34,11 @@ export default function ExplanationModal({
 }: ExplanationModalProps) {
   if (!isOpen) return null;
 
-  const getContributionBar = (contribution: number, maxContribution: number) => {
-    const percentage = Math.abs(contribution / maxContribution) * 100;
-    const isPositive = contribution >= 0;
+  const getContributionBar = (contribution: number | undefined | null, maxContribution: number) => {
+    // Safety check for undefined/null contribution values
+    const safeContribution = contribution ?? 0;
+    const percentage = Math.abs(safeContribution / maxContribution) * 100;
+    const isPositive = safeContribution >= 0;
     
     return (
       <div className="flex items-center gap-2 w-full">
@@ -56,7 +58,7 @@ export default function ExplanationModal({
           )}
         </div>
         <span className="text-sm font-mono w-16 text-right" style={{ color: isPositive ? '#10b981' : '#ef4444' }}>
-          {isPositive ? '+' : ''}{contribution.toFixed(3)}
+          {isPositive ? '+' : ''}{safeContribution.toFixed(3)}
         </span>
       </div>
     );

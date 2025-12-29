@@ -33,7 +33,7 @@ export default function ControlPanel({
         <div className="flex items-center justify-between mb-3">
           <div>
             <p className="font-medium" style={{ color: 'var(--text-primary)' }}>FairFlow Protection</p>
-            <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>RL Gatekeeper bias mitigation</p>
+            <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>🌍 Universal RL Gatekeeper</p>
           </div>
           <button
             onClick={onToggleFairflow}
@@ -48,7 +48,7 @@ export default function ControlPanel({
         }`} style={{ borderColor: fairflowActive ? undefined : 'var(--border-subtle)' }}>
           <p className="text-sm" style={{ color: fairflowActive ? '#10b981' : 'var(--text-secondary)' }}>
             {fairflowActive 
-              ? '✓ Active: RL agent monitoring all predictions for bias' 
+              ? '✓ Active: Universal agent monitoring (works with any dataset)' 
               : '○ Inactive: Base model running without intervention'}
           </p>
         </div>

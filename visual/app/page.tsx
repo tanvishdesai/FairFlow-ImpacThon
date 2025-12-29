@@ -258,17 +258,34 @@ export default function Dashboard() {
                 </div>
                 <div className="flex items-center justify-between">
                   <span style={{ color: 'var(--text-secondary)' }}>RL Agent</span>
-                  <span className="flex items-center gap-2" style={{ color: fairflowStatus?.rl_agent_loaded ? '#10b981' : '#f59e0b' }}>
-                    <div className="w-2 h-2 rounded-full" style={{ backgroundColor: fairflowStatus?.rl_agent_loaded ? '#10b981' : '#f59e0b' }} />
-                    {fairflowStatus?.rl_agent_loaded ? 'Loaded' : 'Fallback'}
+                  <span className="flex items-center gap-2" style={{ 
+                    color: fairflowStatus?.universal_agent_loaded ? '#10b981' : 
+                           fairflowStatus?.dataset_agent_loaded ? '#3b82f6' : '#f59e0b' 
+                  }}>
+                    <div className="w-2 h-2 rounded-full" style={{ 
+                      backgroundColor: fairflowStatus?.universal_agent_loaded ? '#10b981' : 
+                                       fairflowStatus?.dataset_agent_loaded ? '#3b82f6' : '#f59e0b' 
+                    }} />
+                    {fairflowStatus?.universal_agent_loaded ? 'Universal' : 
+                     fairflowStatus?.dataset_agent_loaded ? 'Dataset-Specific' : 'Fallback'}
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span style={{ color: 'var(--text-secondary)' }}>Mode</span>
-                  <span className="font-medium" style={{ color: '#6366f1' }}>
-                    {fairflowStatus?.mode === 'rl_agent' ? 'PPO Agent' : 'Rule-Based'}
+                  <span className="font-medium" style={{ 
+                    color: fairflowStatus?.is_universal ? '#10b981' : '#6366f1' 
+                  }}>
+                    {fairflowStatus?.mode === 'universal_rl_agent' ? '🌍 Universal Agent' : 
+                     fairflowStatus?.mode === 'dataset_specific_rl_agent' ? 'PPO Agent' : 'Rule-Based'}
                   </span>
                 </div>
+                {fairflowStatus?.is_universal && (
+                  <div className="p-2 rounded-lg bg-green-500/10 border border-green-500/20">
+                    <p className="text-xs" style={{ color: '#10b981' }}>
+                      ✨ Dataset-agnostic mode: Works with any data!
+                    </p>
+                  </div>
+                )}
                 <div className="flex items-center justify-between">
                   <span style={{ color: 'var(--text-secondary)' }}>Simulation</span>
                   <span className="flex items-center gap-2" style={{ color: simulationRunning ? '#10b981' : 'var(--text-secondary)' }}>

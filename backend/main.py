@@ -96,6 +96,16 @@ class SimulationStatus(BaseModel):
     fairflow_active: bool
 
 
+class FairFlowConfig(BaseModel):
+    """Configuration for universal FairFlow."""
+    protected_attribute: Optional[str] = Field(default="sex", description="Name of protected attribute")
+    fairness_threshold: float = Field(default=0.8, description="Minimum acceptable DPR")
+    fairness_metric: str = Field(default="demographic_parity", description="Fairness metric to optimize")
+    accuracy_weight: float = Field(default=0.4, description="Weight for accuracy in trade-off")
+    fairness_weight: float = Field(default=0.6, description="Weight for fairness in trade-off")
+    use_universal_agent: bool = Field(default=True, description="Use universal (dataset-agnostic) agent")
+
+
 # ============================================================================
 # Application State
 # ============================================================================
@@ -106,10 +116,22 @@ class AppState:
     def __init__(self):
         self.base_model = None
         self.rl_agent = None
+        self.universal_rl_agent = None  # NEW: Universal (dataset-agnostic) agent
+        self.fairflow_wrapper = None    # NEW: Universal wrapper
         self.explainer = None
         self.data = None
         self.feature_names = []
         self.scaler = None
+        
+        # Configuration
+        self.config = {
+            "protected_attribute": "sex",
+            "fairness_threshold": 0.8,
+            "fairness_metric": "demographic_parity",
+            "accuracy_weight": 0.4,
+            "fairness_weight": 0.6,
+            "use_universal_agent": True
+        }
         
         # Simulation state
         self.simulation_running = False
@@ -129,6 +151,12 @@ class AppState:
         # Rolling metrics
         self.decisions_window = []
         self.window_size = 100
+        
+        # Universal agent statistics (for feature-agnostic state)
+        self.privileged_decisions = []
+        self.unprivileged_decisions = []
+        self.privileged_confidences = []
+        self.unprivileged_confidences = []
 
 
 state = AppState()
@@ -166,15 +194,27 @@ async def lifespan(app: FastAPI):
     else:
         print("⚠️ Base model not found. Train it first with: python src/train_base_model.py")
     
-    # Load RL agent (optional)
-    agent_path = base_dir / "models" / "rl_agent" / "ppo_fairness_agent.zip"
-    if agent_path.exists():
-        print(f"🤖 Loading RL agent from {agent_path}...")
-        from stable_baselines3 import PPO
-        state.rl_agent = PPO.load(str(agent_path))
-        print("✅ RL agent loaded")
-    else:
-        print("⚠️ RL agent not found. Using rule-based fallback.")
+    # Load RL agents (try universal first, then dataset-specific)
+    universal_agent_path = base_dir / "models" / "rl_agent" / "ppo_universal_fairness_agent.zip"
+    dataset_agent_path = base_dir / "models" / "rl_agent" / "ppo_fairness_agent.zip"
+    
+    from stable_baselines3 import PPO
+    
+    # Try universal agent first (preferred)
+    if universal_agent_path.exists():
+        print(f"🌍 Loading UNIVERSAL RL agent from {universal_agent_path}...")
+        state.universal_rl_agent = PPO.load(str(universal_agent_path))
+        print("✅ Universal RL agent loaded (dataset-agnostic)")
+    
+    # Also load dataset-specific agent if available
+    if dataset_agent_path.exists():
+        print(f"🤖 Loading dataset-specific RL agent from {dataset_agent_path}...")
+        state.rl_agent = PPO.load(str(dataset_agent_path))
+        print("✅ Dataset-specific RL agent loaded")
+    
+    if state.universal_rl_agent is None and state.rl_agent is None:
+        print("⚠️ No RL agent found. Using rule-based fallback.")
+        print("   Train universal agent with: python src/agents/train_universal.py")
     
     print("🎉 FairFlow API ready!")
     
@@ -220,9 +260,57 @@ def sanitize_float(value: float, default: float = 0.0) -> float:
     return value
 
 
-def get_fairflow_decision(features: np.ndarray, base_pred: int, base_prob: float) -> tuple:
+def get_universal_state(base_pred: int, base_prob: float, protected_value: int) -> np.ndarray:
+    """
+    Build the 12-dimensional universal state vector for the dataset-agnostic agent.
+    """
+    # Calculate rolling metrics
+    dpr = calculate_current_dpr()
+    priv_approval = np.mean(state.privileged_decisions[-50:]) if state.privileged_decisions else 0.5
+    unpriv_approval = np.mean(state.unprivileged_decisions[-50:]) if state.unprivileged_decisions else 0.5
+    
+    # Intervention rate
+    total_preds = len(state.predictions)
+    total_interventions = sum(1 for p in state.predictions if p["base_prediction"] != p["final_decision"])
+    intervention_rate = total_interventions / max(total_preds, 1)
+    
+    # Group ratio
+    n_unpriv = len(state.unprivileged_decisions)
+    n_total = len(state.privileged_decisions) + n_unpriv
+    group_ratio = n_unpriv / max(n_total, 1)
+    
+    # Confidence gap
+    priv_conf = np.mean(state.privileged_confidences[-50:]) if state.privileged_confidences else 0.5
+    unpriv_conf = np.mean(state.unprivileged_confidences[-50:]) if state.unprivileged_confidences else 0.5
+    confidence_gap = priv_conf - unpriv_conf
+    
+    # Normalize DPR and differences to [0, 1]
+    def normalize_dpr(dpr): return min(max(dpr / 2.0, 0.0), 1.0)
+    def normalize_diff(diff): return min(max((diff + 1.0) / 2.0, 0.0), 1.0)
+    
+    universal_state = np.array([
+        float(base_pred),              # 0: Base prediction
+        base_prob,                     # 1: Base confidence
+        float(protected_value),        # 2: Protected value
+        normalize_dpr(dpr),            # 3: DPR (normalized)
+        0.5,                           # 4: TPR diff (placeholder)
+        0.5,                           # 5: FPR diff (placeholder)
+        priv_approval,                 # 6: Privileged approval rate
+        unpriv_approval,               # 7: Unprivileged approval rate
+        min(intervention_rate, 1.0),   # 8: Intervention rate
+        group_ratio,                   # 9: Group ratio
+        0.5,                           # 10: Consecutive same-group (placeholder)
+        normalize_diff(confidence_gap) # 11: Confidence gap
+    ], dtype=np.float32)
+    
+    return universal_state
+
+
+def get_fairflow_decision(features: np.ndarray, base_pred: int, base_prob: float, protected_value: int = 0) -> tuple:
     """
     Get FairFlow's decision using RL agent or rule-based fallback.
+    
+    Supports both universal (dataset-agnostic) and dataset-specific agents.
     
     Returns:
         (final_decision, intervention_type)
@@ -230,9 +318,21 @@ def get_fairflow_decision(features: np.ndarray, base_pred: int, base_prob: float
     if not state.fairflow_active:
         return base_pred, "FAIRFLOW_DISABLED"
     
-    if state.rl_agent is not None:
-        # Use RL agent
-        # Build observation: [base_pred, base_prob, features..., current_dpr]
+    # Try universal agent first (if configured and available)
+    if state.config.get("use_universal_agent", True) and state.universal_rl_agent is not None:
+        # Use UNIVERSAL agent with 12-dimensional state
+        obs = get_universal_state(base_pred, base_prob, protected_value)
+        action, _ = state.universal_rl_agent.predict(obs, deterministic=True)
+        
+        if action == 0:  # APPROVE (use base)
+            return base_pred, "ACCEPTED"
+        elif action == 1:  # DENY
+            return 0, "OVERRIDE_TO_DENY" if base_pred != 0 else "ACCEPTED"
+        else:  # ACCEPT (force approve)
+            return 1, "OVERRIDE_TO_APPROVE" if base_pred != 1 else "ACCEPTED"
+    
+    elif state.rl_agent is not None:
+        # Use dataset-specific RL agent (legacy mode)
         current_dpr = calculate_current_dpr()
         obs = np.concatenate([[base_pred, base_prob], features.flatten(), [current_dpr]])
         action, _ = state.rl_agent.predict(obs.astype(np.float32), deterministic=True)
@@ -246,9 +346,10 @@ def get_fairflow_decision(features: np.ndarray, base_pred: int, base_prob: float
     else:
         # Rule-based fallback
         current_dpr = calculate_current_dpr()
+        threshold = state.config.get("fairness_threshold", 0.8)
         
-        # If DPR is too low and base model is denying, consider approving
-        if current_dpr < 0.8 and base_pred == 0 and base_prob < 0.6:
+        # If DPR is too low and base model is denying unprivileged, consider approving
+        if current_dpr < threshold and base_pred == 0 and protected_value == 0 and base_prob > 0.35:
             return 1, "OVERRIDE_TO_APPROVE"
         
         return base_pred, "ACCEPTED"
@@ -461,11 +562,54 @@ async def toggle_fairflow(active: bool):
 @app.get("/api/fairflow/status")
 async def get_fairflow_status():
     """Get current FairFlow status."""
+    if state.universal_rl_agent is not None:
+        mode = "universal_rl_agent"
+    elif state.rl_agent is not None:
+        mode = "dataset_specific_rl_agent"
+    else:
+        mode = "rule_based"
+    
     return {
         "active": state.fairflow_active,
-        "rl_agent_loaded": state.rl_agent is not None,
-        "mode": "rl_agent" if state.rl_agent else "rule_based"
+        "universal_agent_loaded": state.universal_rl_agent is not None,
+        "dataset_agent_loaded": state.rl_agent is not None,
+        "mode": mode,
+        "config": state.config,
+        "is_universal": state.config.get("use_universal_agent", True) and state.universal_rl_agent is not None
     }
+
+
+@app.post("/api/fairflow/configure")
+async def configure_fairflow(config: FairFlowConfig):
+    """
+    Configure FairFlow for a specific use case.
+    
+    This allows customizing:
+    - Protected attribute to monitor
+    - Fairness threshold
+    - Accuracy vs fairness trade-off weights
+    - Whether to use universal or dataset-specific agent
+    """
+    state.config = {
+        "protected_attribute": config.protected_attribute,
+        "fairness_threshold": config.fairness_threshold,
+        "fairness_metric": config.fairness_metric,
+        "accuracy_weight": config.accuracy_weight,
+        "fairness_weight": config.fairness_weight,
+        "use_universal_agent": config.use_universal_agent
+    }
+    
+    return {
+        "status": "configured",
+        "config": state.config,
+        "mode": "universal" if config.use_universal_agent and state.universal_rl_agent else "dataset_specific"
+    }
+
+
+@app.get("/api/fairflow/config")
+async def get_fairflow_config():
+    """Get current FairFlow configuration."""
+    return state.config
 
 
 # ============================================================================
@@ -588,11 +732,27 @@ async def run_simulation(speed: float = 1.0):
         base_pred = int(state.base_model.predict(features)[0])
         base_prob = float(state.base_model.predict_proba(features)[0, 1])
         
-        # Get FairFlow decision
+        # Get FairFlow decision (pass protected_value for universal agent)
         final_decision, intervention_type = get_fairflow_decision(
-            features, base_pred, base_prob
+            features, base_pred, base_prob, protected_val
         )
         intervened = final_decision != base_pred
+        
+        # Update universal agent statistics for state building
+        if protected_val == 1:
+            state.privileged_decisions.append(final_decision)
+            state.privileged_confidences.append(base_prob)
+        else:
+            state.unprivileged_decisions.append(final_decision)
+            state.unprivileged_confidences.append(base_prob)
+        
+        # Keep rolling window size manageable
+        if len(state.privileged_decisions) > 100:
+            state.privileged_decisions = state.privileged_decisions[-100:]
+            state.privileged_confidences = state.privileged_confidences[-100:]
+        if len(state.unprivileged_decisions) > 100:
+            state.unprivileged_decisions = state.unprivileged_decisions[-100:]
+            state.unprivileged_confidences = state.unprivileged_confidences[-100:]
         
         # Record
         prediction_id = state.next_id

@@ -56,8 +56,19 @@ export interface Explanation {
 
 export interface FairFlowStatus {
     active: boolean;
-    rl_agent_loaded: boolean;
+    rl_agent_loaded?: boolean;  // Legacy - kept for backward compatibility
+    universal_agent_loaded: boolean;
+    dataset_agent_loaded: boolean;
     mode: string;
+    config?: {
+        protected_attribute: string;
+        fairness_threshold: number;
+        fairness_metric: string;
+        accuracy_weight: number;
+        fairness_weight: number;
+        use_universal_agent: boolean;
+    };
+    is_universal: boolean;
 }
 
 // ============================================
