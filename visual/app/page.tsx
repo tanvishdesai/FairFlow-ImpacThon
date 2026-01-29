@@ -61,6 +61,11 @@ export default function Dashboard() {
     if (metrics && simStatus?.is_running) {
       // Only update if prediction count actually changed
       if (metrics.total_predictions !== lastPredictionCount.current) {
+        // Detect reset (current count < last count)
+        if (metrics.total_predictions < lastPredictionCount.current) {
+           setChartData([]);
+        }
+        
         lastPredictionCount.current = metrics.total_predictions;
         
         const timestamp = new Date().toLocaleTimeString('en-US', { 
@@ -69,11 +74,20 @@ export default function Dashboard() {
           second: '2-digit'
         });
         
+        // Sanitize fairness metric - handle Infinity/NaN during potential volatile starts
+        let safeFairness = metrics.demographic_parity_ratio;
+        if (!Number.isFinite(safeFairness)) {
+          safeFairness = 1.0; // Default to perfect fairness if undefined/infinity
+        } else {
+          // Clamp to reasonable visual range [0, 1.5] to prevent graph scaling issues
+          safeFairness = Math.min(Math.max(safeFairness, 0), 1.5);
+        }
+
         setChartData((prev) => {
           const newPoint = {
             time: timestamp,
             accuracy: metrics.accuracy,
-            fairness: metrics.demographic_parity_ratio,
+            fairness: safeFairness,
           };
           
           // Keep last 30 points for smooth chart
