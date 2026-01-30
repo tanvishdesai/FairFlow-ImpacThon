@@ -10,6 +10,11 @@ interface ControlPanelProps {
   onStartSimulation: () => void;
   onStopSimulation: () => void;
   onInjectDrift: () => void;
+  models?: Array<{ id: string; name: string; active: boolean }>;
+  modelError?: string | null;
+  onSwitchModel?: (modelId: string) => void;
+  datasets?: Array<{ id: string; name: string; active: boolean }>;
+  onSwitchDataset?: (datasetId: string) => void;
 }
 
 export default function ControlPanel({
@@ -20,6 +25,11 @@ export default function ControlPanel({
   onStartSimulation,
   onStopSimulation,
   onInjectDrift,
+  models = [],
+  modelError,
+  onSwitchModel,
+  datasets = [],
+  onSwitchDataset,
 }: ControlPanelProps) {
   return (
     <div className="glass-card p-6 animate-slide-up" style={{ animationDelay: '0.2s' }}>
@@ -52,6 +62,84 @@ export default function ControlPanel({
               : '○ Inactive: Base model running without intervention'}
           </p>
         </div>
+      </div>
+
+
+      {/* Dataset Selection */}
+      <div className="mb-6">
+        <p className="font-medium mb-3" style={{ color: 'var(--text-primary)' }}>
+          Active Dataset
+        </p>
+        <div className="relative">
+          <select 
+            className="w-full p-3 rounded-lg border appearance-none cursor-pointer"
+            style={{ 
+              backgroundColor: 'var(--bg-secondary)', 
+              borderColor: 'var(--border-subtle)',
+              color: 'var(--text-primary)'
+            }}
+            value={datasets.find(d => d.active)?.id || "adult"}
+            onChange={(e) => {
+                if (onSwitchDataset) onSwitchDataset(e.target.value);
+            }}
+            disabled={simulationRunning}
+          >
+            {datasets.map(dataset => (
+              <option key={dataset.id} value={dataset.id}>
+                {dataset.name}
+              </option>
+            ))}
+          </select>
+          <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+            <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      {/* Model Selection */}
+      <div className="mb-8">
+        <p className="font-medium mb-3" style={{ color: 'var(--text-primary)' }}>
+          Base Model 
+          <span className="text-xs ml-2 opacity-50">({models.length} loaded)</span>
+        </p>
+        {modelError && (
+            <p className="text-xs text-red-500 mb-2">Error: {modelError}</p>
+        )}
+        <div className="relative">
+          <select 
+            className="w-full p-3 rounded-lg border appearance-none cursor-pointer"
+            style={{ 
+              backgroundColor: 'var(--bg-secondary)', 
+              borderColor: 'var(--border-subtle)',
+              color: 'var(--text-primary)'
+            }}
+            value={models.find(m => m.active)?.id || ""}
+            onChange={(e) => {
+                console.log("Switching model to:", e.target.value);
+                if (onSwitchModel) onSwitchModel(e.target.value);
+            }}
+            disabled={simulationRunning}
+          >
+            {models.length === 0 && <option value="">Loading models...</option>}
+            {models.map(model => (
+              <option key={model.id} value={model.id}>
+                {model.name}
+              </option>
+            ))}
+          </select>
+          <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+            <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+        </div>
+        <p className="text-xs mt-2" style={{ color: 'var(--text-muted)' }}>
+          {simulationRunning 
+            ? 'Stop simulation to switch models' 
+            : 'Select the biased "bad actor" model to wrap'}
+        </p>
       </div>
 
       {/* Simulation Controls */}

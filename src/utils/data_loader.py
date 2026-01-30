@@ -43,7 +43,7 @@ def load_raw_adult_data(file_path: str) -> pd.DataFrame:
 def preprocess_adult_data(
     df: pd.DataFrame,
     protected_attribute: str = "sex"
-) -> Tuple[pd.DataFrame, pd.Series, pd.Series]:
+) -> Tuple[pd.DataFrame, pd.Series, pd.Series, dict]:
     """
     Preprocess the Adult Census dataset.
     
@@ -104,7 +104,7 @@ def preprocess_adult_data(
     protected = df["protected"]
     features = df.drop(["target", "protected"], axis=1)
     
-    return features, target, protected
+    return features, target, protected, label_encoders
 
 
 def load_adult_data(
@@ -143,7 +143,7 @@ def load_adult_data(
     print(f"   Loaded {len(df):,} samples with {len(df.columns)} columns")
     
     # Preprocess
-    X, y, protected = preprocess_adult_data(df, protected_attribute)
+    X, y, protected, label_encoders = preprocess_adult_data(df, protected_attribute)
     feature_names = X.columns.tolist()
     
     print(f"   Protected attribute: {protected_attribute}")
@@ -198,14 +198,125 @@ def load_adult_data(
         "feature_names": feature_names,
         "protected_attribute": protected_attribute,
         "scaler": scaler,
+        "label_encoders": label_encoders,
     }
 
 
 # Alias for backward compatibility
-def load_german_credit_data(*args, **kwargs):
-    """Deprecated: Use load_adult_data instead."""
-    print("⚠️  Warning: load_german_credit_data is deprecated. Using Adult Census dataset instead.")
-    return load_adult_data(*args, **kwargs)
+def load_german_credit_data(
+    data_dir: str = "data",
+    protected_attribute: str = "Sex",
+    test_size: float = 0.2,
+    val_size: float = 0.1,
+    random_state: int = 42,
+    scale_features: bool = True
+) -> dict:
+    """
+    Load and preprocess the German Credit dataset.
+    
+    Args:
+        data_dir: Base data directory
+        protected_attribute: Attribute for fairness analysis ("Sex", "Age")
+        test_size: Proportion of data for test set
+        val_size: Proportion of remaining data for validation set
+        random_state: Random seed for reproducibility
+        scale_features: Whether to standardize features
+        
+    Returns:
+        Dictionary containing all data splits and metadata
+    """
+    # Load raw data
+    raw_path = Path(data_dir) / "raw" / "german_credit.csv"
+    
+    if not raw_path.exists():
+        raise FileNotFoundError(
+            f"German Credit dataset not found at {raw_path}. "
+        )
+    
+    print(f"📥 Loading German Credit dataset from {raw_path}...")
+    df = pd.read_csv(raw_path)
+    print(f"   Loaded {len(df):,} samples with {len(df.columns)} columns")
+    
+    df = df.copy()
+    
+    # Target: Risk (good=1, bad=0) - "good" is the favorable outcome
+    df["target"] = (df["Risk"] == "good").astype(int)
+    df = df.drop("Risk", axis=1)
+    
+    # Protected Attribute
+    if protected_attribute == "Sex":
+        # male = 1 (privileged), female = 0 (unprivileged)
+        df["protected"] = (df["Sex"] == "male").astype(int)
+    elif protected_attribute == "Age":
+        # > 25 = 1 (privileged), <= 25 = 0 (unprivileged) - Common split for this dataset
+        df["protected"] = (df["Age"] > 25).astype(int)
+    else:
+        raise ValueError(f"Unsupported protected attribute: {protected_attribute}")
+        
+    # Encode categorical columns
+    categorical_cols = df.select_dtypes(include=["object"]).columns
+    label_encoders = {}
+    
+    for col in categorical_cols:
+        le = LabelEncoder()
+        df[col] = le.fit_transform(df[col].astype(str))
+        label_encoders[col] = le
+        
+    # Separate features, target, and protected attribute
+    target = df["target"]
+    protected = df["protected"]
+    features = df.drop(["target", "protected"], axis=1)
+    feature_names = features.columns.tolist()
+    
+    print(f"   Protected attribute: {protected_attribute}")
+    print(f"   Positive class (Good Credit): {target.sum():,} ({target.mean()*100:.1f}%)")
+    print(f"   Privileged group: {protected.sum():,} ({protected.mean()*100:.1f}%)")
+    
+    # Train/Test split
+    X_temp, X_test, y_temp, y_test, prot_temp, prot_test = train_test_split(
+        features, target, protected, test_size=test_size, random_state=random_state, stratify=target
+    )
+    
+    # Train/Val split
+    val_ratio = val_size / (1 - test_size)
+    X_train, X_val, y_train, y_val, prot_train, prot_val = train_test_split(
+        X_temp, y_temp, prot_temp, test_size=val_ratio, random_state=random_state, stratify=y_temp
+    )
+    
+    # Scale features
+    scaler = None
+    if scale_features:
+        scaler = StandardScaler()
+        X_train = pd.DataFrame(scaler.fit_transform(X_train), columns=feature_names, index=X_train.index)
+        X_val = pd.DataFrame(scaler.transform(X_val), columns=feature_names, index=X_val.index)
+        X_test = pd.DataFrame(scaler.transform(X_test), columns=feature_names, index=X_test.index)
+        
+    # Save processed data (in a separate folder to avoid overwriting adult data)
+    processed_dir = Path(data_dir) / "processed_german"
+    processed_dir.mkdir(parents=True, exist_ok=True)
+    
+    X_train.to_csv(processed_dir / "X_train.csv", index=False)
+    X_val.to_csv(processed_dir / "X_val.csv", index=False)
+    X_test.to_csv(processed_dir / "X_test.csv", index=False)
+    pd.DataFrame({"target": y_train, "protected": prot_train}).to_csv(processed_dir / "y_train.csv", index=False)
+    pd.DataFrame({"target": y_val, "protected": prot_val}).to_csv(processed_dir / "y_val.csv", index=False)
+    pd.DataFrame({"target": y_test, "protected": prot_test}).to_csv(processed_dir / "y_test.csv", index=False)
+    
+    return {
+        "X_train": X_train,
+        "X_val": X_val,
+        "X_test": X_test,
+        "y_train": y_train.reset_index(drop=True),
+        "y_val": y_val.reset_index(drop=True),
+        "y_test": y_test.reset_index(drop=True),
+        "protected_train": prot_train.reset_index(drop=True),
+        "protected_val": prot_val.reset_index(drop=True),
+        "protected_test": prot_test.reset_index(drop=True),
+        "feature_names": feature_names,
+        "protected_attribute": protected_attribute,
+        "scaler": scaler,
+        "label_encoders": label_encoders,
+    }
 
 
 if __name__ == "__main__":

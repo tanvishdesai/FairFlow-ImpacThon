@@ -1,0 +1,5 @@
+Dataset: Adult Census
+Model: Logistic Regression
+Protected Attribute: sex
+Training Samples: 22792
+Features: 13

@@ -23,6 +23,8 @@ import {
   useFairFlow,
   useExplanation,
   useApiHealth,
+  useModels,
+  useDatasets,
 } from "./hooks/useApi";
 
 interface ChartDataPoint {
@@ -44,6 +46,8 @@ export default function Dashboard() {
     fetchExplanation, 
     clearExplanation 
   } = useExplanation();
+  const { models, switchModel, error: modelError } = useModels();
+  const { datasets, switchDataset } = useDatasets();
 
   // Chart data history
   const [chartData, setChartData] = useState<ChartDataPoint[]>([]);
@@ -248,8 +252,7 @@ export default function Dashboard() {
 
           {/* Right Column - Controls */}
           <div className="col-span-12 lg:col-span-3 space-y-6">
-            {/* Control Panel */}
-            <ControlPanel
+              <ControlPanel
               fairflowActive={fairflowActive}
               simulationRunning={simulationRunning}
               driftActive={driftActive}
@@ -257,6 +260,11 @@ export default function Dashboard() {
               onStartSimulation={() => startSimulation(2.0)}
               onStopSimulation={stopSimulation}
               onInjectDrift={handleInjectDrift}
+              models={models}
+              modelError={modelError}
+              onSwitchModel={switchModel}
+              datasets={datasets}
+              onSwitchDataset={switchDataset}
             />
 
             {/* System Status */}

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const API_BASE = "http://localhost:8000";
 
 // ============================================
 // Types
@@ -322,4 +322,111 @@ export function useApiHealth(pollInterval: number = 5000) {
     }, [checkHealth, pollInterval]);
 
     return { isConnected, isLoading };
+}
+
+// ============================================
+// useModels Hook
+// ============================================
+
+export interface ModelInfo {
+    id: string;
+    name: string;
+    description: string;
+    active: boolean;
+}
+
+export function useModels() {
+    const [models, setModels] = useState<ModelInfo[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    const fetchModels = useCallback(async () => {
+        try {
+            const response = await fetch(`${API_BASE}/api/models`);
+            if (!response.ok) throw new Error("Failed to fetch models");
+            const data = await response.json();
+            setModels(data);
+            setError(null);
+        } catch (err) {
+            setError(err instanceof Error ? err.message : "Unknown error");
+        } finally {
+            setIsLoading(false);
+        }
+    }, []);
+
+    const switchModel = useCallback(async (modelId: string) => {
+        try {
+            const response = await fetch(
+                `${API_BASE}/api/models/switch`,
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ model_id: modelId })
+                }
+            );
+            if (!response.ok) throw new Error("Failed to switch model");
+            await fetchModels();
+        } catch (err) {
+            setError(err instanceof Error ? err.message : "Unknown error");
+        }
+    }, [fetchModels]);
+
+    useEffect(() => {
+        fetchModels();
+    }, [fetchModels]);
+
+    return { models, isLoading, error, switchModel, refetch: fetchModels };
+}
+
+// ============================================
+// useDatasets Hook
+// ============================================
+
+export interface DatasetInfo {
+    id: string;
+    name: string;
+    active: boolean;
+}
+
+export function useDatasets() {
+    const [datasets, setDatasets] = useState<DatasetInfo[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    const fetchDatasets = useCallback(async () => {
+        try {
+            const response = await fetch(`${API_BASE}/api/datasets`);
+            if (!response.ok) throw new Error("Failed to fetch datasets");
+            const data = await response.json();
+            setDatasets(data);
+            setError(null);
+        } catch (err) {
+            setError(err instanceof Error ? err.message : "Unknown error");
+        } finally {
+            setIsLoading(false);
+        }
+    }, []);
+
+    const switchDataset = useCallback(async (datasetId: string) => {
+        try {
+            const response = await fetch(
+                `${API_BASE}/api/dataset/switch`,
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ dataset_id: datasetId })
+                }
+            );
+            if (!response.ok) throw new Error("Failed to switch dataset");
+            await fetchDatasets();
+        } catch (err) {
+            setError(err instanceof Error ? err.message : "Unknown error");
+        }
+    }, [fetchDatasets]);
+
+    useEffect(() => {
+        fetchDatasets();
+    }, [fetchDatasets]);
+
+    return { datasets, isLoading, error, switchDataset, refetch: fetchDatasets };
 }

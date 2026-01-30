@@ -25,9 +25,12 @@ import joblib
 # Add parent directory for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from src.utils.data_loader import load_adult_data
+from src.utils.data_loader import load_adult_data, load_german_credit_data
 from src.utils.metrics import calculate_all_metrics, calculate_demographic_parity
 from src.explainability.shap_explainer import ShapExplainer
+from backend.database import init_db, SessionLocal, Prediction, AuditLog
+import json
+
 
 
 # ============================================================================
@@ -36,7 +39,7 @@ from src.explainability.shap_explainer import ShapExplainer
 
 class ApplicantData(BaseModel):
     """Input data for a single applicant/prediction request."""
-    features: Dict[str, float] = Field(..., description="Feature name to value mapping")
+    features: Dict[str, Any] = Field(..., description="Feature name to value mapping")
 
 
 class PredictionResponse(BaseModel):
@@ -110,18 +113,28 @@ class FairFlowConfig(BaseModel):
 # Application State
 # ============================================================================
 
+class DatasetSwitchRequest(BaseModel):
+    dataset_id: str
+
+class ModelSwitchRequest(BaseModel):
+    model_id: str
+
+
 class AppState:
     """Global application state."""
     
     def __init__(self):
-        self.base_model = None
+        self.models = {}  # {dataset_id: {model_id: model}}
+        self.data = {}    # {dataset_id: data_dict}
+        self.active_dataset = "adult"
+        self.active_model_id = "xgboost"
+        
+        # Universal RL Agent (Shared across datasets)
+        self.universal_rl_agent = None 
+        # Dataset-specific RL agent (Deprecating, but keeping for compatibility if needed)
         self.rl_agent = None
-        self.universal_rl_agent = None  # NEW: Universal (dataset-agnostic) agent
-        self.fairflow_wrapper = None    # NEW: Universal wrapper
+        
         self.explainer = None
-        self.data = None
-        self.feature_names = []
-        self.scaler = None
         
         # Configuration
         self.config = {
@@ -141,7 +154,7 @@ class AppState:
         # Drift injection state
         self.drift_active = False
         self.drift_samples_remaining = 0
-        self.drift_unprivileged_ratio = 0.9  # 90% female when drift is active
+        self.drift_unprivileged_ratio = 0.9
         
         # Prediction history
         self.predictions = []
@@ -152,12 +165,33 @@ class AppState:
         self.decisions_window = []
         self.window_size = 100
         
-        # Universal agent statistics (for feature-agnostic state)
+        # Universal agent statistics
         self.privileged_decisions = []
         self.unprivileged_decisions = []
         self.privileged_confidences = []
         self.unprivileged_confidences = []
 
+    def get_active_model(self):
+        """Get the currently active base model."""
+        if self.active_dataset in self.models and self.active_model_id in self.models[self.active_dataset]:
+            return self.models[self.active_dataset][self.active_model_id]
+        return None
+        
+    def get_active_data(self):
+        """Get the currently active dataset."""
+        return self.data.get(self.active_dataset)
+
+    def get_feature_names(self):
+        data = self.get_active_data()
+        return data["feature_names"] if data else []
+
+    def get_label_encoders(self):
+        data = self.get_active_data()
+        return data.get("label_encoders", {}) if data else {}
+
+    def get_scaler(self):
+        data = self.get_active_data()
+        return data.get("scaler") if data else None
 
 state = AppState()
 
@@ -169,58 +203,63 @@ state = AppState()
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Application lifespan manager."""
-    # Startup
     print("🚀 Starting FairFlow API server...")
+    
+    init_db()
     
     base_dir = Path(__file__).parent.parent
     
-    # Load data
-    print("📥 Loading data...")
+    # 1. Load Adult Census Data & Models
+    print("📥 Loading Adult Census Data...")
     try:
-        state.data = load_adult_data(data_dir=str(base_dir / "data"), protected_attribute="sex")
-        state.feature_names = state.data["feature_names"]
-        state.scaler = state.data.get("scaler")
-        print("✅ Data loaded successfully")
+        adult_data = load_adult_data(data_dir=str(base_dir / "data"), protected_attribute="sex")
+        state.data["adult"] = adult_data
+        
+        state.models["adult"] = {}
+        # Load Adult models
+        try:
+            state.models["adult"]["xgboost"] = joblib.load(base_dir / "models/base_model/xgboost_biased.joblib")
+            state.models["adult"]["random_forest"] = joblib.load(base_dir / "models/rf_model/random_forest_biased.joblib")
+            state.models["adult"]["logistic_regression"] = joblib.load(base_dir / "models/lr_model/logistic_regression_biased.joblib")
+        except Exception as e:
+            print(f"⚠️ Partial failure loading Adult models: {e}")
+            
     except Exception as e:
-        print(f"⚠️ Could not load data: {e}")
-    
-    # Load base model
-    model_path = base_dir / "models" / "base_model" / "xgboost_biased.joblib"
-    if model_path.exists():
-        print(f"📦 Loading base model from {model_path}...")
-        state.base_model = joblib.load(model_path)
-        state.explainer = ShapExplainer(state.base_model, state.feature_names)
-        print("✅ Base model and explainer loaded")
-    else:
-        print("⚠️ Base model not found. Train it first with: python src/train_base_model.py")
-    
-    # Load RL agents (try universal first, then dataset-specific)
-    universal_agent_path = base_dir / "models" / "rl_agent" / "ppo_universal_fairness_agent.zip"
-    dataset_agent_path = base_dir / "models" / "rl_agent" / "ppo_fairness_agent.zip"
-    
+        print(f"⚠️ Could not load Adult data: {e}")
+
+    # 2. Load German Credit Data & Models
+    print("📥 Loading German Credit Data...")
+    try:
+        german_data = load_german_credit_data(data_dir=str(base_dir / "data"), protected_attribute="Sex")
+        state.data["german"] = german_data
+        
+        state.models["german"] = {}
+        # Load German models
+        try:
+            state.models["german"]["xgboost"] = joblib.load(base_dir / "models/german_credit/xgboost_model.pkl")
+            state.models["german"]["random_forest"] = joblib.load(base_dir / "models/german_credit/rf_model.pkl")
+            state.models["german"]["logistic_regression"] = joblib.load(base_dir / "models/german_credit/lr_model.pkl")
+        except Exception as e:
+            print(f"⚠️ Partial failure loading German models: {e}")
+            
+    except Exception as e:
+        print(f"⚠️ Could not load German Credit data: {e}")
+        
+    # 3. Load Universal Agent
+    print("🌍 Loading Universal RL Agent...")
+    universal_agent_path = base_dir / "models/rl_agent/ppo_universal_fairness_agent.zip"
     from stable_baselines3 import PPO
     
-    # Try universal agent first (preferred)
     if universal_agent_path.exists():
-        print(f"🌍 Loading UNIVERSAL RL agent from {universal_agent_path}...")
         state.universal_rl_agent = PPO.load(str(universal_agent_path))
-        print("✅ Universal RL agent loaded (dataset-agnostic)")
-    
-    # Also load dataset-specific agent if available
-    if dataset_agent_path.exists():
-        print(f"🤖 Loading dataset-specific RL agent from {dataset_agent_path}...")
-        state.rl_agent = PPO.load(str(dataset_agent_path))
-        print("✅ Dataset-specific RL agent loaded")
-    
-    if state.universal_rl_agent is None and state.rl_agent is None:
-        print("⚠️ No RL agent found. Using rule-based fallback.")
-        print("   Train universal agent with: python src/agents/train_universal.py")
-    
+        print("✅ Universal RL agent loaded and ready for ALL datasets!")
+    else:
+        print("⚠️ Universal agent not found.")
+
     print("🎉 FairFlow API ready!")
     
     yield
     
-    # Shutdown
     print("👋 Shutting down FairFlow API...")
     state.simulation_running = False
 
@@ -266,13 +305,21 @@ def get_universal_state(base_pred: int, base_prob: float, protected_value: int) 
     """
     # Calculate rolling metrics
     dpr = calculate_current_dpr()
+    
+    # ... (Rest of logic is state-dependent but generic)
+    # Using existing state lists which are populated by predictions regardless of dataset
+    # This assumes we want the agent to adapt to the CURRENT stream of data
+    
     priv_approval = np.mean(state.privileged_decisions[-50:]) if state.privileged_decisions else 0.5
     unpriv_approval = np.mean(state.unprivileged_decisions[-50:]) if state.unprivileged_decisions else 0.5
     
     # Intervention rate
     total_preds = len(state.predictions)
-    total_interventions = sum(1 for p in state.predictions if p["base_prediction"] != p["final_decision"])
-    intervention_rate = total_interventions / max(total_preds, 1)
+    # ... (keeping existing logic)
+    total_interventions = sum(1 for p in state.predictions[-100:] if p["base_prediction"] != p["final_decision"]) # Check last 100 for relevance
+    intervention_rate = total_interventions / min(len(state.predictions[-100:]), 100) if state.predictions else 0.0
+    
+    # ... (Rest is fine)
     
     # Group ratio
     n_unpriv = len(state.unprivileged_decisions)
@@ -406,7 +453,7 @@ async def root():
         "status": "running",
         "fairflow_active": state.fairflow_active,
         "models_loaded": {
-            "base_model": state.base_model is not None,
+            "base_model": state.get_active_model() is not None,
             "rl_agent": state.rl_agent is not None,
             "explainer": state.explainer is not None
         }
@@ -421,16 +468,60 @@ async def predict(applicant: ApplicantData):
     The request contains feature values, and the response includes
     both the base model prediction and FairFlow's final decision.
     """
-    if state.base_model is None:
+    base_model = state.get_active_model()
+    if base_model is None:
         raise HTTPException(status_code=503, detail="Base model not loaded")
     
-    # Convert features to array
-    features = np.array([applicant.features.get(f, 0.0) for f in state.feature_names])
-    features = features.reshape(1, -1)
+    feature_names = state.get_feature_names()
+    label_encoders = state.get_label_encoders()
     
+    # Process features: handle both numeric and categorical strings
+    processed_features = []
+    
+    for f in feature_names:
+        raw_val = applicant.features.get(f)
+        
+        # Default to 0/mode if missing
+        if raw_val is None:
+            processed_features.append(0.0)
+            continue
+            
+        if f in label_encoders:
+            # Need to encode string -> int
+            le = label_encoders[f]
+            try:
+                # Handle unknown labels gracefully-ish (e.g. use first class)
+                if str(raw_val) in le.classes_:
+                    encoded_val = le.transform([str(raw_val)])[0]
+                else:
+                    # Fallback for unknown category
+                    print(f"⚠️ Warning: Unknown category '{raw_val}' for feature '{f}'. Using default.")
+                    encoded_val = 0
+                processed_features.append(float(encoded_val))
+            except Exception as e:
+                print(f"❌ Encoding error for {f}: {e}")
+                processed_features.append(0.0)
+        else:
+            # Numeric feature
+            try:
+                processed_features.append(float(raw_val))
+            except (ValueError, TypeError):
+                print(f"❌ Value error for {f}: {raw_val}")
+                processed_features.append(0.0)
+                
+    features = np.array(processed_features).reshape(1, -1)
+    
+    # Scale features if scaler exists
+    scaler = state.get_scaler()
+    if scaler:
+        try:
+             features = scaler.transform(pd.DataFrame(features, columns=feature_names))
+        except Exception as e:
+            print(f"⚠️ Scaling failed: {e}")
+            
     # Get base model prediction
-    base_pred = int(state.base_model.predict(features)[0])
-    base_prob = float(state.base_model.predict_proba(features)[0, 1])
+    base_pred = int(base_model.predict(features)[0])
+    base_prob = float(base_model.predict_proba(features)[0, 1])
     
     # Get FairFlow decision
     final_decision, intervention_type = get_fairflow_decision(features, base_pred, base_prob)
@@ -461,7 +552,7 @@ async def predict(applicant: ApplicantData):
     if len(state.decisions_window) > state.window_size:
         state.decisions_window.pop(0)
     
-    # Add to audit log
+    # Add to audit log (In-memory - optional, keep for now if needed by other components, but DB is primary)
     state.audit_log.append({
         "id": prediction_id,
         "timestamp": timestamp,
@@ -471,6 +562,35 @@ async def predict(applicant: ApplicantData):
         "protected_value": 0,
         "true_label": None
     })
+    
+    # Persist to Database
+    db = SessionLocal()
+    try:
+        db_prediction = Prediction(
+            timestamp=timestamp,
+            features_json=json.dumps(features[0].tolist()),
+            base_prediction=base_pred,
+            base_probability=base_prob,
+            final_decision=final_decision,
+            intervention_type=intervention_type if intervention_type else "None",  # Handle None
+            intervened=intervened,
+            protected_value=0, # Default for API
+            true_label=None
+        )
+        db_audit = AuditLog(
+            timestamp=timestamp,
+            base_prediction=base_pred,
+            final_decision=final_decision,
+            intervention_type=intervention_type if intervention_type else "None",
+            protected_value=0,
+            true_label=None
+        )
+        db.add(db_prediction)
+        db.add(db_audit)
+        db.commit()
+    finally:
+        db.close()
+
     
     return PredictionResponse(
         id=prediction_id,
@@ -511,7 +631,25 @@ async def get_metrics():
 @app.get("/api/audit-log", response_model=List[AuditLogEntry])
 async def get_audit_log(limit: int = 50):
     """Get recent entries from the audit log."""
-    return [AuditLogEntry(**entry) for entry in state.audit_log[-limit:]]
+    # return [AuditLogEntry(**entry) for entry in state.audit_log[-limit:]]
+    
+    db = SessionLocal()
+    try:
+        logs = db.query(AuditLog).order_by(AuditLog.id.desc()).limit(limit).all()
+        return [
+            AuditLogEntry(
+                id=log.id, 
+                timestamp=log.timestamp,
+                base_prediction=log.base_prediction,
+                final_decision=log.final_decision,
+                intervention_type=log.intervention_type,
+                protected_value=log.protected_value,
+                true_label=log.true_label
+            ) for log in logs
+        ]
+    finally:
+        db.close()
+
 
 
 @app.get("/api/explain/{prediction_id}", response_model=ExplanationResponse)
@@ -559,57 +697,61 @@ async def toggle_fairflow(active: bool):
     return {"fairflow_active": state.fairflow_active}
 
 
+@app.get("/api/datasets")
+async def get_datasets():
+    """Get available datasets."""
+    return [
+        {"id": "adult", "name": "Adult Census (Income)", "active": state.active_dataset == "adult"},
+        {"id": "german", "name": "German Credit (Risk)", "active": state.active_dataset == "german"}
+    ]
+
+@app.post("/api/dataset/switch")
+async def switch_dataset(dataset: DatasetSwitchRequest):
+    """Switch the active dataset."""
+    if dataset.dataset_id not in state.data:
+        raise HTTPException(status_code=404, detail="Dataset not found")
+    
+    state.active_dataset = dataset.dataset_id
+    # Reset model to default for the new dataset
+    state.active_model_id = "xgboost" 
+    
+    print(f"🔄 Switched to dataset: {dataset.dataset_id}")
+    return {"status": "success", "dataset": dataset.dataset_id}
+
+@app.get("/api/models")
+async def get_models():
+    """Get available models for the CURRENT dataset."""
+    if state.active_dataset not in state.models:
+        return []
+        
+    current_models = state.models[state.active_dataset]
+    return [
+        {"id": m_id, "name": m_id.replace("_", " ").title(), "active": m_id == state.active_model_id}
+        for m_id in current_models.keys()
+    ]
+
+@app.post("/api/models/switch")
+async def switch_model(model: ModelSwitchRequest):
+    """Switch the active model for the current dataset."""
+    current_models = state.models.get(state.active_dataset, {})
+    if model.model_id not in current_models:
+        raise HTTPException(status_code=404, detail="Model not found for current dataset")
+    
+    state.active_model_id = model.model_id
+    print(f"🔄 Switched to model: {model.model_id}")
+    return {"status": "success", "model": model.model_id}
+
 @app.get("/api/fairflow/status")
 async def get_fairflow_status():
     """Get current FairFlow status."""
-    if state.universal_rl_agent is not None:
-        mode = "universal_rl_agent"
-    elif state.rl_agent is not None:
-        mode = "dataset_specific_rl_agent"
-    else:
-        mode = "rule_based"
-    
     return {
         "active": state.fairflow_active,
         "universal_agent_loaded": state.universal_rl_agent is not None,
-        "dataset_agent_loaded": state.rl_agent is not None,
-        "mode": mode,
+        "mode": "universal_rl_agent" if state.universal_rl_agent else "rule_based",
         "config": state.config,
-        "is_universal": state.config.get("use_universal_agent", True) and state.universal_rl_agent is not None
+        "active_dataset": state.active_dataset,  # Expose active dataset
+        "active_model": state.active_model_id
     }
-
-
-@app.post("/api/fairflow/configure")
-async def configure_fairflow(config: FairFlowConfig):
-    """
-    Configure FairFlow for a specific use case.
-    
-    This allows customizing:
-    - Protected attribute to monitor
-    - Fairness threshold
-    - Accuracy vs fairness trade-off weights
-    - Whether to use universal or dataset-specific agent
-    """
-    state.config = {
-        "protected_attribute": config.protected_attribute,
-        "fairness_threshold": config.fairness_threshold,
-        "fairness_metric": config.fairness_metric,
-        "accuracy_weight": config.accuracy_weight,
-        "fairness_weight": config.fairness_weight,
-        "use_universal_agent": config.use_universal_agent
-    }
-    
-    return {
-        "status": "configured",
-        "config": state.config,
-        "mode": "universal" if config.use_universal_agent and state.universal_rl_agent else "dataset_specific"
-    }
-
-
-@app.get("/api/fairflow/config")
-async def get_fairflow_config():
-    """Get current FairFlow configuration."""
-    return state.config
 
 
 # ============================================================================
@@ -678,12 +820,15 @@ async def inject_drift(unprivileged_ratio: float = 0.9, duration: int = 50):
 
 async def run_simulation(speed: float = 1.0):
     """Background task to run simulation."""
-    if state.data is None or state.base_model is None:
+    data = state.get_active_data()
+    base_model = state.get_active_model()
+    
+    if data is None or base_model is None:
         return
     
-    X_test = state.data["X_test"].values
-    y_test = state.data["y_test"].values
-    protected_test = state.data["protected_test"].values
+    X_test = data["X_test"].values
+    y_test = data["y_test"].values
+    protected_test = data["protected_test"].values
     
     n_samples = len(X_test)
     
@@ -729,8 +874,8 @@ async def run_simulation(speed: float = 1.0):
         protected_val = int(protected_test[idx])
         
         # Get base prediction
-        base_pred = int(state.base_model.predict(features)[0])
-        base_prob = float(state.base_model.predict_proba(features)[0, 1])
+        base_pred = int(base_model.predict(features)[0])
+        base_prob = float(base_model.predict_proba(features)[0, 1])
         
         # Get FairFlow decision (pass protected_value for universal agent)
         final_decision, intervention_type = get_fairflow_decision(
@@ -787,10 +932,39 @@ async def run_simulation(speed: float = 1.0):
             "true_label": true_label
         })
         
+        # Persist to Database
+        db = SessionLocal()
+        try:
+            db_prediction = Prediction(
+                timestamp=timestamp,
+                features_json=json.dumps(features[0].tolist()),
+                base_prediction=base_pred,
+                base_probability=base_prob,
+                final_decision=final_decision,
+                intervention_type=intervention_type if intervention_type else "None",
+                intervened=intervened,
+                protected_value=protected_val,
+                true_label=true_label
+            )
+            db_audit = AuditLog(
+                timestamp=timestamp,
+                base_prediction=base_pred,
+                final_decision=final_decision,
+                intervention_type=intervention_type if intervention_type else "None",
+                protected_value=protected_val,
+                true_label=true_label
+            )
+            db.add(db_prediction)
+            db.add(db_audit)
+            db.commit()
+        finally:
+            db.close()
+        
         samples_processed += 1
         await asyncio.sleep(0.5 / speed)  # Delay between samples
     
     state.simulation_running = False
+
 
 
 # ============================================================================

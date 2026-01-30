@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+pandas
+numpy
+scikit-learn
+shap
+lime
+matplotlib
+seaborn
+plotly
+pydantic
+python-multipart
+sqlalchemy
