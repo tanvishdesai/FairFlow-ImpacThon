@@ -1,8 +1,9 @@
 "use client";
 
-import { Shield, Activity, Zap, Sun, Moon } from "lucide-react";
+import { Shield, Activity, Zap, Sun, Moon, Scale } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 interface HeaderProps {
   isConnected: boolean;
@@ -40,8 +41,21 @@ export default function Header({ isConnected, fairflowActive }: HeaderProps) {
           </div>
         </div>
 
-        {/* Status Indicators */}
+        {/* Navigation & Status */}
         <div className="flex items-center gap-4">
+          {/* Simulator Link */}
+          <Link 
+            href="/simulator"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg transition-all hover:opacity-80"
+            style={{ 
+              background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
+              color: 'white'
+            }}
+          >
+            <Scale className="w-4 h-4" />
+            <span className="text-sm font-medium">Try Simulator</span>
+          </Link>
+
           {/* Theme Toggle - only show icon after mount to prevent hydration mismatch */}
           <button
             onClick={toggleTheme}
