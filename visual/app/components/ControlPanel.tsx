@@ -161,7 +161,7 @@ export default function ControlPanel({
         <p className="text-xs mt-2" style={{ color: 'var(--text-muted)' }}>
           {simulationRunning 
             ? 'Processing test data samples...' 
-            : 'Run predictions on Adult Census test data'}
+            : `Run predictions on ${datasets.find(d => d.active)?.name || "selected"} test data`}
         </p>
       </div>
 

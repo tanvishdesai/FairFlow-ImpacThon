@@ -1,5 +1,5 @@
 {
-  "evaluated_at": "2026-01-31T09:13:18.337912",
+  "evaluated_at": "2026-01-31T09:27:49.591203",
   "total_samples": 200,
   "base_model_stats": {
     "accuracy": 0.835,
@@ -54,14 +54,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 1.58,
-        "Job": 1.68,
-        "Housing": 1.77,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": 0.1,
-        "Duration": -0.49,
-        "Purpose": 1.07
+        "Age": 52,
+        "Job": "Highly Skilled",
+        "Housing": "Own",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac3,562",
+        "Duration": "15 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -80,14 +80,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -1.01,
-        "Job": 0.14,
-        "Housing": 1.77,
-        "Saving_accounts": 2.63,
-        "Checking_account": -0.24,
-        "Credit_amount": -1.01,
-        "Duration": -1.23,
-        "Purpose": 0.06
+        "Age": 24,
+        "Job": "Skilled",
+        "Housing": "Own",
+        "Saving_accounts": "Rich",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac421",
+        "Duration": "6 months",
+        "Purpose": "Domestic Appliances"
       }
     },
     {
@@ -106,14 +106,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -1.18,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": 1.79,
-        "Checking_account": -1.31,
-        "Credit_amount": -0.16,
-        "Duration": 0.25,
-        "Purpose": 0.56
+        "Age": 22,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Rich",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac2,821",
+        "Duration": "24 months",
+        "Purpose": "Repairs"
       }
     },
     {
@@ -132,14 +132,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.49,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": 0.96,
-        "Checking_account": -0.24,
-        "Credit_amount": -0.44,
-        "Duration": -0.74,
-        "Purpose": -0.95
+        "Age": 30,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Quite Rich",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac2,019",
+        "Duration": "12 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -158,14 +158,14 @@
       "is_model_correct": false,
       "result_type": "FALSE_POSITIVE",
       "features": {
-        "Age": 1.15,
-        "Job": 0.14,
-        "Housing": -2.02,
-        "Saving_accounts": 0.96,
-        "Checking_account": -1.31,
-        "Credit_amount": -0.11,
-        "Duration": 0.25,
-        "Purpose": -0.95
+        "Age": 48,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Quite Rich",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac2,957",
+        "Duration": "24 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -184,14 +184,14 @@
       "is_model_correct": false,
       "result_type": "FALSE_NEGATIVE",
       "features": {
-        "Age": -0.75,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": 0.26,
-        "Duration": 0.25,
-        "Purpose": 0.56
+        "Age": 27,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac4,015",
+        "Duration": "24 months",
+        "Purpose": "Repairs"
       }
     },
     {
@@ -210,14 +210,14 @@
       "is_model_correct": false,
       "result_type": "FALSE_NEGATIVE",
       "features": {
-        "Age": -1.01,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": -0.03,
-        "Duration": -0.24,
-        "Purpose": 1.07
+        "Age": 24,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac3,184",
+        "Duration": "18 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -236,14 +236,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_NEGATIVE",
       "features": {
-        "Age": -0.32,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": 0.46,
-        "Duration": 0.74,
-        "Purpose": 0.56
+        "Age": 32,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac4,580",
+        "Duration": "30 months",
+        "Purpose": "Repairs"
       }
     },
     {
@@ -262,14 +262,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_NEGATIVE",
       "features": {
-        "Age": 0.03,
-        "Job": 0.14,
-        "Housing": 1.77,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": 0.22,
-        "Duration": -0.82,
-        "Purpose": -0.95
+        "Age": 35,
+        "Job": "Skilled",
+        "Housing": "Own",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac3,900",
+        "Duration": "11 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -288,14 +288,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 2.44,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": 0.13,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.66,
-        "Duration": -0.66,
-        "Purpose": 1.07
+        "Age": 62,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Moderate",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac1,399",
+        "Duration": "13 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -314,14 +314,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.83,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": 0.96,
-        "Checking_account": -0.24,
-        "Credit_amount": -0.55,
-        "Duration": 0.74,
-        "Purpose": 1.07
+        "Age": 26,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Quite Rich",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac1,705",
+        "Duration": "30 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -340,14 +340,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_NEGATIVE",
       "features": {
-        "Age": -1.18,
-        "Job": 0.14,
-        "Housing": -2.02,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": 0.25,
-        "Duration": -0.57,
-        "Purpose": -0.95
+        "Age": 22,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac3,968",
+        "Duration": "14 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -366,14 +366,14 @@
       "is_model_correct": false,
       "result_type": "FALSE_POSITIVE",
       "features": {
-        "Age": -0.57,
-        "Job": 0.14,
-        "Housing": 1.77,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.42,
-        "Duration": -1.23,
-        "Purpose": 1.07
+        "Age": 29,
+        "Job": "Skilled",
+        "Housing": "Own",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac2,099",
+        "Duration": "6 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -392,14 +392,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_NEGATIVE",
       "features": {
-        "Age": -1.09,
-        "Job": 0.14,
-        "Housing": -2.02,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": -0.51,
-        "Duration": 1.98,
-        "Purpose": 1.07
+        "Age": 23,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac1,836",
+        "Duration": "45 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -418,14 +418,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 0.37,
-        "Job": 1.68,
-        "Housing": 1.77,
-        "Saving_accounts": -0.7,
-        "Checking_account": 1.89,
-        "Credit_amount": -0.49,
-        "Duration": -0.49,
-        "Purpose": 0.06
+        "Age": 39,
+        "Job": "Highly Skilled",
+        "Housing": "Own",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac1,896",
+        "Duration": "15 months",
+        "Purpose": "Domestic Appliances"
       }
     },
     {
@@ -444,14 +444,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 1.41,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.91,
-        "Duration": -0.74,
-        "Purpose": 1.07
+        "Age": 51,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac705",
+        "Duration": "12 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -470,14 +470,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.32,
-        "Job": 1.68,
-        "Housing": -2.02,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.63,
-        "Duration": -0.24,
-        "Purpose": 1.07
+        "Age": 32,
+        "Job": "Highly Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac1,495",
+        "Duration": "18 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -496,14 +496,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_NEGATIVE",
       "features": {
-        "Age": -0.66,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": 2.23,
-        "Duration": 1.24,
-        "Purpose": -1.46
+        "Age": 28,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac9,579",
+        "Duration": "36 months",
+        "Purpose": "Car"
       }
     },
     {
@@ -522,14 +522,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.4,
-        "Job": -1.41,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.61,
-        "Duration": -0.9,
-        "Purpose": -0.95
+        "Age": 31,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac1,536",
+        "Duration": "10 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -548,14 +548,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 0.29,
-        "Job": -1.41,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": -1.01,
-        "Duration": -1.23,
-        "Purpose": 1.07
+        "Age": 38,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac414",
+        "Duration": "6 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -574,14 +574,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 0.89,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": 2.63,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.6,
-        "Duration": -0.24,
-        "Purpose": 1.07
+        "Age": 45,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac1,572",
+        "Duration": "18 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -600,14 +600,14 @@
       "is_model_correct": false,
       "result_type": "FALSE_POSITIVE",
       "features": {
-        "Age": -0.92,
-        "Job": -1.41,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -0.24,
-        "Credit_amount": 0.52,
-        "Duration": 1.98,
-        "Purpose": 1.07
+        "Age": 25,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac4,743",
+        "Duration": "45 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -626,14 +626,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_NEGATIVE",
       "features": {
-        "Age": -0.57,
-        "Job": 1.68,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.21,
-        "Duration": 0.25,
-        "Purpose": -0.95
+        "Age": 29,
+        "Job": "Highly Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac2,672",
+        "Duration": "24 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -652,14 +652,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.23,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": 2.63,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.62,
-        "Duration": -1.23,
-        "Purpose": 0.56
+        "Age": 32,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac1,533",
+        "Duration": "6 months",
+        "Purpose": "Repairs"
       }
     },
     {
@@ -678,14 +678,14 @@
       "is_model_correct": false,
       "result_type": "FALSE_NEGATIVE",
       "features": {
-        "Age": -0.75,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": -0.05,
-        "Duration": 0.25,
-        "Purpose": -0.95
+        "Age": 27,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac3,117",
+        "Duration": "24 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -704,14 +704,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.83,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": 1.79,
-        "Checking_account": -0.24,
-        "Credit_amount": -0.75,
-        "Duration": -0.74,
-        "Purpose": 1.07
+        "Age": 26,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Rich",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac1,147",
+        "Duration": "12 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -730,14 +730,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 0.89,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": -0.33,
-        "Duration": 1.24,
-        "Purpose": 0.56
+        "Age": 45,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac2,340",
+        "Duration": "36 months",
+        "Purpose": "Repairs"
       }
     },
     {
@@ -756,14 +756,14 @@
       "is_model_correct": false,
       "result_type": "FALSE_POSITIVE",
       "features": {
-        "Age": -0.92,
-        "Job": 0.14,
-        "Housing": 1.77,
-        "Saving_accounts": 0.96,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.71,
-        "Duration": 0.09,
-        "Purpose": -0.95
+        "Age": 25,
+        "Job": "Skilled",
+        "Housing": "Own",
+        "Saving_accounts": "Quite Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac1,273",
+        "Duration": "22 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -782,14 +782,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.06,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": 0.13,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.19,
-        "Duration": -0.99,
-        "Purpose": 1.07
+        "Age": 34,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Moderate",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac2,746",
+        "Duration": "9 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -808,14 +808,14 @@
       "is_model_correct": false,
       "result_type": "FALSE_POSITIVE",
       "features": {
-        "Age": 0.29,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": 0.96,
-        "Checking_account": -1.31,
-        "Credit_amount": -0.38,
-        "Duration": -0.08,
-        "Purpose": 0.56
+        "Age": 38,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Quite Rich",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac2,204",
+        "Duration": "20 months",
+        "Purpose": "Repairs"
       }
     },
     {
@@ -834,14 +834,14 @@
       "is_model_correct": false,
       "result_type": "FALSE_NEGATIVE",
       "features": {
-        "Age": -0.49,
-        "Job": 1.68,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -0.24,
-        "Credit_amount": 0.54,
-        "Duration": 1.24,
-        "Purpose": 1.07
+        "Age": 30,
+        "Job": "Highly Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac4,792",
+        "Duration": "36 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -860,14 +860,14 @@
       "is_model_correct": false,
       "result_type": "FALSE_NEGATIVE",
       "features": {
-        "Age": 0.55,
-        "Job": 1.68,
-        "Housing": -2.02,
-        "Saving_accounts": -0.7,
-        "Checking_account": -0.24,
-        "Credit_amount": 1.79,
-        "Duration": 0.5,
-        "Purpose": -1.46
+        "Age": 41,
+        "Job": "Highly Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac8,323",
+        "Duration": "27 months",
+        "Purpose": "Car"
       }
     },
     {
@@ -886,14 +886,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.66,
-        "Job": 0.14,
-        "Housing": -2.02,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": 0.02,
-        "Duration": -0.49,
-        "Purpose": 0.56
+        "Age": 28,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac3,337",
+        "Duration": "15 months",
+        "Purpose": "Repairs"
       }
     },
     {
@@ -912,14 +912,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.4,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": -0.47,
-        "Duration": -1.23,
-        "Purpose": 1.07
+        "Age": 31,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac1,948",
+        "Duration": "6 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -938,14 +938,14 @@
       "is_model_correct": false,
       "result_type": "FALSE_POSITIVE",
       "features": {
-        "Age": -0.32,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": 0.47,
-        "Duration": -0.24,
-        "Purpose": 1.07
+        "Age": 32,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac4,591",
+        "Duration": "18 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -964,14 +964,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.92,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.72,
-        "Duration": -0.74,
-        "Purpose": 1.07
+        "Age": 25,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac1,252",
+        "Duration": "12 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -990,14 +990,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 2.62,
-        "Job": 1.68,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": 1.89,
-        "Credit_amount": -0.49,
-        "Duration": 0.74,
-        "Purpose": -1.46
+        "Age": 64,
+        "Job": "Highly Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac1,899",
+        "Duration": "30 months",
+        "Purpose": "Car"
       }
     },
     {
@@ -1016,14 +1016,14 @@
       "is_model_correct": false,
       "result_type": "FALSE_POSITIVE",
       "features": {
-        "Age": -0.66,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.39,
-        "Duration": -0.24,
-        "Purpose": -1.46
+        "Age": 28,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac2,160",
+        "Duration": "18 months",
+        "Purpose": "Car"
       }
     },
     {
@@ -1042,14 +1042,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.57,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.39,
-        "Duration": -0.74,
-        "Purpose": 1.07
+        "Age": 29,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac2,162",
+        "Duration": "12 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -1068,14 +1068,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.32,
-        "Job": -1.41,
-        "Housing": -2.02,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": -0.65,
-        "Duration": -0.24,
-        "Purpose": -0.95
+        "Age": 32,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac1,432",
+        "Duration": "18 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -1094,14 +1094,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.83,
-        "Job": 0.14,
-        "Housing": 1.77,
-        "Saving_accounts": 0.13,
-        "Checking_account": 0.83,
-        "Credit_amount": 0.11,
-        "Duration": -0.99,
-        "Purpose": -0.95
+        "Age": 26,
+        "Job": "Skilled",
+        "Housing": "Own",
+        "Saving_accounts": "Moderate",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac3,571",
+        "Duration": "9 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -1120,14 +1120,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 0.37,
-        "Job": -1.41,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": -0.68,
-        "Duration": -1.23,
-        "Purpose": -0.95
+        "Age": 39,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac1,351",
+        "Duration": "6 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -1146,14 +1146,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 0.2,
-        "Job": 1.68,
-        "Housing": -0.12,
-        "Saving_accounts": 0.96,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.02,
-        "Duration": -0.24,
-        "Purpose": -0.95
+        "Age": 37,
+        "Job": "Highly Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Quite Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac3,223",
+        "Duration": "18 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -1172,14 +1172,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 0.12,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": 1.89,
-        "Credit_amount": -0.42,
-        "Duration": -0.24,
-        "Purpose": 1.07
+        "Age": 36,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac2,091",
+        "Duration": "18 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -1198,14 +1198,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.57,
-        "Job": -2.96,
-        "Housing": -0.12,
-        "Saving_accounts": 0.96,
-        "Checking_account": -0.24,
-        "Credit_amount": 0.25,
-        "Duration": 1.24,
-        "Purpose": -0.45
+        "Age": 29,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Quite Rich",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac3,985",
+        "Duration": "36 months",
+        "Purpose": "Radio/Tv"
       }
     },
     {
@@ -1224,14 +1224,14 @@
       "is_model_correct": false,
       "result_type": "FALSE_POSITIVE",
       "features": {
-        "Age": 2.36,
-        "Job": 1.68,
-        "Housing": -2.02,
-        "Saving_accounts": 0.96,
-        "Checking_account": 0.83,
-        "Credit_amount": 3.72,
-        "Duration": 3.21,
-        "Purpose": -0.95
+        "Age": 61,
+        "Job": "Highly Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Quite Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac13,772",
+        "Duration": "60 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -1250,14 +1250,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.83,
-        "Job": -1.41,
-        "Housing": -0.12,
-        "Saving_accounts": 0.96,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.89,
-        "Duration": -1.23,
-        "Purpose": -0.95
+        "Age": 26,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Quite Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac771",
+        "Duration": "6 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -1276,14 +1276,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_NEGATIVE",
       "features": {
-        "Age": -0.75,
-        "Job": 1.68,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -0.24,
-        "Credit_amount": 3.82,
-        "Duration": 3.21,
-        "Purpose": -0.95
+        "Age": 27,
+        "Job": "Highly Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac14,044",
+        "Duration": "60 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -1302,14 +1302,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.75,
-        "Job": -1.41,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.88,
-        "Duration": -0.57,
-        "Purpose": -0.95
+        "Age": 27,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac791",
+        "Duration": "14 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -1328,14 +1328,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.4,
-        "Job": 1.68,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.31,
-        "Duration": -0.99,
-        "Purpose": 0.56
+        "Age": 31,
+        "Job": "Highly Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac2,398",
+        "Duration": "9 months",
+        "Purpose": "Repairs"
       }
     },
     {
@@ -1354,14 +1354,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_NEGATIVE",
       "features": {
-        "Age": -0.75,
-        "Job": 1.68,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": 0.05,
-        "Duration": 0.5,
-        "Purpose": 1.07
+        "Age": 27,
+        "Job": "Highly Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac3,410",
+        "Duration": "27 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -1380,14 +1380,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_NEGATIVE",
       "features": {
-        "Age": 1.06,
-        "Job": 0.14,
-        "Housing": -2.02,
-        "Saving_accounts": 0.96,
-        "Checking_account": 0.83,
-        "Credit_amount": 2.13,
-        "Duration": 0.25,
-        "Purpose": -0.95
+        "Age": 47,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Quite Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac9,284",
+        "Duration": "24 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -1406,14 +1406,14 @@
       "is_model_correct": false,
       "result_type": "FALSE_POSITIVE",
       "features": {
-        "Age": 0.03,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.8,
-        "Duration": -0.24,
-        "Purpose": -0.95
+        "Age": 35,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac1,017",
+        "Duration": "18 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -1432,14 +1432,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 0.55,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": -0.25,
-        "Duration": -0.74,
-        "Purpose": 0.56
+        "Age": 41,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac2,569",
+        "Duration": "12 months",
+        "Purpose": "Repairs"
       }
     },
     {
@@ -1458,14 +1458,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_NEGATIVE",
       "features": {
-        "Age": -0.92,
-        "Job": 0.14,
-        "Housing": 1.77,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": -0.65,
-        "Duration": -0.49,
-        "Purpose": 0.56
+        "Age": 25,
+        "Job": "Skilled",
+        "Housing": "Own",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac1,423",
+        "Duration": "15 months",
+        "Purpose": "Repairs"
       }
     },
     {
@@ -1484,14 +1484,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.14,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.34,
-        "Duration": -0.24,
-        "Purpose": 1.07
+        "Age": 33,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac2,312",
+        "Duration": "18 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -1510,14 +1510,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -1.09,
-        "Job": -1.41,
-        "Housing": 1.77,
-        "Saving_accounts": 1.79,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.93,
-        "Duration": -1.23,
-        "Purpose": 1.57
+        "Age": 23,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Own",
+        "Saving_accounts": "Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac648",
+        "Duration": "6 months",
+        "Purpose": "Business"
       }
     },
     {
@@ -1536,14 +1536,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 1.06,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": 0.96,
-        "Checking_account": 0.83,
-        "Credit_amount": 0.68,
-        "Duration": 0.5,
-        "Purpose": 1.57
+        "Age": 47,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Quite Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac5,188",
+        "Duration": "27 months",
+        "Purpose": "Business"
       }
     },
     {
@@ -1562,14 +1562,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 0.72,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": 0.96,
-        "Checking_account": 0.83,
-        "Credit_amount": 0.95,
-        "Duration": 0.25,
-        "Purpose": 1.07
+        "Age": 43,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Quite Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac5,943",
+        "Duration": "24 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -1588,14 +1588,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 1.32,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -0.24,
-        "Credit_amount": 0.53,
-        "Duration": -0.82,
-        "Purpose": 1.07
+        "Age": 50,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac4,768",
+        "Duration": "11 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -1614,14 +1614,14 @@
       "is_model_correct": false,
       "result_type": "FALSE_NEGATIVE",
       "features": {
-        "Age": -1.01,
-        "Job": -1.41,
-        "Housing": 1.77,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": -0.61,
-        "Duration": 0.25,
-        "Purpose": 1.07
+        "Age": 24,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Own",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac1,536",
+        "Duration": "24 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -1640,14 +1640,14 @@
       "is_model_correct": false,
       "result_type": "FALSE_POSITIVE",
       "features": {
-        "Age": -0.4,
-        "Job": 1.68,
-        "Housing": 1.77,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.47,
-        "Duration": -0.74,
-        "Purpose": 1.07
+        "Age": 31,
+        "Job": "Highly Skilled",
+        "Housing": "Own",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac1,954",
+        "Duration": "12 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -1666,14 +1666,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -1.01,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": 1.79,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.42,
-        "Duration": -1.23,
-        "Purpose": -0.95
+        "Age": 24,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac2,071",
+        "Duration": "6 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -1692,14 +1692,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.23,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": 0.96,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.07,
-        "Duration": -0.99,
-        "Purpose": 1.07
+        "Age": 32,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Quite Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac3,067",
+        "Duration": "9 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -1718,14 +1718,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_NEGATIVE",
       "features": {
-        "Age": -0.57,
-        "Job": 0.14,
-        "Housing": 1.77,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": 3.03,
-        "Duration": 1.98,
-        "Purpose": -1.46
+        "Age": 29,
+        "Job": "Skilled",
+        "Housing": "Own",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac11,828",
+        "Duration": "45 months",
+        "Purpose": "Car"
       }
     },
     {
@@ -1744,14 +1744,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.49,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": 1.79,
-        "Checking_account": -0.24,
-        "Credit_amount": 1.8,
-        "Duration": 2.23,
-        "Purpose": -0.95
+        "Age": 30,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Rich",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac8,363",
+        "Duration": "48 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -1770,14 +1770,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_NEGATIVE",
       "features": {
-        "Age": 0.12,
-        "Job": 0.14,
-        "Housing": -2.02,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.52,
-        "Duration": 1.24,
-        "Purpose": 0.06
+        "Age": 36,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac1,810",
+        "Duration": "36 months",
+        "Purpose": "Domestic Appliances"
       }
     },
     {
@@ -1796,14 +1796,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.06,
-        "Job": 1.68,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.22,
-        "Duration": 0.25,
-        "Purpose": -0.95
+        "Age": 34,
+        "Job": "Highly Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac2,663",
+        "Duration": "24 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -1822,14 +1822,14 @@
       "is_model_correct": false,
       "result_type": "FALSE_POSITIVE",
       "features": {
-        "Age": 0.81,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": -0.35,
-        "Duration": 0.25,
-        "Purpose": -0.95
+        "Age": 44,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac2,295",
+        "Duration": "24 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -1848,14 +1848,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.49,
-        "Job": 1.68,
-        "Housing": 1.77,
-        "Saving_accounts": -0.7,
-        "Checking_account": -0.24,
-        "Credit_amount": -0.43,
-        "Duration": -1.23,
-        "Purpose": 1.07
+        "Age": 30,
+        "Job": "Highly Skilled",
+        "Housing": "Own",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac2,054",
+        "Duration": "6 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -1874,14 +1874,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 0.81,
-        "Job": -1.41,
-        "Housing": -0.12,
-        "Saving_accounts": 1.79,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.54,
-        "Duration": -1.23,
-        "Purpose": 1.07
+        "Age": 44,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac1,741",
+        "Duration": "6 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -1900,14 +1900,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.75,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.77,
-        "Duration": -0.74,
-        "Purpose": -0.95
+        "Age": 27,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac1,090",
+        "Duration": "12 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -1926,14 +1926,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.92,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -0.24,
-        "Credit_amount": 0.59,
-        "Duration": 1.49,
-        "Purpose": 1.07
+        "Age": 25,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac4,930",
+        "Duration": "39 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -1952,14 +1952,14 @@
       "is_model_correct": false,
       "result_type": "FALSE_NEGATIVE",
       "features": {
-        "Age": 1.67,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": 1.28,
-        "Duration": 0.25,
-        "Purpose": 0.56
+        "Age": 53,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac6,874",
+        "Duration": "24 months",
+        "Purpose": "Repairs"
       }
     },
     {
@@ -1978,14 +1978,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 0.37,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.6,
-        "Duration": 0.25,
-        "Purpose": 0.56
+        "Age": 39,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac1,575",
+        "Duration": "24 months",
+        "Purpose": "Repairs"
       }
     },
     {
@@ -2004,14 +2004,14 @@
       "is_model_correct": false,
       "result_type": "FALSE_NEGATIVE",
       "features": {
-        "Age": -0.75,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": -0.32,
-        "Duration": -0.24,
-        "Purpose": 1.07
+        "Age": 27,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac2,381",
+        "Duration": "18 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -2030,14 +2030,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_NEGATIVE",
       "features": {
-        "Age": -0.49,
-        "Job": 1.68,
-        "Housing": -0.12,
-        "Saving_accounts": 0.96,
-        "Checking_account": -1.31,
-        "Credit_amount": 3.87,
-        "Duration": 1.49,
-        "Purpose": 0.56
+        "Age": 30,
+        "Job": "Highly Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Quite Rich",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac14,196",
+        "Duration": "39 months",
+        "Purpose": "Repairs"
       }
     },
     {
@@ -2056,14 +2056,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.92,
-        "Job": 0.14,
-        "Housing": 1.77,
-        "Saving_accounts": 1.79,
-        "Checking_account": -0.24,
-        "Credit_amount": -0.02,
-        "Duration": -0.24,
-        "Purpose": 1.07
+        "Age": 25,
+        "Job": "Skilled",
+        "Housing": "Own",
+        "Saving_accounts": "Rich",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac3,207",
+        "Duration": "18 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -2082,14 +2082,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.75,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": 2.63,
-        "Checking_account": 0.83,
-        "Credit_amount": 1.89,
-        "Duration": 0.5,
-        "Purpose": -0.95
+        "Age": 27,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac8,618",
+        "Duration": "27 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -2108,14 +2108,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_NEGATIVE",
       "features": {
-        "Age": -1.01,
-        "Job": -1.41,
-        "Housing": 1.77,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": -0.09,
-        "Duration": 0.25,
-        "Purpose": 0.56
+        "Age": 24,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Own",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac3,014",
+        "Duration": "24 months",
+        "Purpose": "Repairs"
       }
     },
     {
@@ -2134,14 +2134,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 1.84,
-        "Job": -1.41,
-        "Housing": -0.12,
-        "Saving_accounts": 0.13,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.75,
-        "Duration": -0.82,
-        "Purpose": 1.07
+        "Age": 55,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Moderate",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac1,143",
+        "Duration": "11 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -2160,14 +2160,14 @@
       "is_model_correct": false,
       "result_type": "FALSE_POSITIVE",
       "features": {
-        "Age": 0.2,
-        "Job": 0.14,
-        "Housing": -2.02,
-        "Saving_accounts": 0.96,
-        "Checking_account": -0.24,
-        "Credit_amount": 1.21,
-        "Duration": 2.23,
-        "Purpose": -1.46
+        "Age": 37,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Quite Rich",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac6,682",
+        "Duration": "48 months",
+        "Purpose": "Car"
       }
     },
     {
@@ -2186,14 +2186,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.32,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -0.24,
-        "Credit_amount": 0.99,
-        "Duration": -0.74,
-        "Purpose": -0.95
+        "Age": 32,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac6,078",
+        "Duration": "12 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -2212,14 +2212,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.23,
-        "Job": 1.68,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -0.24,
-        "Credit_amount": 0.41,
-        "Duration": -0.24,
-        "Purpose": -1.46
+        "Age": 32,
+        "Job": "Highly Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac4,435",
+        "Duration": "18 months",
+        "Purpose": "Car"
       }
     },
     {
@@ -2238,14 +2238,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 2.53,
-        "Job": -2.96,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.77,
-        "Duration": -0.24,
-        "Purpose": 1.07
+        "Age": 63,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac1,087",
+        "Duration": "18 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -2264,14 +2264,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 1.67,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": -0.59,
-        "Duration": 0.25,
-        "Purpose": 1.07
+        "Age": 53,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac1,593",
+        "Duration": "24 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -2290,14 +2290,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.83,
-        "Job": -2.96,
-        "Housing": 1.77,
-        "Saving_accounts": -0.7,
-        "Checking_account": -0.24,
-        "Credit_amount": -0.53,
-        "Duration": -0.49,
-        "Purpose": -0.95
+        "Age": 26,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Own",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac1,769",
+        "Duration": "15 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -2316,14 +2316,14 @@
       "is_model_correct": false,
       "result_type": "FALSE_NEGATIVE",
       "features": {
-        "Age": 1.5,
-        "Job": 1.68,
-        "Housing": -0.12,
-        "Saving_accounts": 0.96,
-        "Checking_account": 0.83,
-        "Credit_amount": 1.49,
-        "Duration": 0.74,
-        "Purpose": -0.95
+        "Age": 51,
+        "Job": "Highly Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Quite Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac7,488",
+        "Duration": "30 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -2342,14 +2342,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_NEGATIVE",
       "features": {
-        "Age": -1.09,
-        "Job": 0.14,
-        "Housing": 1.77,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": -0.31,
-        "Duration": 0.74,
-        "Purpose": 0.56
+        "Age": 23,
+        "Job": "Skilled",
+        "Housing": "Own",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac2,398",
+        "Duration": "30 months",
+        "Purpose": "Repairs"
       }
     },
     {
@@ -2368,14 +2368,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.92,
-        "Job": -1.41,
-        "Housing": -0.12,
-        "Saving_accounts": 0.13,
-        "Checking_account": -0.24,
-        "Credit_amount": -0.23,
-        "Duration": -0.49,
-        "Purpose": 1.57
+        "Age": 25,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Moderate",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac2,623",
+        "Duration": "15 months",
+        "Purpose": "Business"
       }
     },
     {
@@ -2394,14 +2394,14 @@
       "is_model_correct": false,
       "result_type": "FALSE_POSITIVE",
       "features": {
-        "Age": -0.57,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": 0.96,
-        "Checking_account": 0.83,
-        "Credit_amount": 0.61,
-        "Duration": 0.0,
-        "Purpose": -0.95
+        "Age": 29,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Quite Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac5,001",
+        "Duration": "21 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -2420,14 +2420,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 0.81,
-        "Job": 0.14,
-        "Housing": -2.02,
-        "Saving_accounts": 0.96,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.7,
-        "Duration": -0.49,
-        "Purpose": -0.95
+        "Age": 44,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Quite Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac1,290",
+        "Duration": "15 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -2446,14 +2446,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_NEGATIVE",
       "features": {
-        "Age": 1.67,
-        "Job": -2.96,
-        "Housing": -2.02,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": -0.74,
-        "Duration": -0.24,
-        "Purpose": 1.57
+        "Age": 53,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac1,179",
+        "Duration": "18 months",
+        "Purpose": "Business"
       }
     },
     {
@@ -2472,14 +2472,14 @@
       "is_model_correct": false,
       "result_type": "FALSE_NEGATIVE",
       "features": {
-        "Age": -0.75,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": 0.12,
-        "Duration": 2.23,
-        "Purpose": -1.46
+        "Age": 27,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac3,604",
+        "Duration": "48 months",
+        "Purpose": "Car"
       }
     },
     {
@@ -2498,14 +2498,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 0.12,
-        "Job": -1.41,
-        "Housing": -0.12,
-        "Saving_accounts": 0.96,
-        "Checking_account": 1.89,
-        "Credit_amount": -0.69,
-        "Duration": 0.25,
-        "Purpose": -0.95
+        "Age": 36,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Quite Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac1,334",
+        "Duration": "24 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -2524,14 +2524,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.23,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": -0.76,
-        "Duration": -0.24,
-        "Purpose": 0.56
+        "Age": 32,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac1,120",
+        "Duration": "18 months",
+        "Purpose": "Repairs"
       }
     },
     {
@@ -2550,14 +2550,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_NEGATIVE",
       "features": {
-        "Age": -0.14,
-        "Job": 1.68,
-        "Housing": -2.02,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": -0.13,
-        "Duration": 0.25,
-        "Purpose": -0.95
+        "Age": 33,
+        "Job": "Highly Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac2,903",
+        "Duration": "24 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -2576,14 +2576,14 @@
       "is_model_correct": false,
       "result_type": "FALSE_POSITIVE",
       "features": {
-        "Age": -0.23,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.44,
-        "Duration": -0.24,
-        "Purpose": 1.07
+        "Age": 32,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac2,042",
+        "Duration": "18 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -2602,14 +2602,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 2.44,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.68,
-        "Duration": -0.9,
-        "Purpose": -0.95
+        "Age": 62,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac1,354",
+        "Duration": "10 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -2628,14 +2628,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_NEGATIVE",
       "features": {
-        "Age": -0.32,
-        "Job": 1.68,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -0.24,
-        "Credit_amount": 5.38,
-        "Duration": 2.23,
-        "Purpose": 2.08
+        "Age": 32,
+        "Job": "Highly Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac18,450",
+        "Duration": "48 months",
+        "Purpose": "Vacation"
       }
     },
     {
@@ -2654,14 +2654,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.66,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": 0.96,
-        "Checking_account": -0.24,
-        "Credit_amount": -0.49,
-        "Duration": -0.24,
-        "Purpose": -1.46
+        "Age": 28,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Quite Rich",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac1,878",
+        "Duration": "18 months",
+        "Purpose": "Car"
       }
     },
     {
@@ -2680,14 +2680,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_NEGATIVE",
       "features": {
-        "Age": -0.49,
-        "Job": 1.68,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": 0.24,
-        "Duration": 1.24,
-        "Purpose": 0.56
+        "Age": 30,
+        "Job": "Highly Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac3,954",
+        "Duration": "36 months",
+        "Purpose": "Repairs"
       }
     },
     {
@@ -2706,14 +2706,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.14,
-        "Job": 1.68,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -0.24,
-        "Credit_amount": -0.63,
-        "Duration": -0.99,
-        "Purpose": 0.06
+        "Age": 33,
+        "Job": "Highly Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac1,491",
+        "Duration": "9 months",
+        "Purpose": "Domestic Appliances"
       }
     },
     {
@@ -2732,14 +2732,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_NEGATIVE",
       "features": {
-        "Age": -0.57,
-        "Job": -2.96,
-        "Housing": 1.77,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": -0.74,
-        "Duration": 0.25,
-        "Purpose": -0.95
+        "Age": 29,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Own",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac1,182",
+        "Duration": "24 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -2758,14 +2758,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.4,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": 0.96,
-        "Checking_account": 0.83,
-        "Credit_amount": 0.04,
-        "Duration": -0.24,
-        "Purpose": -0.95
+        "Age": 31,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Quite Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac3,372",
+        "Duration": "18 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -2784,14 +2784,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.92,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": 0.96,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.81,
-        "Duration": 0.25,
-        "Purpose": 1.07
+        "Age": 25,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Quite Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac988",
+        "Duration": "24 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -2810,14 +2810,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -1.35,
-        "Job": 0.14,
-        "Housing": 1.77,
-        "Saving_accounts": 1.79,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.37,
-        "Duration": -0.49,
-        "Purpose": 0.56
+        "Age": 20,
+        "Job": "Skilled",
+        "Housing": "Own",
+        "Saving_accounts": "Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac2,213",
+        "Duration": "15 months",
+        "Purpose": "Repairs"
       }
     },
     {
@@ -2836,14 +2836,14 @@
       "is_model_correct": false,
       "result_type": "FALSE_NEGATIVE",
       "features": {
-        "Age": -1.09,
-        "Job": 0.14,
-        "Housing": 1.77,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.72,
-        "Duration": -0.99,
-        "Purpose": -0.45
+        "Age": 23,
+        "Job": "Skilled",
+        "Housing": "Own",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac1,225",
+        "Duration": "9 months",
+        "Purpose": "Radio/Tv"
       }
     },
     {
@@ -2862,14 +2862,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 0.03,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": 1.79,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.72,
-        "Duration": -0.49,
-        "Purpose": -0.45
+        "Age": 35,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac1,252",
+        "Duration": "15 months",
+        "Purpose": "Radio/Tv"
       }
     },
     {
@@ -2888,14 +2888,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 0.89,
-        "Job": -1.41,
-        "Housing": 1.77,
-        "Saving_accounts": 0.96,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.9,
-        "Duration": -1.15,
-        "Purpose": 1.07
+        "Age": 45,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Own",
+        "Saving_accounts": "Quite Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac718",
+        "Duration": "7 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -2914,14 +2914,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 0.98,
-        "Job": 0.14,
-        "Housing": -2.02,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.46,
-        "Duration": -0.24,
-        "Purpose": 0.56
+        "Age": 46,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac1,975",
+        "Duration": "18 months",
+        "Purpose": "Repairs"
       }
     },
     {
@@ -2940,14 +2940,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -1.09,
-        "Job": -1.41,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -0.24,
-        "Credit_amount": -0.72,
-        "Duration": 0.25,
-        "Purpose": -0.95
+        "Age": 23,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac1,235",
+        "Duration": "24 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -2966,14 +2966,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.57,
-        "Job": 1.68,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.66,
-        "Duration": -0.74,
-        "Purpose": -1.46
+        "Age": 29,
+        "Job": "Highly Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac1,402",
+        "Duration": "12 months",
+        "Purpose": "Car"
       }
     },
     {
@@ -2992,14 +2992,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 1.41,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": 0.13,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.37,
-        "Duration": 0.25,
-        "Purpose": 1.07
+        "Age": 51,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Moderate",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac2,215",
+        "Duration": "24 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -3018,14 +3018,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 2.44,
-        "Job": -1.41,
-        "Housing": -0.12,
-        "Saving_accounts": 0.96,
-        "Checking_account": 0.83,
-        "Credit_amount": 0.2,
-        "Duration": -0.99,
-        "Purpose": 0.06
+        "Age": 62,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Quite Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac3,827",
+        "Duration": "9 months",
+        "Purpose": "Domestic Appliances"
       }
     },
     {
@@ -3044,14 +3044,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 1.58,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": 0.96,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.91,
-        "Duration": 0.25,
-        "Purpose": -0.95
+        "Age": 52,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Quite Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac705",
+        "Duration": "24 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -3070,14 +3070,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.83,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": 0.65,
-        "Duration": 0.5,
-        "Purpose": -1.46
+        "Age": 26,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac5,115",
+        "Duration": "27 months",
+        "Purpose": "Car"
       }
     },
     {
@@ -3096,14 +3096,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_NEGATIVE",
       "features": {
-        "Age": 1.24,
-        "Job": 1.68,
-        "Housing": -2.02,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": 1.49,
-        "Duration": 2.23,
-        "Purpose": 0.06
+        "Age": 49,
+        "Job": "Highly Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac7,479",
+        "Duration": "48 months",
+        "Purpose": "Domestic Appliances"
       }
     },
     {
@@ -3122,14 +3122,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_NEGATIVE",
       "features": {
-        "Age": 0.29,
-        "Job": 0.14,
-        "Housing": -2.02,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": 2.49,
-        "Duration": 2.23,
-        "Purpose": -0.95
+        "Age": 38,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac10,306",
+        "Duration": "48 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -3148,14 +3148,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.23,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": 0.99,
-        "Duration": -0.24,
-        "Purpose": 1.07
+        "Age": 32,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac6,070",
+        "Duration": "18 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -3174,14 +3174,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_NEGATIVE",
       "features": {
-        "Age": -0.4,
-        "Job": 0.14,
-        "Housing": 1.77,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": -0.35,
-        "Duration": 1.24,
-        "Purpose": 1.07
+        "Age": 31,
+        "Job": "Skilled",
+        "Housing": "Own",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac2,294",
+        "Duration": "36 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -3200,14 +3200,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.49,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": 2.63,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.82,
-        "Duration": -0.49,
-        "Purpose": 0.56
+        "Age": 30,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac949",
+        "Duration": "15 months",
+        "Purpose": "Repairs"
       }
     },
     {
@@ -3226,14 +3226,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.06,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -0.24,
-        "Credit_amount": -0.25,
-        "Duration": -1.15,
-        "Purpose": 1.07
+        "Age": 34,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac2,568",
+        "Duration": "7 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -3252,14 +3252,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.4,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": 0.96,
-        "Checking_account": 1.89,
-        "Credit_amount": -0.05,
-        "Duration": 0.25,
-        "Purpose": 1.07
+        "Age": 31,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Quite Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac3,142",
+        "Duration": "24 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -3278,14 +3278,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 0.29,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": -0.27,
-        "Duration": 0.74,
-        "Purpose": 1.07
+        "Age": 38,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac2,514",
+        "Duration": "30 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -3304,14 +3304,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.32,
-        "Job": 0.14,
-        "Housing": -2.02,
-        "Saving_accounts": 2.63,
-        "Checking_account": -0.24,
-        "Credit_amount": -0.76,
-        "Duration": -0.99,
-        "Purpose": 0.06
+        "Age": 32,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Rich",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac1,125",
+        "Duration": "9 months",
+        "Purpose": "Domestic Appliances"
       }
     },
     {
@@ -3330,14 +3330,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.06,
-        "Job": -1.41,
-        "Housing": 1.77,
-        "Saving_accounts": 0.13,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.66,
-        "Duration": -0.9,
-        "Purpose": -0.95
+        "Age": 34,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Own",
+        "Saving_accounts": "Moderate",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac1,408",
+        "Duration": "10 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -3356,14 +3356,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -1.26,
-        "Job": 0.14,
-        "Housing": 1.77,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.54,
-        "Duration": -1.23,
-        "Purpose": 0.56
+        "Age": 21,
+        "Job": "Skilled",
+        "Housing": "Own",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac1,757",
+        "Duration": "6 months",
+        "Purpose": "Repairs"
       }
     },
     {
@@ -3382,14 +3382,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 0.81,
-        "Job": -1.41,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": 1.89,
-        "Credit_amount": -0.08,
-        "Duration": -0.24,
-        "Purpose": 0.56
+        "Age": 44,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac3,042",
+        "Duration": "18 months",
+        "Purpose": "Repairs"
       }
     },
     {
@@ -3408,14 +3408,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 0.03,
-        "Job": 1.68,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.71,
-        "Duration": 0.25,
-        "Purpose": 1.07
+        "Age": 35,
+        "Job": "Highly Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac1,268",
+        "Duration": "24 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -3434,14 +3434,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.49,
-        "Job": -1.41,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.44,
-        "Duration": 0.25,
-        "Purpose": 0.56
+        "Age": 30,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac2,019",
+        "Duration": "24 months",
+        "Purpose": "Repairs"
       }
     },
     {
@@ -3460,14 +3460,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_NEGATIVE",
       "features": {
-        "Age": 1.84,
-        "Job": -1.41,
-        "Housing": -2.02,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.19,
-        "Duration": -0.74,
-        "Purpose": 0.06
+        "Age": 55,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac2,741",
+        "Duration": "12 months",
+        "Purpose": "Domestic Appliances"
       }
     },
     {
@@ -3486,14 +3486,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.06,
-        "Job": 1.68,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -0.24,
-        "Credit_amount": -0.79,
-        "Duration": -1.23,
-        "Purpose": 0.56
+        "Age": 34,
+        "Job": "Highly Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac1,039",
+        "Duration": "6 months",
+        "Purpose": "Repairs"
       }
     },
     {
@@ -3512,14 +3512,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.75,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": 1.79,
-        "Checking_account": -0.24,
-        "Credit_amount": -0.34,
-        "Duration": -0.49,
-        "Purpose": -1.46
+        "Age": 27,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Rich",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac2,318",
+        "Duration": "15 months",
+        "Purpose": "Car"
       }
     },
     {
@@ -3538,14 +3538,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_NEGATIVE",
       "features": {
-        "Age": -0.49,
-        "Job": 1.68,
-        "Housing": -0.12,
-        "Saving_accounts": 0.96,
-        "Checking_account": -1.31,
-        "Credit_amount": 1.38,
-        "Duration": 1.73,
-        "Purpose": 1.07
+        "Age": 30,
+        "Job": "Highly Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Quite Rich",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac7,176",
+        "Duration": "42 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -3564,14 +3564,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 0.46,
-        "Job": -1.41,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -0.24,
-        "Credit_amount": 0.95,
-        "Duration": 1.73,
-        "Purpose": -1.46
+        "Age": 40,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac5,954",
+        "Duration": "42 months",
+        "Purpose": "Car"
       }
     },
     {
@@ -3590,14 +3590,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_NEGATIVE",
       "features": {
-        "Age": -1.18,
-        "Job": 0.14,
-        "Housing": 1.77,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": -0.68,
-        "Duration": -0.99,
-        "Purpose": 1.07
+        "Age": 22,
+        "Job": "Skilled",
+        "Housing": "Own",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac1,356",
+        "Duration": "9 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -3616,14 +3616,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -1.18,
-        "Job": -1.41,
-        "Housing": 1.77,
-        "Saving_accounts": -0.7,
-        "Checking_account": -0.24,
-        "Credit_amount": -1.07,
-        "Duration": -0.99,
-        "Purpose": -0.95
+        "Age": 22,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Own",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac263",
+        "Duration": "9 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -3642,14 +3642,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.06,
-        "Job": -1.41,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.21,
-        "Duration": 0.25,
-        "Purpose": 1.07
+        "Age": 34,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac2,677",
+        "Duration": "24 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -3668,14 +3668,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.83,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -0.24,
-        "Credit_amount": -0.74,
-        "Duration": 0.25,
-        "Purpose": -0.95
+        "Age": 26,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac1,190",
+        "Duration": "24 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -3694,14 +3694,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.06,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": -0.92,
-        "Duration": -0.74,
-        "Purpose": -0.95
+        "Age": 34,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac679",
+        "Duration": "12 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -3720,14 +3720,14 @@
       "is_model_correct": false,
       "result_type": "FALSE_NEGATIVE",
       "features": {
-        "Age": -1.18,
-        "Job": 0.14,
-        "Housing": 1.77,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": -0.5,
-        "Duration": -0.74,
-        "Purpose": 0.56
+        "Age": 22,
+        "Job": "Skilled",
+        "Housing": "Own",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac1,849",
+        "Duration": "12 months",
+        "Purpose": "Repairs"
       }
     },
     {
@@ -3746,14 +3746,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.32,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": 0.47,
-        "Duration": -1.23,
-        "Purpose": 0.56
+        "Age": 32,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac4,608",
+        "Duration": "6 months",
+        "Purpose": "Repairs"
       }
     },
     {
@@ -3772,14 +3772,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.06,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": 0.96,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.82,
-        "Duration": -0.74,
-        "Purpose": 1.07
+        "Age": 34,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Quite Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac965",
+        "Duration": "12 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -3798,14 +3798,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 2.19,
-        "Job": -1.41,
-        "Housing": -0.12,
-        "Saving_accounts": 2.63,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.08,
-        "Duration": -0.74,
-        "Purpose": 1.07
+        "Age": 59,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac3,052",
+        "Duration": "12 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -3824,14 +3824,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_NEGATIVE",
       "features": {
-        "Age": -0.06,
-        "Job": -1.41,
-        "Housing": -2.02,
-        "Saving_accounts": 0.96,
-        "Checking_account": 0.83,
-        "Credit_amount": 2.05,
-        "Duration": 1.24,
-        "Purpose": 0.06
+        "Age": 34,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Quite Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac9,061",
+        "Duration": "36 months",
+        "Purpose": "Domestic Appliances"
       }
     },
     {
@@ -3850,14 +3850,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 2.44,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -0.24,
-        "Credit_amount": -0.9,
-        "Duration": -1.23,
-        "Purpose": 1.07
+        "Age": 62,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac741",
+        "Duration": "6 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -3876,14 +3876,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_NEGATIVE",
       "features": {
-        "Age": 0.2,
-        "Job": 1.68,
-        "Housing": -2.02,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": 2.61,
-        "Duration": 0.74,
-        "Purpose": -0.95
+        "Age": 37,
+        "Job": "Highly Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac10,633",
+        "Duration": "30 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -3902,14 +3902,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_NEGATIVE",
       "features": {
-        "Age": 1.5,
-        "Job": 0.14,
-        "Housing": -2.02,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": 1.36,
-        "Duration": 2.23,
-        "Purpose": 0.56
+        "Age": 51,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac7,121",
+        "Duration": "48 months",
+        "Purpose": "Repairs"
       }
     },
     {
@@ -3928,14 +3928,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_NEGATIVE",
       "features": {
-        "Age": 0.12,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": 0.96,
-        "Checking_account": 0.83,
-        "Credit_amount": 2.47,
-        "Duration": 2.23,
-        "Purpose": 1.07
+        "Age": 36,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Quite Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac10,231",
+        "Duration": "48 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -3954,14 +3954,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_NEGATIVE",
       "features": {
-        "Age": 0.12,
-        "Job": -1.41,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": -0.71,
-        "Duration": -0.74,
-        "Purpose": -0.95
+        "Age": 36,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac1,264",
+        "Duration": "12 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -3980,14 +3980,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.83,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.65,
-        "Duration": -0.24,
-        "Purpose": 1.07
+        "Age": 26,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac1,443",
+        "Duration": "18 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -4006,14 +4006,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_NEGATIVE",
       "features": {
-        "Age": -0.57,
-        "Job": -1.41,
-        "Housing": 1.77,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": -0.57,
-        "Duration": 0.25,
-        "Purpose": 1.07
+        "Age": 29,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Own",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac1,649",
+        "Duration": "24 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -4032,14 +4032,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 1.67,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": 2.63,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.66,
-        "Duration": -0.74,
-        "Purpose": -0.95
+        "Age": 53,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac1,403",
+        "Duration": "12 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -4058,14 +4058,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.75,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -0.24,
-        "Credit_amount": 0.13,
-        "Duration": 0.0,
-        "Purpose": -1.46
+        "Age": 27,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac3,647",
+        "Duration": "21 months",
+        "Purpose": "Car"
       }
     },
     {
@@ -4084,14 +4084,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.75,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -0.24,
-        "Credit_amount": -0.12,
-        "Duration": -0.74,
-        "Purpose": 1.07
+        "Age": 27,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac2,923",
+        "Duration": "12 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -4110,14 +4110,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 0.72,
-        "Job": -1.41,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -0.24,
-        "Credit_amount": -0.89,
-        "Duration": -1.07,
-        "Purpose": 1.07
+        "Age": 43,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac748",
+        "Duration": "8 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -4136,14 +4136,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.23,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -0.24,
-        "Credit_amount": -0.66,
-        "Duration": -1.07,
-        "Purpose": 1.07
+        "Age": 32,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac1,404",
+        "Duration": "8 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -4162,14 +4162,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.14,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": 0.13,
-        "Checking_account": -0.24,
-        "Credit_amount": -0.23,
-        "Duration": -0.24,
-        "Purpose": -1.46
+        "Age": 33,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Moderate",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac2,614",
+        "Duration": "18 months",
+        "Purpose": "Car"
       }
     },
     {
@@ -4188,14 +4188,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 0.37,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": 0.96,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.85,
-        "Duration": -0.9,
-        "Purpose": 0.06
+        "Age": 39,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Quite Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac883",
+        "Duration": "10 months",
+        "Purpose": "Domestic Appliances"
       }
     },
     {
@@ -4214,14 +4214,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 0.2,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.48,
-        "Duration": -0.9,
-        "Purpose": 1.07
+        "Age": 37,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac1,915",
+        "Duration": "10 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -4240,14 +4240,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 0.55,
-        "Job": -1.41,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.62,
-        "Duration": -1.4,
-        "Purpose": 1.07
+        "Age": 41,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac1,534",
+        "Duration": "4 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -4266,14 +4266,14 @@
       "is_model_correct": false,
       "result_type": "FALSE_POSITIVE",
       "features": {
-        "Age": 0.03,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": 0.96,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.07,
-        "Duration": 1.24,
-        "Purpose": -0.95
+        "Age": 35,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Quite Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac3,072",
+        "Duration": "36 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -4292,14 +4292,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -1.01,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": 1.79,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.25,
-        "Duration": 1.49,
-        "Purpose": -0.95
+        "Age": 24,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac2,561",
+        "Duration": "39 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -4318,14 +4318,14 @@
       "is_model_correct": false,
       "result_type": "FALSE_POSITIVE",
       "features": {
-        "Age": -0.92,
-        "Job": -1.41,
-        "Housing": 1.77,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.38,
-        "Duration": -0.9,
-        "Purpose": 0.56
+        "Age": 25,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Own",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac2,202",
+        "Duration": "10 months",
+        "Purpose": "Repairs"
       }
     },
     {
@@ -4344,14 +4344,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -1.18,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": -0.29,
-        "Duration": -0.24,
-        "Purpose": 0.56
+        "Age": 22,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac2,454",
+        "Duration": "18 months",
+        "Purpose": "Repairs"
       }
     },
     {
@@ -4370,14 +4370,14 @@
       "is_model_correct": false,
       "result_type": "FALSE_POSITIVE",
       "features": {
-        "Age": -0.75,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -0.24,
-        "Credit_amount": -0.16,
-        "Duration": 1.24,
-        "Purpose": -0.95
+        "Age": 27,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac2,813",
+        "Duration": "36 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -4396,14 +4396,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.83,
-        "Job": -1.41,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -0.24,
-        "Credit_amount": -0.95,
-        "Duration": -1.23,
-        "Purpose": 1.07
+        "Age": 26,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac578",
+        "Duration": "6 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -4422,14 +4422,14 @@
       "is_model_correct": false,
       "result_type": "FALSE_POSITIVE",
       "features": {
-        "Age": -0.92,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": -0.82,
-        "Duration": -0.49,
-        "Purpose": 0.56
+        "Age": 25,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac964",
+        "Duration": "15 months",
+        "Purpose": "Repairs"
       }
     },
     {
@@ -4448,14 +4448,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.23,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": 0.13,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.64,
-        "Duration": 0.25,
-        "Purpose": -0.95
+        "Age": 32,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Moderate",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac1,464",
+        "Duration": "24 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -4474,14 +4474,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_NEGATIVE",
       "features": {
-        "Age": 0.81,
-        "Job": 0.14,
-        "Housing": -2.02,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": 1.63,
-        "Duration": 1.73,
-        "Purpose": 0.56
+        "Age": 44,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac7,886",
+        "Duration": "42 months",
+        "Purpose": "Repairs"
       }
     },
     {
@@ -4500,14 +4500,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.06,
-        "Job": 0.14,
-        "Housing": 1.77,
-        "Saving_accounts": 0.13,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.74,
-        "Duration": -1.23,
-        "Purpose": -0.95
+        "Age": 34,
+        "Job": "Skilled",
+        "Housing": "Own",
+        "Saving_accounts": "Moderate",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac1,193",
+        "Duration": "6 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -4526,14 +4526,14 @@
       "is_model_correct": false,
       "result_type": "FALSE_POSITIVE",
       "features": {
-        "Age": -0.92,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": 0.96,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.31,
-        "Duration": 1.24,
-        "Purpose": 1.07
+        "Age": 25,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Quite Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac2,386",
+        "Duration": "36 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -4552,14 +4552,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -1.01,
-        "Job": -1.41,
-        "Housing": 1.77,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.54,
-        "Duration": -0.74,
-        "Purpose": 0.56
+        "Age": 24,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Own",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac1,759",
+        "Duration": "12 months",
+        "Purpose": "Repairs"
       }
     },
     {
@@ -4578,14 +4578,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.06,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": 0.96,
-        "Checking_account": -0.24,
-        "Credit_amount": -0.19,
-        "Duration": -0.49,
-        "Purpose": 1.07
+        "Age": 34,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Quite Rich",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac2,721",
+        "Duration": "15 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -4604,14 +4604,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_NEGATIVE",
       "features": {
-        "Age": -1.09,
-        "Job": -1.41,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": -0.82,
-        "Duration": -0.24,
-        "Purpose": -0.95
+        "Age": 23,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac965",
+        "Duration": "18 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -4630,14 +4630,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_NEGATIVE",
       "features": {
-        "Age": -1.09,
-        "Job": -1.41,
-        "Housing": 1.77,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": -0.02,
-        "Duration": 0.25,
-        "Purpose": 0.56
+        "Age": 23,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Own",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac3,228",
+        "Duration": "24 months",
+        "Purpose": "Repairs"
       }
     },
     {
@@ -4656,14 +4656,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 0.03,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": 1.79,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.84,
-        "Duration": 1.24,
-        "Purpose": -0.95
+        "Age": 35,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac898",
+        "Duration": "36 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -4682,14 +4682,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.32,
-        "Job": 1.68,
-        "Housing": -0.12,
-        "Saving_accounts": 1.79,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.94,
-        "Duration": -0.24,
-        "Purpose": 1.07
+        "Age": 32,
+        "Job": "Highly Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac617",
+        "Duration": "18 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -4708,14 +4708,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_NEGATIVE",
       "features": {
-        "Age": -1.01,
-        "Job": -1.41,
-        "Housing": 1.77,
-        "Saving_accounts": 0.13,
-        "Checking_account": 0.83,
-        "Credit_amount": 2.95,
-        "Duration": 2.23,
-        "Purpose": -0.95
+        "Age": 24,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Own",
+        "Saving_accounts": "Moderate",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac11,602",
+        "Duration": "48 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -4734,14 +4734,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_NEGATIVE",
       "features": {
-        "Age": -1.01,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": 2.25,
-        "Duration": 1.24,
-        "Purpose": -0.95
+        "Age": 24,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac9,636",
+        "Duration": "36 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -4760,14 +4760,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_NEGATIVE",
       "features": {
-        "Age": 0.72,
-        "Job": 1.68,
-        "Housing": -2.02,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": 1.12,
-        "Duration": 0.25,
-        "Purpose": -0.95
+        "Age": 43,
+        "Job": "Highly Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac6,420",
+        "Duration": "24 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -4786,14 +4786,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -1.09,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": 0.13,
-        "Checking_account": 0.83,
-        "Credit_amount": 0.19,
-        "Duration": -0.49,
-        "Purpose": -0.95
+        "Age": 23,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Moderate",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac3,807",
+        "Duration": "15 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -4812,14 +4812,14 @@
       "is_model_correct": false,
       "result_type": "FALSE_POSITIVE",
       "features": {
-        "Age": 0.2,
-        "Job": -1.41,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.63,
-        "Duration": -0.74,
-        "Purpose": -0.95
+        "Age": 37,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac1,485",
+        "Duration": "12 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -4838,14 +4838,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.92,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": 0.96,
-        "Checking_account": -0.24,
-        "Credit_amount": -0.18,
-        "Duration": -0.74,
-        "Purpose": 0.56
+        "Age": 25,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Quite Rich",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac2,755",
+        "Duration": "12 months",
+        "Purpose": "Repairs"
       }
     },
     {
@@ -4864,14 +4864,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 0.55,
-        "Job": 0.14,
-        "Housing": 1.77,
-        "Saving_accounts": 2.63,
-        "Checking_account": 1.89,
-        "Credit_amount": -1.02,
-        "Duration": -0.74,
-        "Purpose": 1.07
+        "Age": 41,
+        "Job": "Skilled",
+        "Housing": "Own",
+        "Saving_accounts": "Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac397",
+        "Duration": "12 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -4890,14 +4890,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.75,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": 0.13,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.72,
-        "Duration": -1.23,
-        "Purpose": 1.07
+        "Age": 27,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Moderate",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac1,226",
+        "Duration": "6 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -4916,14 +4916,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 0.98,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -0.24,
-        "Credit_amount": -0.33,
-        "Duration": 0.0,
-        "Purpose": -0.95
+        "Age": 46,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac2,345",
+        "Duration": "21 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -4942,14 +4942,14 @@
       "is_model_correct": false,
       "result_type": "FALSE_POSITIVE",
       "features": {
-        "Age": -0.23,
-        "Job": 0.14,
-        "Housing": 1.77,
-        "Saving_accounts": -0.7,
-        "Checking_account": -1.31,
-        "Credit_amount": -0.83,
-        "Duration": -0.49,
-        "Purpose": -0.95
+        "Age": 32,
+        "Job": "Skilled",
+        "Housing": "Own",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Little/None",
+        "Credit_amount": "\u20ac939",
+        "Duration": "15 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -4968,14 +4968,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_NEGATIVE",
       "features": {
-        "Age": 0.81,
-        "Job": 1.68,
-        "Housing": -0.12,
-        "Saving_accounts": 0.13,
-        "Checking_account": 0.83,
-        "Credit_amount": 1.89,
-        "Duration": 1.49,
-        "Purpose": -0.95
+        "Age": 44,
+        "Job": "Highly Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Moderate",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac8,593",
+        "Duration": "39 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -4994,14 +4994,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.83,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": 1.89,
-        "Credit_amount": -0.69,
-        "Duration": -0.74,
-        "Purpose": -0.95
+        "Age": 26,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac1,320",
+        "Duration": "12 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -5020,14 +5020,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -0.14,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": -0.24,
-        "Credit_amount": -0.31,
-        "Duration": -1.15,
-        "Purpose": 1.07
+        "Age": 33,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac2,407",
+        "Duration": "7 months",
+        "Purpose": "Education"
       }
     },
     {
@@ -5046,14 +5046,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 1.58,
-        "Job": -2.96,
-        "Housing": -0.12,
-        "Saving_accounts": -0.7,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.92,
-        "Duration": -1.23,
-        "Purpose": -0.95
+        "Age": 52,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac660",
+        "Duration": "6 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -5072,14 +5072,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": -1.26,
-        "Job": 0.14,
-        "Housing": 1.77,
-        "Saving_accounts": 0.13,
-        "Checking_account": -0.24,
-        "Credit_amount": 0.06,
-        "Duration": 0.74,
-        "Purpose": 0.56
+        "Age": 21,
+        "Job": "Skilled",
+        "Housing": "Own",
+        "Saving_accounts": "Moderate",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac3,435",
+        "Duration": "30 months",
+        "Purpose": "Repairs"
       }
     },
     {
@@ -5098,14 +5098,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 0.46,
-        "Job": 1.68,
-        "Housing": -0.12,
-        "Saving_accounts": 0.96,
-        "Checking_account": 0.83,
-        "Credit_amount": 1.08,
-        "Duration": 0.25,
-        "Purpose": -0.95
+        "Age": 40,
+        "Job": "Highly Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Quite Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac6,313",
+        "Duration": "24 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -5124,14 +5124,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 1.32,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": 0.13,
-        "Checking_account": 0.83,
-        "Credit_amount": -0.92,
-        "Duration": -0.74,
-        "Purpose": -0.95
+        "Age": 50,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Moderate",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac670",
+        "Duration": "12 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -5150,14 +5150,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 2.19,
-        "Job": 0.14,
-        "Housing": -0.12,
-        "Saving_accounts": 2.63,
-        "Checking_account": -0.24,
-        "Credit_amount": -0.63,
-        "Duration": -0.49,
-        "Purpose": 1.57
+        "Age": 59,
+        "Job": "Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Rich",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac1,502",
+        "Duration": "15 months",
+        "Purpose": "Business"
       }
     },
     {
@@ -5176,14 +5176,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 2.96,
-        "Job": 1.68,
-        "Housing": -2.02,
-        "Saving_accounts": -0.7,
-        "Checking_account": -0.24,
-        "Credit_amount": 1.43,
-        "Duration": -0.9,
-        "Purpose": -0.95
+        "Age": 68,
+        "Job": "Highly Skilled",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Little/None",
+        "Checking_account": "Moderate",
+        "Credit_amount": "\u20ac7,311",
+        "Duration": "10 months",
+        "Purpose": "Furniture/Equipment"
       }
     },
     {
@@ -5202,14 +5202,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 1.15,
-        "Job": 0.14,
-        "Housing": 1.77,
-        "Saving_accounts": 0.96,
-        "Checking_account": 0.83,
-        "Credit_amount": 0.9,
-        "Duration": -0.74,
-        "Purpose": 0.56
+        "Age": 48,
+        "Job": "Skilled",
+        "Housing": "Own",
+        "Saving_accounts": "Quite Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac5,800",
+        "Duration": "12 months",
+        "Purpose": "Repairs"
       }
     },
     {
@@ -5228,14 +5228,14 @@
       "is_model_correct": true,
       "result_type": "TRUE_POSITIVE",
       "features": {
-        "Age": 0.46,
-        "Job": -1.41,
-        "Housing": -0.12,
-        "Saving_accounts": 2.63,
-        "Checking_account": 0.83,
-        "Credit_amount": -1.07,
-        "Duration": -1.23,
-        "Purpose": -0.95
+        "Age": 40,
+        "Job": "Unskilled Non-Resident",
+        "Housing": "Rent/Free",
+        "Saving_accounts": "Rich",
+        "Checking_account": "Rich",
+        "Credit_amount": "\u20ac250",
+        "Duration": "6 months",
+        "Purpose": "Furniture/Equipment"
       }
     }
   ]

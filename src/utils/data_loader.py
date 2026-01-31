@@ -319,10 +319,171 @@ def load_german_credit_data(
     }
 
 
+
+# ============================================
+# Fair Recruitment Dataset Loader
+# ============================================
+
+def load_fair_recruitment_data(
+    data_dir: str = "data",
+    protected_attribute: str = "Gender",
+    test_size: float = 0.2,
+    val_size: float = 0.1,
+    random_state: int = 42,
+    scale_features: bool = True
+) -> dict:
+    """
+    Load and preprocess the Fair Recruitment dataset.
+    
+    Args:
+        data_dir: Base data directory
+        protected_attribute: Attribute for fairness analysis (default: "Gender")
+        test_size: Proportion of data for test set
+        val_size: Proportion of remaining data for validation set
+        random_state: Random seed for reproducibility
+        scale_features: Whether to standardize features
+        
+    Returns:
+        Dictionary containing all data splits and metadata
+    """
+    # Load raw data
+    raw_path = Path(data_dir) / "raw" / "fair_recrutment_dataset final.csv"
+    
+    if not raw_path.exists():
+        raise FileNotFoundError(
+            f"Recruitment dataset not found at {raw_path}. "
+        )
+    
+    print(f"📥 Loading Fair Recruitment dataset from {raw_path}...")
+    df = pd.read_csv(raw_path)
+    print(f"   Loaded {len(df):,} samples with {len(df.columns)} columns")
+    
+    df = df.copy()
+    
+    # Target: Hiring_Decision (1=Hired, 0=Not Hired)
+    if "Hiring_Decision" not in df.columns:
+        raise ValueError("Target column 'Hiring_Decision' not found in dataset")
+        
+    df["target"] = df["Hiring_Decision"].astype(int)
+    df = df.drop("Hiring_Decision", axis=1)
+    
+    # Drop irrelevant ID column
+    if "Candidate_ID" in df.columns:
+        df = df.drop("Candidate_ID", axis=1)
+    
+    # Protected Attribute
+    # Default: Gender (Male=1 Privileged, Female=0 Unprivileged)
+    if protected_attribute == "Gender":
+        # Check actual values in dataset
+        if "Male" in df["Gender"].unique():
+             df["protected"] = (df["Gender"] == "Male").astype(int)
+        else:
+             # Fallback or error if format differs
+             print("⚠️ Warning: 'Gender' column values unexpected. Assuming first value is privileged.")
+             unique_vals = df["Gender"].unique()
+             df["protected"] = (df["Gender"] == unique_vals[0]).astype(int)
+    else:
+        # Generic fallback for other potential attributes
+        if protected_attribute in df.columns:
+            # Simple binary encoding of first unique value as privileged
+            unique_vals = df[protected_attribute].unique()
+            df["protected"] = (df[protected_attribute] == unique_vals[0]).astype(int)
+        else:
+            raise ValueError(f"Unsupported protected attribute: {protected_attribute}")
+        
+    # Impute missing values
+    # For numerical columns, fill with median
+    numerical_cols = df.select_dtypes(include=["int64", "float64"]).columns
+    for col in numerical_cols:
+         if df[col].isnull().any():
+             print(f"   Imputing missing values in {col} with median")
+             df[col] = df[col].fillna(df[col].median())
+
+    # For categorical columns, fill with mode
+    categorical_cols = df.select_dtypes(include=["object"]).columns
+    for col in categorical_cols:
+        if df[col].isnull().any():
+             print(f"   Imputing missing values in {col} with mode")
+             mode_val = df[col].mode()[0] if len(df[col].mode()) > 0 else "Unknown"
+             df[col] = df[col].fillna(mode_val)
+
+    # Encode categorical columns
+    label_encoders = {}
+    
+    for col in categorical_cols:
+        le = LabelEncoder()
+        df[col] = le.fit_transform(df[col].astype(str))
+        label_encoders[col] = le
+        
+    # Separate features, target, and protected attribute
+    target = df["target"]
+    protected = df["protected"]
+    features = df.drop(["target", "protected"], axis=1)
+    feature_names = features.columns.tolist()
+    
+    print(f"   Protected attribute: {protected_attribute}")
+    print(f"   Positive class (Hired): {target.sum():,} ({target.mean()*100:.1f}%)")
+    print(f"   Privileged group: {protected.sum():,} ({protected.mean()*100:.1f}%)")
+    
+    # Train/Test split
+    X_temp, X_test, y_temp, y_test, prot_temp, prot_test = train_test_split(
+        features, target, protected, test_size=test_size, random_state=random_state, stratify=target
+    )
+    
+    # Train/Val split
+    val_ratio = val_size / (1 - test_size)
+    X_train, X_val, y_train, y_val, prot_train, prot_val = train_test_split(
+        X_temp, y_temp, prot_temp, test_size=val_ratio, random_state=random_state, stratify=y_temp
+    )
+    
+    # Scale features
+    scaler = None
+    if scale_features:
+        scaler = StandardScaler()
+        X_train = pd.DataFrame(scaler.fit_transform(X_train), columns=feature_names, index=X_train.index)
+        X_val = pd.DataFrame(scaler.transform(X_val), columns=feature_names, index=X_val.index)
+        X_test = pd.DataFrame(scaler.transform(X_test), columns=feature_names, index=X_test.index)
+        
+    # Save processed data
+    processed_dir = Path(data_dir) / "processed_recruitment"
+    processed_dir.mkdir(parents=True, exist_ok=True)
+    
+    X_train.to_csv(processed_dir / "X_train.csv", index=False)
+    X_val.to_csv(processed_dir / "X_val.csv", index=False)
+    X_test.to_csv(processed_dir / "X_test.csv", index=False)
+    pd.DataFrame({"target": y_train, "protected": prot_train}).to_csv(processed_dir / "y_train.csv", index=False)
+    pd.DataFrame({"target": y_val, "protected": prot_val}).to_csv(processed_dir / "y_val.csv", index=False)
+    pd.DataFrame({"target": y_test, "protected": prot_test}).to_csv(processed_dir / "y_test.csv", index=False)
+    
+    return {
+        "X_train": X_train,
+        "X_val": X_val,
+        "X_test": X_test,
+        "y_train": y_train.reset_index(drop=True),
+        "y_val": y_val.reset_index(drop=True),
+        "y_test": y_test.reset_index(drop=True),
+        "protected_train": prot_train.reset_index(drop=True),
+        "protected_val": prot_val.reset_index(drop=True),
+        "protected_test": prot_test.reset_index(drop=True),
+        "feature_names": feature_names,
+        "protected_attribute": protected_attribute,
+        "scaler": scaler,
+        "label_encoders": label_encoders,
+    }
+
 if __name__ == "__main__":
     # Test the data loader
     data = load_adult_data(data_dir="data", protected_attribute="sex")
     print(f"\nFeature names: {data['feature_names']}")
     print(f"Protected attribute: {data['protected_attribute']}")
-    print(f"Target distribution (train): {data['y_train'].value_counts().to_dict()}")
-    print(f"Protected distribution (train): {data['protected_train'].value_counts().to_dict()}")
+    
+    print("\n" + "="*50 + "\n")
+    
+    try:
+        data_rec = load_fair_recruitment_data(data_dir=r"c:\\Users\\DELL\\Desktop\\hckton\\ImpactThon\\fairflow\\data", protected_attribute="Gender")
+        print(f"\nRecruitment Feature names: {data_rec['feature_names']}")
+        print(f"Recruitment Protected attribute: {data_rec['protected_attribute']}")
+        print(f"Recruitment Target distribution (train): {data_rec['y_train'].value_counts().to_dict()}")
+    except Exception as e:
+        print(f"Skipping recruitment data test: {e}")
+

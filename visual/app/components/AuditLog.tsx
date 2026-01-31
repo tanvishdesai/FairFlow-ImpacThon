@@ -10,6 +10,7 @@ interface AuditEntry {
   intervention_type: string;
   protected_value: number;
   true_label: number | null;
+  features?: Record<string, any>;
 }
 
 interface AuditLogProps {
@@ -49,20 +50,47 @@ export default function AuditLog({ entries, onSelectEntry }: AuditLogProps) {
     }
   };
 
-  const getProtectedValueDisplay = (value: number) => {
-    // In Adult Census dataset: 0 = Female, 1 = Male
+  const getProtectedValueDisplay = (value: number, features?: Record<string, any>) => {
+    // If we have explicit Gender feature, use it
+    if (features?.Gender) {
+        if (features.Gender === "Male") {
+            return (
+                <div className="flex items-center gap-1" style={{ color: '#3b82f6' }}>
+                  <UserCheck className="w-4 h-4" />
+                  <span className="text-xs font-medium">Male</span>
+                </div>
+            );
+        } else if (features.Gender === "Female") {
+            return (
+                <div className="flex items-center gap-1" style={{ color: '#ec4899' }}>
+                  <User className="w-4 h-4" />
+                  <span className="text-xs font-medium">Female</span>
+                </div>
+            );
+        } else {
+             return (
+                <div className="flex items-center gap-1" style={{ color: '#8b5cf6' }}>
+                  <User className="w-4 h-4" />
+                  <span className="text-xs font-medium">{features.Gender}</span>
+                </div>
+            );
+        }
+    }
+
+    // Fallback based on integer value (Legacy / Default)
+    // 0 = Unprivileged (Female/Other), 1 = Privileged (Male)
     if (value === 0) {
       return (
         <div className="flex items-center gap-1" style={{ color: '#ec4899' }}>
           <User className="w-4 h-4" />
-          <span>Female</span>
+          <span className="text-xs font-medium">Unprivileged</span>
         </div>
       );
     }
     return (
       <div className="flex items-center gap-1" style={{ color: '#3b82f6' }}>
         <UserCheck className="w-4 h-4" />
-        <span>Male</span>
+        <span className="text-xs font-medium">Privileged</span>
       </div>
     );
   };
@@ -101,9 +129,11 @@ export default function AuditLog({ entries, onSelectEntry }: AuditLogProps) {
             </thead>
             <tbody>
               {entries.slice().reverse().map((entry) => (
+                <>
                 <tr 
                   key={entry.id} 
                   onClick={() => onSelectEntry(entry.id)}
+                  className="cursor-pointer hover:bg-slate-50/5 relative"
                 >
                   <td className="font-mono text-sm" style={{ color: 'var(--text-secondary)' }}>
                     #{entry.id}
@@ -112,7 +142,7 @@ export default function AuditLog({ entries, onSelectEntry }: AuditLogProps) {
                     {formatTimestamp(entry.timestamp)}
                   </td>
                   <td>
-                    {getProtectedValueDisplay(entry.protected_value)}
+                    {getProtectedValueDisplay(entry.protected_value, entry.features)}
                   </td>
                   <td>
                     {getDecisionBadge(entry.base_prediction)}
@@ -127,6 +157,49 @@ export default function AuditLog({ entries, onSelectEntry }: AuditLogProps) {
                     <ChevronRight className="w-4 h-4" style={{ color: 'var(--text-muted)' }} />
                   </td>
                 </tr>
+                {/* Expanded Details Row */}
+                {entry.features && (
+                  <tr>
+                    <td colSpan={7} className="p-0 border-0">
+                      <div className="bg-slate-50/50 dark:bg-slate-800/30 px-6 py-3 border-b border-slate-100 dark:border-slate-700/50 text-xs">
+                        <div className="grid grid-cols-4 gap-4">
+                           {entry.features.Job_Role_Applied && (
+                              <div className="col-span-1">
+                                <span className="text-gray-500 uppercase tracking-wider text-[10px] block mb-1">Role</span>
+                                <span className="font-medium text-slate-700 dark:text-slate-300">{entry.features.Job_Role_Applied}</span>
+                              </div>
+                           )}
+                           {entry.features.Education_Level && (
+                              <div className="col-span-1">
+                                <span className="text-gray-500 uppercase tracking-wider text-[10px] block mb-1">Education</span>
+                                <span className="font-medium text-slate-700 dark:text-slate-300">{entry.features.Education_Level}</span>
+                              </div>
+                           )}
+                           {entry.features.Experience_Years !== undefined && (
+                              <div className="col-span-1">
+                                <span className="text-gray-500 uppercase tracking-wider text-[10px] block mb-1">Experience</span>
+                                <span className="font-medium text-slate-700 dark:text-slate-300">{entry.features.Experience_Years} Years</span>
+                              </div>
+                           )}
+                           {entry.features.Skill_Score !== undefined && (
+                              <div className="col-span-1">
+                                <span className="text-gray-500 uppercase tracking-wider text-[10px] block mb-1">Skill Score</span>
+                                <span className="font-medium text-slate-700 dark:text-slate-300">{entry.features.Skill_Score}/100</span>
+                              </div>
+                           )}
+                           {/* Fallback for Generic/Other datasets */}
+                           {!entry.features.Job_Role_Applied && Object.keys(entry.features).slice(0, 4).map((key) => (
+                             <div key={key} className="col-span-1">
+                                <span className="text-gray-500 uppercase tracking-wider text-[10px] block mb-1">{key}</span>
+                                <span className="font-medium text-slate-700 dark:text-slate-300">{JSON.stringify(entry.features?.[key])}</span>
+                             </div>
+                           ))}
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                )}
+                </>
               ))}
             </tbody>
           </table>

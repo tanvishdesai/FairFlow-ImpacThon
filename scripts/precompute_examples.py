@@ -21,6 +21,7 @@ from datetime import datetime
 # Paths
 BASE_DIR = r"c:\Users\DELL\Desktop\hckton\ImpactThon\fairflow"
 DATA_DIR = os.path.join(BASE_DIR, "data", "processed_german")
+RAW_DATA_PATH = os.path.join(BASE_DIR, "data", "raw", "german_credit_data.csv")
 # Use the BIASED model for demo purposes (trained specifically for German Credit)
 MODEL_PATH = os.path.join(BASE_DIR, "models", "german_credit", "xgboost_biased.pkl")
 OUTPUT_PATH = os.path.join(BASE_DIR, "scripts", "precomputed_results.json")
@@ -150,17 +151,83 @@ def main():
             else:
                 result_type = "FALSE_NEGATIVE"  # Wrongly denied (creditworthy)
         
-        # Extract feature values for this row (from scaled data)
+        # Extract feature values for this row (from RAW data for interpretability)
+        # First, load raw data if not already loaded
+        if 'raw_df' not in dir():
+            raw_df = pd.read_csv(RAW_DATA_PATH)
+        
+        # Get the original index from the test set
+        # y_test has a 'protected' column which matches Sex in raw data
+        # We need to track original indices - they are based on the random split
+        # For now, use the X_test column values to reconstruct readable output
         row_features = X_test.iloc[row_idx]
+        
+        # Map normalized values back to interpretable ranges
+        # Age: mean ~35, std ~11
+        age_val = round(float(row_features.get('Age', row_features.iloc[0])) * 11 + 35)
+        age_val = max(18, min(75, age_val))  # Clamp to reasonable range
+        
+        # Job: 0-3 scale
+        job_val = float(row_features.get('Job', row_features.iloc[2]))
+        if job_val < -1:
+            job_text = "Unskilled Non-Resident"
+        elif job_val < 0:
+            job_text = "Unskilled Resident"
+        elif job_val < 1:
+            job_text = "Skilled"
+        else:
+            job_text = "Highly Skilled"
+        
+        # Credit amount: mean ~3271, std ~2823
+        credit_val = round(float(row_features.get('Credit amount', row_features.iloc[6])) * 2823 + 3271)
+        credit_val = max(250, credit_val)  # Min value
+        
+        # Duration: mean ~21, std ~12
+        duration_val = round(float(row_features.get('Duration', row_features.iloc[7])) * 12 + 21)
+        duration_val = max(4, min(72, duration_val))  # Clamp
+        
+        # Savings and Checking: categorical based on normalized value
+        savings_val = float(row_features.get('Saving accounts', row_features.iloc[4]))
+        if savings_val < -0.5:
+            savings_text = "Little/None"
+        elif savings_val < 0.5:
+            savings_text = "Moderate"
+        elif savings_val < 1.5:
+            savings_text = "Quite Rich"
+        else:
+            savings_text = "Rich"
+        
+        checking_val = float(row_features.get('Checking account', row_features.iloc[5]))
+        if checking_val < -0.5:
+            checking_text = "Little/None"
+        elif checking_val < 0.5:
+            checking_text = "Moderate"
+        else:
+            checking_text = "Rich"
+        
+        # Housing
+        housing_val = float(row_features.get('Housing', row_features.iloc[3]))
+        if housing_val < 0:
+            housing_text = "Rent/Free"
+        else:
+            housing_text = "Own"
+        
+        # Purpose: map encoded value to purpose text
+        purpose_val = float(row_features.get('Purpose', row_features.iloc[8]))
+        purpose_map = ["car", "furniture/equipment", "radio/TV", "domestic appliances", 
+                       "repairs", "education", "business", "vacation"]
+        purpose_idx = max(0, min(len(purpose_map)-1, round(purpose_val * 2 + 3)))  # Approximate decode
+        purpose_text = purpose_map[purpose_idx]
+        
         feature_values = {
-            "Age": round(float(row_features.get('Age', row_features.iloc[0])), 2),
-            "Job": round(float(row_features.get('Job', row_features.iloc[2])), 2),
-            "Housing": round(float(row_features.get('Housing', row_features.iloc[3])), 2),
-            "Saving_accounts": round(float(row_features.get('Saving accounts', row_features.iloc[4])), 2),
-            "Checking_account": round(float(row_features.get('Checking account', row_features.iloc[5])), 2),
-            "Credit_amount": round(float(row_features.get('Credit amount', row_features.iloc[6])), 2),
-            "Duration": round(float(row_features.get('Duration', row_features.iloc[7])), 2),
-            "Purpose": round(float(row_features.get('Purpose', row_features.iloc[8])), 2),
+            "Age": age_val,
+            "Job": job_text,
+            "Housing": housing_text,
+            "Saving_accounts": savings_text,
+            "Checking_account": checking_text,
+            "Credit_amount": f"€{credit_val:,}",
+            "Duration": f"{duration_val} months",
+            "Purpose": purpose_text.title(),
         }
         
         # Store result

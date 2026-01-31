@@ -1,0 +1,68 @@
+[
+  {
+    "type": "bias_victim",
+    "display_name": "Real Candidate (Bias Victim)",
+    "description": "Real dataset example: Bias Victim. Score: 88",
+    "base_prediction": 0,
+    "base_probability": 0.5,
+    "fairflow_decision": 1,
+    "intervention_type": "OVERRIDE_TO_APPROVE",
+    "protected_value": 0,
+    "true_label": 1,
+    "features": {
+      "Age": 39,
+      "Gender": "Female",
+      "Education_Level": "Masters",
+      "Experience_Years": 10,
+      "Skill_Score": 88,
+      "Interview_Score": 38,
+      "Job_Role_Applied": "Software Engineer",
+      "Expected_Salary": 97778,
+      "Education_Level_Label": "Masters"
+    }
+  },
+  {
+    "type": "correct_denial",
+    "display_name": "Real Candidate (Correct Denial)",
+    "description": "Real dataset example: Correct Denial. Score: 19",
+    "base_prediction": 0,
+    "base_probability": 0.0,
+    "fairflow_decision": 0,
+    "intervention_type": "ACCEPTED",
+    "protected_value": 0,
+    "true_label": 0,
+    "features": {
+      "Age": 49,
+      "Gender": "Female",
+      "Education_Level": "High School",
+      "Experience_Years": 8,
+      "Skill_Score": 19,
+      "Interview_Score": 36,
+      "Job_Role_Applied": "Software Engineer",
+      "Expected_Salary": 112586,
+      "Education_Level_Label": "High School"
+    }
+  },
+  {
+    "type": "male_baseline",
+    "display_name": "Real Candidate (Male Baseline)",
+    "description": "Real dataset example: Male Baseline. Score: 73",
+    "base_prediction": 1,
+    "base_probability": 1.0,
+    "fairflow_decision": 1,
+    "intervention_type": "ACCEPTED",
+    "protected_value": 1,
+    "true_label": 1,
+    "features": {
+      "Age": 40,
+      "Gender": "Male",
+      "Education_Level": "Bachelors",
+      "Experience_Years": 5,
+      "Skill_Score": 73,
+      "Interview_Score": 95,
+      "Job_Role_Applied": "Software Engineer",
+      "Expected_Salary": 132590,
+      "Education_Level_Label": "Bachelors"
+    }
+  }
+]

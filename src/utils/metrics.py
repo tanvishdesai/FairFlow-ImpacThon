@@ -39,8 +39,15 @@ def calculate_demographic_parity(
     privileged_mask = protected == 1
     unprivileged_mask = protected == 0
     
-    privileged_approval_rate = np.mean(y_pred[privileged_mask] == positive_label)
-    unprivileged_approval_rate = np.mean(y_pred[unprivileged_mask] == positive_label)
+    if np.sum(privileged_mask) > 0:
+        privileged_approval_rate = np.mean(y_pred[privileged_mask] == positive_label)
+    else:
+        privileged_approval_rate = 0.0
+        
+    if np.sum(unprivileged_mask) > 0:
+        unprivileged_approval_rate = np.mean(y_pred[unprivileged_mask] == positive_label)
+    else:
+        unprivileged_approval_rate = 0.0
     
     # Calculate ratio (avoid division by zero)
     if privileged_approval_rate == 0:
