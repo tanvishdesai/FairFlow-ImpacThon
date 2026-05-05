@@ -284,7 +284,7 @@ def build_stream_trace(
     return pd.DataFrame(rows)
 
 
-def summarize_stream_trace(trace: pd.DataFrame) -> Dict[str, float]:
+def summarize_stream_trace(trace: pd.DataFrame, *, warmup: int = 0) -> Dict[str, float]:
     """Summarize a rolling fairness trace into paper-friendly scalars."""
     if trace.empty:
         return {
@@ -292,12 +292,21 @@ def summarize_stream_trace(trace: pd.DataFrame) -> Dict[str, float]:
             "rolling_min_dpr": 1.0,
             "rolling_fair_rate": 1.0,
             "rolling_max_eo_gap": 0.0,
+            "rolling_tail_avg_dpr": 1.0,
+            "rolling_tail_fair_rate": 1.0,
+            "rolling_tail_max_eo_gap": 0.0,
         }
+    tail = trace.iloc[min(max(warmup, 0), max(len(trace) - 1, 0)):] if len(trace) > 1 else trace
+    if tail.empty:
+        tail = trace
     return {
         "rolling_avg_dpr": float(trace["rolling_dpr"].mean()),
         "rolling_min_dpr": float(trace["rolling_dpr"].min()),
         "rolling_fair_rate": float(trace["rolling_fairness_pass"].mean()),
         "rolling_max_eo_gap": float(trace["rolling_equalized_odds_gap"].max()),
+        "rolling_tail_avg_dpr": float(tail["rolling_dpr"].mean()),
+        "rolling_tail_fair_rate": float(tail["rolling_fairness_pass"].mean()),
+        "rolling_tail_max_eo_gap": float(tail["rolling_equalized_odds_gap"].max()),
     }
 
 
@@ -323,4 +332,3 @@ def paper_selection_score(
         - 0.35 * eo_penalty
         - intervention_weight * intervention_penalty
     )
-

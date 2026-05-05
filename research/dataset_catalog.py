@@ -46,7 +46,13 @@ DATASET_REFERENCES: Dict[str, DatasetReference] = {
         name="compas",
         display_name="COMPAS Two-Year Recidivism",
         kaggle_url="https://www.kaggle.com/datasets/danofer/compass",
-        expected_files=("compas-scores-two-years.csv",),
+        expected_files=(
+            "compas-scores-two-years.csv",
+            "cox-violent-parsed_filt.csv",
+            "cox-violent-parsed.csv",
+            "compas-scores-two-years-violent.csv",
+            "compas-scores-raw.csv",
+        ),
         protected_attribute="race",
         target="no recidivism in two years",
         notes="High-impact fairness benchmark; the loader filters to Caucasian and African-American rows for binary-group evaluation.",
@@ -86,4 +92,3 @@ def dataset_catalog_rows() -> List[dict]:
         }
         for ref in DATASET_REFERENCES.values()
     ]
-

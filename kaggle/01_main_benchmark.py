@@ -89,8 +89,10 @@ def main() -> None:
     )
     print(f"Saved {len(results)} benchmark rows to {Path(args.output_dir) / 'main_results.csv'}")
     print(f"Saved {len(traces)} rolling-trace rows to {Path(args.output_dir) / 'rolling_traces.csv'}")
+    skipped_path = Path(args.output_dir) / "skipped_datasets.csv"
+    if skipped_path.exists():
+        print(f"Some datasets were skipped. See {skipped_path}")
 
 
 if __name__ == "__main__":
     main()
-

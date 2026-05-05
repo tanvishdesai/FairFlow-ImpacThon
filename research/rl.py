@@ -96,6 +96,9 @@ class RLTrainingConfig:
     fairness_weight: float = 0.55
     intervention_penalty: float = -0.05
     fairness_threshold: float = 0.8
+    fairness_upper_target: float = 1.05
+    fairness_band_bonus: float = 0.45
+    overshoot_penalty_weight: float = 0.75
     window_size: int = 50
     random_seed: int = 42
     synthetic_random_scenarios: int = 12
@@ -107,6 +110,110 @@ class RLTrainingConfig:
         if self.state_mask is not None:
             data["state_mask"] = self.state_mask.astype(int).tolist()
         return data
+
+
+def tracker_snapshot(tracker: RollingFairnessTracker, fairness_threshold: float) -> dict:
+    """Read the current rolling metrics from a tracker without mutating it."""
+    rolling = tracker._window_counts  # pylint: disable=protected-access
+
+    privileged_rate = (
+        rolling["privileged_positive"] / rolling["privileged_n"]
+        if rolling["privileged_n"] > 0
+        else 0.5
+    )
+    unprivileged_rate = (
+        rolling["unprivileged_positive"] / rolling["unprivileged_n"]
+        if rolling["unprivileged_n"] > 0
+        else 0.5
+    )
+    if privileged_rate == 0:
+        rolling_dpr = 1.0 if unprivileged_rate == 0 else 0.0
+    else:
+        rolling_dpr = unprivileged_rate / privileged_rate
+
+    privileged_tpr = (
+        rolling["privileged_tp"] / (rolling["privileged_tp"] + rolling["privileged_fn"])
+        if (rolling["privileged_tp"] + rolling["privileged_fn"]) > 0
+        else 0.5
+    )
+    unprivileged_tpr = (
+        rolling["unprivileged_tp"] / (rolling["unprivileged_tp"] + rolling["unprivileged_fn"])
+        if (rolling["unprivileged_tp"] + rolling["unprivileged_fn"]) > 0
+        else 0.5
+    )
+    privileged_fpr = (
+        rolling["privileged_fp"] / (rolling["privileged_fp"] + rolling["privileged_tn"])
+        if (rolling["privileged_fp"] + rolling["privileged_tn"]) > 0
+        else 0.5
+    )
+    unprivileged_fpr = (
+        rolling["unprivileged_fp"] / (rolling["unprivileged_fp"] + rolling["unprivileged_tn"])
+        if (rolling["unprivileged_fp"] + rolling["unprivileged_tn"]) > 0
+        else 0.5
+    )
+    tpr_gap = unprivileged_tpr - privileged_tpr
+    fpr_gap = unprivileged_fpr - privileged_fpr
+    return {
+        "rolling_dpr": rolling_dpr,
+        "rolling_privileged_rate": privileged_rate,
+        "rolling_unprivileged_rate": unprivileged_rate,
+        "rolling_tpr_gap": tpr_gap,
+        "rolling_fpr_gap": fpr_gap,
+        "rolling_equalized_odds_gap": max(abs(tpr_gap), abs(fpr_gap)),
+        "rolling_fairness_pass": float(rolling_dpr >= fairness_threshold),
+    }
+
+
+def build_state_from_history(
+    *,
+    base_pred: int,
+    base_prob: float,
+    protected_value: int,
+    tracker: RollingFairnessTracker,
+    intervention_history: list[int],
+    seen_group_history: deque[int],
+    consecutive_same_group: int,
+    privileged_confidences: deque[float],
+    unprivileged_confidences: deque[float],
+    protected_population_mean: float,
+    config: RLTrainingConfig,
+) -> np.ndarray:
+    """Build the 12-dimensional state used by the RL controller from external history."""
+    snapshot = tracker_snapshot(tracker, config.fairness_threshold)
+    intervention_rate = float(np.mean(intervention_history)) if intervention_history else 0.0
+    group_ratio = (
+        float(np.mean(np.asarray(seen_group_history) == 0))
+        if seen_group_history
+        else 1.0 - protected_population_mean
+    )
+    consecutive_norm = min(consecutive_same_group / max(config.window_size, 1), 1.0)
+    privileged_conf = float(np.mean(privileged_confidences)) if privileged_confidences else 0.5
+    unprivileged_conf = float(np.mean(unprivileged_confidences)) if unprivileged_confidences else 0.5
+    confidence_gap = unprivileged_conf - privileged_conf
+
+    state = np.array(
+        [
+            float(base_pred),
+            float(base_prob),
+            float(protected_value),
+            np.clip(snapshot["rolling_dpr"] / 2.0, 0.0, 1.0),
+            np.clip((snapshot["rolling_tpr_gap"] + 1.0) / 2.0, 0.0, 1.0),
+            np.clip((snapshot["rolling_fpr_gap"] + 1.0) / 2.0, 0.0, 1.0),
+            np.clip(snapshot["rolling_privileged_rate"], 0.0, 1.0),
+            np.clip(snapshot["rolling_unprivileged_rate"], 0.0, 1.0),
+            np.clip(intervention_rate, 0.0, 1.0),
+            np.clip(group_ratio, 0.0, 1.0),
+            np.clip(consecutive_norm, 0.0, 1.0),
+            np.clip((confidence_gap + 1.0) / 2.0, 0.0, 1.0),
+        ],
+        dtype=np.float32,
+    )
+
+    if config.state_mask is not None:
+        masked = StreamingFairnessEnv.neutral_state.copy()
+        masked[config.state_mask] = state[config.state_mask]
+        return masked
+    return state
 
 
 class StreamingFairnessEnv(gym.Env):
@@ -223,81 +330,19 @@ class StreamingFairnessEnv(gym.Env):
 
     def _build_observation(self) -> np.ndarray:
         idx = self.stream_indices[self.current_step]
-        base_pred = float(self.base_predictions[idx])
-        base_prob = float(self.base_probabilities[idx])
-        protected_value = float(self.protected[idx])
-
-        # The tracker should not be mutated here; metrics are derived from stored counters.
-        rolling = self.tracker._window_counts  # pylint: disable=protected-access
-
-        rolling_privileged_rate = (
-            rolling["privileged_positive"] / rolling["privileged_n"] if rolling["privileged_n"] > 0 else 0.5
+        return build_state_from_history(
+            base_pred=int(self.base_predictions[idx]),
+            base_prob=float(self.base_probabilities[idx]),
+            protected_value=int(self.protected[idx]),
+            tracker=self.tracker,
+            intervention_history=self.interventions,
+            seen_group_history=self.seen_group_history,
+            consecutive_same_group=self.consecutive_same_group,
+            privileged_confidences=self.privileged_confidences,
+            unprivileged_confidences=self.unprivileged_confidences,
+            protected_population_mean=float(np.mean(self.protected)),
+            config=self.config,
         )
-        rolling_unprivileged_rate = (
-            rolling["unprivileged_positive"] / rolling["unprivileged_n"] if rolling["unprivileged_n"] > 0 else 0.5
-        )
-        if rolling_privileged_rate == 0:
-            rolling_dpr = 1.0 if rolling_unprivileged_rate == 0 else 0.0
-        else:
-            rolling_dpr = rolling_unprivileged_rate / rolling_privileged_rate
-
-        privileged_tpr = (
-            rolling["privileged_tp"] / (rolling["privileged_tp"] + rolling["privileged_fn"])
-            if (rolling["privileged_tp"] + rolling["privileged_fn"]) > 0
-            else 0.5
-        )
-        unprivileged_tpr = (
-            rolling["unprivileged_tp"] / (rolling["unprivileged_tp"] + rolling["unprivileged_fn"])
-            if (rolling["unprivileged_tp"] + rolling["unprivileged_fn"]) > 0
-            else 0.5
-        )
-        privileged_fpr = (
-            rolling["privileged_fp"] / (rolling["privileged_fp"] + rolling["privileged_tn"])
-            if (rolling["privileged_fp"] + rolling["privileged_tn"]) > 0
-            else 0.5
-        )
-        unprivileged_fpr = (
-            rolling["unprivileged_fp"] / (rolling["unprivileged_fp"] + rolling["unprivileged_tn"])
-            if (rolling["unprivileged_fp"] + rolling["unprivileged_tn"]) > 0
-            else 0.5
-        )
-        tpr_gap = unprivileged_tpr - privileged_tpr
-        fpr_gap = unprivileged_fpr - privileged_fpr
-
-        intervention_rate = float(np.mean(self.interventions)) if self.interventions else 0.0
-        group_ratio = (
-            float(np.mean(np.asarray(self.seen_group_history) == 0))
-            if self.seen_group_history
-            else float(np.mean(self.protected == 0))
-        )
-        consecutive_norm = min(self.consecutive_same_group / max(self.config.window_size, 1), 1.0)
-        privileged_conf = float(np.mean(self.privileged_confidences)) if self.privileged_confidences else 0.5
-        unprivileged_conf = float(np.mean(self.unprivileged_confidences)) if self.unprivileged_confidences else 0.5
-        confidence_gap = unprivileged_conf - privileged_conf
-
-        state = np.array(
-            [
-                base_pred,
-                base_prob,
-                protected_value,
-                np.clip(rolling_dpr / 2.0, 0.0, 1.0),
-                np.clip((tpr_gap + 1.0) / 2.0, 0.0, 1.0),
-                np.clip((fpr_gap + 1.0) / 2.0, 0.0, 1.0),
-                np.clip(rolling_privileged_rate, 0.0, 1.0),
-                np.clip(rolling_unprivileged_rate, 0.0, 1.0),
-                np.clip(intervention_rate, 0.0, 1.0),
-                np.clip(group_ratio, 0.0, 1.0),
-                np.clip(consecutive_norm, 0.0, 1.0),
-                np.clip((confidence_gap + 1.0) / 2.0, 0.0, 1.0),
-            ],
-            dtype=np.float32,
-        )
-
-        if self.config.state_mask is not None:
-            masked = self.neutral_state.copy()
-            masked[self.config.state_mask] = state[self.config.state_mask]
-            state = masked
-        return state
 
     def _reward(
         self,
@@ -312,10 +357,14 @@ class StreamingFairnessEnv(gym.Env):
         dpr = stream_metrics["rolling_dpr"]
         eo_gap = stream_metrics["rolling_equalized_odds_gap"]
 
-        if dpr >= self.config.fairness_threshold:
-            fairness_reward = 0.4
-        else:
+        if dpr < self.config.fairness_threshold:
             fairness_reward = -(self.config.fairness_threshold - dpr)
+        elif dpr <= self.config.fairness_upper_target:
+            fairness_reward = self.config.fairness_band_bonus
+        else:
+            fairness_reward = self.config.fairness_band_bonus - (
+                self.config.overshoot_penalty_weight * (dpr - self.config.fairness_upper_target)
+            )
 
         fairness_reward -= 0.25 * eo_gap
 
@@ -377,6 +426,8 @@ def train_universal_controller(
     output_dir: str | Path,
     config: RLTrainingConfig,
     curriculum: bool = True,
+    device: str = "cpu",
+    show_progress: bool = False,
 ) -> PPO:
     """Train a universal controller on synthetic scenarios."""
     ensure_sb3_available()
@@ -387,6 +438,7 @@ def train_universal_controller(
     scenarios = generator.generate_all_training_data(
         base_seed=config.random_seed,
         augment_random=config.synthetic_random_scenarios,
+        verbose=show_progress,
     )
     env = MultiScenarioStreamingEnv(scenarios=scenarios, config=config, curriculum=curriculum)
 
@@ -400,9 +452,10 @@ def train_universal_controller(
         gamma=config.gamma,
         seed=config.random_seed,
         verbose=0,
+        device=device,
         policy_kwargs={"net_arch": [128, 128, 64]},
     )
-    model.learn(total_timesteps=config.total_timesteps, progress_bar=False)
+    model.learn(total_timesteps=config.total_timesteps, progress_bar=show_progress)
 
     model_path = output_path / f"universal_{config.tag}.zip"
     model.save(str(model_path.with_suffix("")))
@@ -420,6 +473,8 @@ def train_dataset_specific_controller(
     output_dir: str | Path,
     config: RLTrainingConfig,
     tag: str,
+    device: str = "cpu",
+    show_progress: bool = False,
 ) -> PPO:
     """Train a controller on one dataset-model stream only."""
     ensure_sb3_available()
@@ -445,9 +500,10 @@ def train_dataset_specific_controller(
         gamma=config.gamma,
         seed=config.random_seed,
         verbose=0,
+        device=device,
         policy_kwargs={"net_arch": [128, 128, 64]},
     )
-    model.learn(total_timesteps=config.total_timesteps, progress_bar=False)
+    model.learn(total_timesteps=config.total_timesteps, progress_bar=show_progress)
 
     model_path = output_path / f"{tag}.zip"
     model.save(str(model_path.with_suffix("")))

@@ -5,7 +5,7 @@ Base models and non-RL baselines for the FairFlow paper.
 from __future__ import annotations
 
 from collections import deque
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Dict, Iterable, Optional
 
@@ -287,6 +287,157 @@ class RuleBasedController:
             window_size=self.window_size,
             fairness_threshold=self.fairness_threshold,
         )
+        return decisions, interventions, trace
+
+
+@dataclass
+class OnlineGroupThresholdConfig:
+    fairness_threshold: float = 0.8
+    fairness_upper_target: float = 1.05
+    window_size: int = 50
+    warmup_grid: tuple[int, ...] = (10, 25)
+    step_size_grid: tuple[float, ...] = (0.02, 0.05, 0.10)
+    privileged_scale_grid: tuple[float, ...] = (0.0, 0.5, 1.0)
+    min_threshold: float = 0.10
+    max_threshold: float = 0.90
+
+
+@dataclass
+class OnlineGroupThresholdController:
+    """
+    A naive online threshold baseline that updates group-specific thresholds from
+    the stream itself rather than fixing them upfront from an offline calibration step.
+    """
+
+    config: OnlineGroupThresholdConfig = field(default_factory=OnlineGroupThresholdConfig)
+
+    def fit(
+        self,
+        *,
+        y_true: np.ndarray,
+        base_scores: np.ndarray,
+        protected: np.ndarray,
+    ) -> "OnlineGroupThresholdController":
+        best_objective = -1e18
+        best_params = (10, 0.05, 0.5)
+        best_metrics: Dict[str, float] | None = None
+
+        for warmup_steps in self.config.warmup_grid:
+            for step_size in self.config.step_size_grid:
+                for privileged_scale in self.config.privileged_scale_grid:
+                    decisions, interventions, _ = self.simulate(
+                        y_true=y_true,
+                        base_scores=base_scores,
+                        protected=protected,
+                        warmup_steps=warmup_steps,
+                        step_size=step_size,
+                        privileged_scale=privileged_scale,
+                    )
+                    metrics = compute_static_metrics(
+                        y_true,
+                        decisions,
+                        protected,
+                        scores=base_scores,
+                        intervention_flags=interventions,
+                        fairness_threshold=self.config.fairness_threshold,
+                    )
+                    objective = paper_selection_score(
+                        metrics,
+                        fairness_threshold=self.config.fairness_threshold,
+                        intervention_weight=0.20,
+                    )
+                    if objective > best_objective:
+                        best_objective = objective
+                        best_params = (warmup_steps, step_size, privileged_scale)
+                        best_metrics = metrics
+
+        self.warmup_steps = int(best_params[0])
+        self.step_size = float(best_params[1])
+        self.privileged_scale = float(best_params[2])
+        self.validation_metrics_ = best_metrics or {}
+        return self
+
+    def simulate(
+        self,
+        *,
+        y_true: np.ndarray,
+        base_scores: np.ndarray,
+        protected: np.ndarray,
+        warmup_steps: Optional[int] = None,
+        step_size: Optional[float] = None,
+        privileged_scale: Optional[float] = None,
+    ) -> tuple[np.ndarray, np.ndarray, pd.DataFrame]:
+        warmup_steps = self.warmup_steps if warmup_steps is None else warmup_steps
+        step_size = self.step_size if step_size is None else step_size
+        privileged_scale = self.privileged_scale if privileged_scale is None else privileged_scale
+
+        threshold_privileged = 0.5
+        threshold_unprivileged = 0.5
+        decisions = np.zeros(len(base_scores), dtype=int)
+        interventions = np.zeros(len(base_scores), dtype=int)
+
+        rolling_approved_privileged = deque()
+        rolling_approved_unprivileged = deque()
+        threshold_privileged_history: list[float] = []
+        threshold_unprivileged_history: list[float] = []
+
+        base_preds = (np.asarray(base_scores, dtype=float) >= 0.5).astype(int)
+
+        for idx, (score, group, base_pred) in enumerate(zip(base_scores, protected, base_preds)):
+            score = float(score)
+            group = int(group)
+            threshold = threshold_privileged if group == 1 else threshold_unprivileged
+            final_decision = int(score >= threshold)
+            decisions[idx] = final_decision
+            interventions[idx] = int(final_decision != int(base_pred))
+
+            target_queue = rolling_approved_privileged if group == 1 else rolling_approved_unprivileged
+            target_queue.append(final_decision)
+            if len(target_queue) > self.config.window_size:
+                target_queue.popleft()
+
+            priv_rate = np.mean(rolling_approved_privileged) if rolling_approved_privileged else 0.5
+            unpriv_rate = np.mean(rolling_approved_unprivileged) if rolling_approved_unprivileged else 0.5
+            current_dpr = (
+                1.0 if priv_rate == 0 and unpriv_rate == 0
+                else 0.0 if priv_rate == 0
+                else unpriv_rate / priv_rate
+            )
+
+            if idx >= warmup_steps and rolling_approved_privileged and rolling_approved_unprivileged:
+                if current_dpr < self.config.fairness_threshold:
+                    deficit = self.config.fairness_threshold - current_dpr
+                    threshold_unprivileged = max(
+                        self.config.min_threshold,
+                        threshold_unprivileged - step_size * deficit,
+                    )
+                    threshold_privileged = min(
+                        self.config.max_threshold,
+                        threshold_privileged + privileged_scale * step_size * deficit,
+                    )
+                elif current_dpr > self.config.fairness_upper_target:
+                    overshoot = current_dpr - self.config.fairness_upper_target
+                    threshold_unprivileged = min(
+                        self.config.max_threshold,
+                        threshold_unprivileged + step_size * overshoot,
+                    )
+                    threshold_privileged = max(
+                        self.config.min_threshold,
+                        threshold_privileged - privileged_scale * step_size * overshoot,
+                    )
+
+            threshold_privileged_history.append(threshold_privileged)
+            threshold_unprivileged_history.append(threshold_unprivileged)
+
+        trace = build_stream_trace(
+            y_true=y_true,
+            y_pred=decisions,
+            protected=protected,
+            window_size=self.config.window_size,
+            fairness_threshold=self.config.fairness_threshold,
+        )
+        trace["threshold_privileged"] = threshold_privileged_history
+        trace["threshold_unprivileged"] = threshold_unprivileged_history
         return decisions, interventions, trace
 
 

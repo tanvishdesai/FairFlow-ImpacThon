@@ -189,7 +189,8 @@ class SyntheticScenarioGenerator:
     @staticmethod
     def generate_all_training_data(
         base_seed: int = 42,
-        augment_random: int = 10
+        augment_random: int = 10,
+        verbose: bool = True,
     ) -> List[dict]:
         """
         Generate all training scenarios.
@@ -206,7 +207,8 @@ class SyntheticScenarioGenerator:
                 scenario, seed=base_seed + i
             )
             all_data.append(data)
-            print(f"Generated: {scenario.name} | DPR: {data['initial_metrics']['dpr']:.3f}")
+            if verbose:
+                print(f"Generated: {scenario.name} | DPR: {data['initial_metrics']['dpr']:.3f}")
         
         # Generate random augmentation scenarios
         for i in range(augment_random):
@@ -215,7 +217,8 @@ class SyntheticScenarioGenerator:
                 seed=base_seed + 1000 + i
             )
             all_data.append(data)
-            print(f"Generated: {data['scenario']['name']} | DPR: {data['initial_metrics']['dpr']:.3f}")
+            if verbose:
+                print(f"Generated: {data['scenario']['name']} | DPR: {data['initial_metrics']['dpr']:.3f}")
         
         return all_data
     

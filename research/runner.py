@@ -102,12 +102,22 @@ def run_main_benchmark(
             output_dir=universal_dir,
             config=config.universal_rl,
             curriculum=True,
+            device="cpu",
         )
 
+    skipped_datasets: list[dict] = []
     for dataset_name in config.datasets:
         try:
             dataset = load_dataset(dataset_name, search_roots=search_roots, random_state=config.random_seed)
-        except FileNotFoundError:
+        except Exception as exc:
+            skipped_datasets.append(
+                {
+                    "dataset": dataset_name,
+                    "error_type": type(exc).__name__,
+                    "reason": str(exc),
+                }
+            )
+            print(f"[skip] {dataset_name}: {exc}")
             continue
 
         dataset_dir = output_path / "models" / dataset_name
@@ -151,6 +161,7 @@ def run_main_benchmark(
                     output_dir=dataset_specific_dir,
                     config=config.dataset_specific_rl,
                     tag=f"{dataset_name}_{model_name}",
+                    device="cpu",
                 )
 
             for order_protocol in config.order_protocols:
@@ -324,6 +335,8 @@ def run_main_benchmark(
     traces_df = pd.DataFrame(trace_rows)
     results_df.to_csv(output_path / "main_results.csv", index=False)
     traces_df.to_csv(output_path / "rolling_traces.csv", index=False)
+    if skipped_datasets:
+        pd.DataFrame(skipped_datasets).to_csv(output_path / "skipped_datasets.csv", index=False)
     return results_df, traces_df
 
 
@@ -356,7 +369,7 @@ def run_state_ablation(
         for dataset_name in dataset_names:
             try:
                 dataset = load_dataset(dataset_name, search_roots=search_roots, random_state=config.random_seed)
-            except FileNotFoundError:
+            except Exception:
                 continue
 
             models = train_base_models(
@@ -417,7 +430,7 @@ def run_reward_ablation(
         for dataset_name in dataset_names:
             try:
                 dataset = load_dataset(dataset_name, search_roots=search_roots, random_state=config.random_seed)
-            except FileNotFoundError:
+            except Exception:
                 continue
 
             models = train_base_models(
@@ -466,7 +479,7 @@ def run_order_stress(
     for dataset_name in dataset_names:
         try:
             dataset = load_dataset(dataset_name, search_roots=search_roots, random_state=config.random_seed)
-        except FileNotFoundError:
+        except Exception:
             continue
 
         base_model = train_base_models(
@@ -492,4 +505,3 @@ def run_order_stress(
     frame = pd.DataFrame(rows)
     frame.to_csv(output_path / "order_stress_results.csv", index=False)
     return frame
-

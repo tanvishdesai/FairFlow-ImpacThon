@@ -82,6 +82,26 @@ def _clean_missing_values(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
+def _resolve_column_name(df: pd.DataFrame, candidates: Iterable[str]) -> Optional[str]:
+    """
+    Resolve a column name using exact and case-insensitive matching.
+    """
+    exact_columns = set(df.columns)
+    for candidate in candidates:
+        if candidate in exact_columns:
+            return candidate
+
+    normalized = {
+        str(column).strip().lower(): column
+        for column in df.columns
+    }
+    for candidate in candidates:
+        match = normalized.get(candidate.strip().lower())
+        if match is not None:
+            return match
+    return None
+
+
 def _adult_loader(df: pd.DataFrame) -> LoaderOutput:
     df = _clean_missing_values(df)
     target = df["income"].astype(str).str.contains(">50K").astype(int)
@@ -131,40 +151,70 @@ def _recruitment_loader(df: pd.DataFrame) -> LoaderOutput:
 def _compas_loader(df: pd.DataFrame) -> LoaderOutput:
     df = _clean_missing_values(df)
 
-    if "days_b_screening_arrest" in df.columns:
-        df = df[df["days_b_screening_arrest"].between(-30, 30)]
-    if "is_recid" in df.columns:
-        df = df[df["is_recid"] != -1]
-    if "c_charge_degree" in df.columns:
-        df = df[df["c_charge_degree"].astype(str) != "O"]
-    if "score_text" in df.columns:
-        df = df[df["score_text"].astype(str) != "N/A"]
-    if "race" in df.columns:
-        df = df[df["race"].isin(["Caucasian", "African-American"])]
+    days_column = _resolve_column_name(df, ("days_b_screening_arrest",))
+    is_recid_column = _resolve_column_name(df, ("is_recid",))
+    charge_column = _resolve_column_name(df, ("c_charge_degree",))
+    race_column = _resolve_column_name(df, ("race",))
+    target_column = _resolve_column_name(df, ("two_year_recid", "is_recid", "recidivism_within_2_years"))
+    score_text_column = _resolve_column_name(df, ("score_text", "v_score_text"))
 
-    target = (df["two_year_recid"].astype(int) == 0).astype(int)
-    protected = (df["race"].astype(str) == "Caucasian").astype(int)
+    if days_column is not None:
+        df = df[df[days_column].astype(float).between(-30, 30)]
+    if is_recid_column is not None:
+        df = df[df[is_recid_column].astype(float) != -1]
+    if charge_column is not None:
+        df = df[df[charge_column].astype(str) != "O"]
+    if score_text_column is not None:
+        df = df[df[score_text_column].astype(str) != "N/A"]
+    if race_column is not None:
+        df = df[df[race_column].isin(["Caucasian", "African-American"])]
+
+    if target_column is None:
+        raise ValueError(
+            "Unsupported COMPAS schema. Expected a target column such as "
+            "'two_year_recid' or 'is_recid'. "
+            f"Found columns: {list(df.columns)}"
+        )
+
+    target_series = df[target_column]
+    if pd.api.types.is_numeric_dtype(target_series):
+        target = (target_series.astype(float) == 0).astype(int)
+    else:
+        normalized_target = target_series.astype(str).str.strip().str.lower()
+        non_recid_tokens = {"0", "false", "no", "did_not_recidivate", "non-recid"}
+        recid_tokens = {"1", "true", "yes", "recidivated", "recid"}
+        if set(normalized_target.unique()).issubset(non_recid_tokens | recid_tokens):
+            target = normalized_target.isin(non_recid_tokens).astype(int)
+        else:
+            raise ValueError(
+                f"Could not infer the COMPAS target encoding for column '{target_column}'. "
+                f"Unique values: {sorted(normalized_target.unique().tolist())[:20]}"
+            )
+
+    if race_column is None:
+        raise ValueError("Unsupported COMPAS schema: no race column was found.")
+    protected = (df[race_column].astype(str) == "Caucasian").astype(int)
 
     preferred_columns = [
-        "age",
-        "age_cat",
-        "sex",
-        "race",
-        "juv_fel_count",
-        "juv_misd_count",
-        "juv_other_count",
-        "priors_count",
-        "days_b_screening_arrest",
-        "c_charge_degree",
-        "score_text",
-        "v_score_text",
-        "decile_score",
-        "v_decile_score",
+        _resolve_column_name(df, ("age",)),
+        _resolve_column_name(df, ("age_cat",)),
+        _resolve_column_name(df, ("sex",)),
+        race_column,
+        _resolve_column_name(df, ("juv_fel_count",)),
+        _resolve_column_name(df, ("juv_misd_count",)),
+        _resolve_column_name(df, ("juv_other_count",)),
+        _resolve_column_name(df, ("priors_count",)),
+        days_column,
+        charge_column,
+        _resolve_column_name(df, ("score_text",)),
+        _resolve_column_name(df, ("v_score_text",)),
+        _resolve_column_name(df, ("decile_score",)),
+        _resolve_column_name(df, ("v_decile_score",)),
     ]
-    feature_columns = [col for col in preferred_columns if col in df.columns]
+    feature_columns = [col for col in preferred_columns if col is not None]
     if not feature_columns:
         drop_cols = {
-            "two_year_recid",
+            target_column,
             "name",
             "first",
             "last",
@@ -174,25 +224,60 @@ def _compas_loader(df: pd.DataFrame) -> LoaderOutput:
         feature_columns = [col for col in df.columns if col not in drop_cols]
     features = df[feature_columns].copy()
     metadata = {
-        "protected_attribute": "race",
+        "protected_attribute": str(race_column),
         "privileged_group": "Caucasian",
         "favorable_outcome": "no recidivism in two years",
         "rows_after_filtering": int(len(df)),
+        "target_column": str(target_column),
     }
     return features, target, protected, metadata
 
 
 def _bank_marketing_loader(df: pd.DataFrame) -> LoaderOutput:
     df = _clean_missing_values(df)
-    target = (df["y"].astype(str).str.lower() == "yes").astype(int)
-    protected = (df["age"].astype(float) >= 40).astype(int)
-    features = df.drop(columns=["y"])
-    if "duration" in features.columns:
-        features = features.drop(columns=["duration"])
+
+    target_column = _resolve_column_name(df, ("y", "deposit", "subscribed", "term_deposit", "target"))
+    age_column = _resolve_column_name(df, ("age",))
+    duration_column = _resolve_column_name(df, ("duration",))
+
+    if target_column is None or age_column is None:
+        raise ValueError(
+            "Unsupported Bank Marketing schema. "
+            f"Expected a target column like one of ['y', 'deposit', 'subscribed', 'term_deposit'] "
+            f"and an age column. Found columns: {list(df.columns)}"
+        )
+
+    target_series = df[target_column]
+    if pd.api.types.is_numeric_dtype(target_series):
+        unique_values = set(pd.Series(target_series).dropna().astype(float).unique().tolist())
+        if unique_values.issubset({0.0, 1.0}):
+            target = target_series.astype(int)
+        else:
+            median_value = float(pd.Series(target_series).median())
+            target = (target_series.astype(float) > median_value).astype(int)
+    else:
+        normalized_target = target_series.astype(str).str.strip().str.lower()
+        positive_tokens = {"yes", "y", "1", "true", "subscribed", "deposit"}
+        negative_tokens = {"no", "n", "0", "false", "not_subscribed"}
+        if set(normalized_target.unique()).issubset(positive_tokens | negative_tokens):
+            target = normalized_target.isin(positive_tokens).astype(int)
+        else:
+            raise ValueError(
+                f"Could not infer the target encoding for Bank Marketing column '{target_column}'. "
+                f"Unique values: {sorted(normalized_target.unique().tolist())[:20]}"
+            )
+
+    protected = (df[age_column].astype(float) >= 40).astype(int)
+    features = df.drop(columns=[target_column])
+    if duration_column is not None and duration_column in features.columns:
+        features = features.drop(columns=[duration_column])
+
     metadata = {
         "protected_attribute": "age",
         "privileged_group": "age >= 40",
         "favorable_outcome": "subscribed term deposit",
+        "target_column": target_column,
+        "age_column": age_column,
         "note": "The duration column is dropped because it is a post-contact leakage feature.",
     }
     return features, target, protected, metadata
@@ -320,4 +405,3 @@ def load_dataset(
         protected_test=prot_test.reset_index(drop=True),
         metadata=metadata,
     )
-
