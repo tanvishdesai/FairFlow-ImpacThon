@@ -1,0 +1,219 @@
+\begin{thebibliography}{34}
+\providecommand{\natexlab}[1]{#1}
+
+\bibitem[{Angwin et~al.(2016)Angwin, Larson, Mattu, and
+  Kirchner}]{angwin2016machine}
+Angwin, J.; Larson, J.; Mattu, S.; and Kirchner, L. 2016.
+\newblock Machine Bias.
+\newblock ProPublica, May 2016.
+
+\bibitem[{Barocas and Selbst(2016)}]{barocas2016big}
+Barocas, S.; and Selbst, A.~D. 2016.
+\newblock Big Data's Disparate Impact.
+\newblock \emph{California Law Review}, 104: 671--732.
+
+\bibitem[{Biddle(2006)}]{biddle2006adverse}
+Biddle, D. 2006.
+\newblock \emph{Adverse Impact and Test Validation: A Practitioner's Guide to
+  Valid and Defensible Employment Testing}.
+\newblock Gower Publishing, 2nd edition.
+
+\bibitem[{Blum et~al.(2018)Blum, Gunasekar, Lykouris, and
+  Srebro}]{blum2018preserving}
+Blum, A.; Gunasekar, S.; Lykouris, T.; and Srebro, N. 2018.
+\newblock On Preserving Non-Discrimination When Combining Expert Advice.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 8376--8387.
+
+\bibitem[{Buolamwini and Gebru(2018)}]{buolamwini2018gender}
+Buolamwini, J.; and Gebru, T. 2018.
+\newblock Gender Shades: Intersectional Accuracy Disparities in Commercial
+  Gender Classification.
+\newblock In \emph{Proceedings of the Conference on Fairness, Accountability,
+  and Transparency (FAccT)}, 77--91.
+
+\bibitem[{Chen et~al.(2025)}]{chen2025fairnessdrift}
+Chen, Y.; et~al. 2025.
+\newblock Emerging Algorithmic Bias: Fairness Drift as the Next Dimension of
+  Model Maintenance and Sustainability.
+\newblock \emph{npj Digital Medicine}, 8(1): 1--8.
+
+\bibitem[{Chouldechova(2017)}]{chouldechova2017fair}
+Chouldechova, A. 2017.
+\newblock Fair Prediction with Disparate Impact: A Study of Bias in Recidivism
+  Prediction Instruments.
+\newblock \emph{Big Data}, 5(2): 153--163.
+
+\bibitem[{Corbett-Davies and Goel(2018)}]{corbettdavies2018measure}
+Corbett-Davies, S.; and Goel, S. 2018.
+\newblock The Measure and Mismeasure of Fairness: A Critical Review of Fair
+  Machine Learning.
+\newblock \emph{arXiv preprint arXiv:1808.00023}.
+
+\bibitem[{Crenshaw(1989)}]{crenshaw1989demarginalizing}
+Crenshaw, K. 1989.
+\newblock Demarginalizing the Intersection of Race and Sex: A Black Feminist
+  Critique of Antidiscrimination Doctrine, Feminist Theory and Antiracist
+  Politics.
+\newblock \emph{University of Chicago Legal Forum}, 1989(1): 139--167.
+
+\bibitem[{Dressel and Farid(2018)}]{dressel2018accuracy}
+Dressel, J.; and Farid, H. 2018.
+\newblock The Accuracy, Fairness, and Limits of Predicting Recidivism.
+\newblock \emph{Science Advances}, 4(1): eaao5580.
+
+\bibitem[{Dua and Graff(2019)}]{dua2019uci}
+Dua, D.; and Graff, C. 2019.
+\newblock {UCI} Machine Learning Repository.
+\newblock \url{http://archive.ics.uci.edu/ml}.
+
+\bibitem[{Dwork et~al.(2012)Dwork, Hardt, Pitassi, Reingold, and
+  Zemel}]{dwork2012fairness}
+Dwork, C.; Hardt, M.; Pitassi, T.; Reingold, O.; and Zemel, R. 2012.
+\newblock Fairness through Awareness.
+\newblock In \emph{Proceedings of the 3rd Innovations in Theoretical Computer
+  Science Conference (ITCS)}, 214--226.
+
+\bibitem[{Eubanks(2018)}]{eubanks2018automating}
+Eubanks, V. 2018.
+\newblock \emph{Automating Inequality: How High-Tech Tools Profile, Police, and
+  Punish the Poor}.
+\newblock St. Martin's Press.
+
+\bibitem[{{European Parliament and Council of the European
+  Union}(2024)}]{euaiact2024}
+{European Parliament and Council of the European Union}. 2024.
+\newblock Regulation ({EU}) 2024/1689 Laying Down Harmonised Rules on
+  Artificial Intelligence (Artificial Intelligence Act).
+\newblock Official Journal of the European Union.
+
+\bibitem[{Gillen et~al.(2018)Gillen, Jung, Kearns, and Roth}]{gillen2018online}
+Gillen, S.; Jung, C.; Kearns, M.; and Roth, A. 2018.
+\newblock Online Learning with an Unknown Fairness Metric.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 2600--2609.
+
+\bibitem[{Green and Chen(2019)}]{green2019disparate}
+Green, B.; and Chen, Y. 2019.
+\newblock Disparate Interactions: An Algorithm-in-the-Loop Analysis of Fairness
+  in Risk Assessments.
+\newblock In \emph{Proceedings of the Conference on Fairness, Accountability,
+  and Transparency (FAccT)}, 90--99.
+
+\bibitem[{Hardt, Price, and Srebro(2016)}]{hardt2016equality}
+Hardt, M.; Price, E.; and Srebro, N. 2016.
+\newblock Equality of Opportunity in Supervised Learning.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 3315--3323.
+
+\bibitem[{Hazan(2016)}]{hazan2016introduction}
+Hazan, E. 2016.
+\newblock Introduction to Online Convex Optimization.
+\newblock \emph{Foundations and Trends in Optimization}, 2(3-4): 157--325.
+
+\bibitem[{H{\'e}bert-Johnson et~al.(2018)H{\'e}bert-Johnson, Kim, Reingold, and
+  Rothblum}]{hebert2018multicalibration}
+H{\'e}bert-Johnson, U.; Kim, M.~P.; Reingold, O.; and Rothblum, G.~N. 2018.
+\newblock Multicalibration: Calibration for the (Computationally-Identifiable)
+  Masses.
+\newblock In \emph{Proceedings of the 35th International Conference on Machine
+  Learning (ICML)}, 1939--1948.
+
+\bibitem[{Kearns et~al.(2018)Kearns, Neel, Roth, and Wu}]{kearns2018preventing}
+Kearns, M.; Neel, S.; Roth, A.; and Wu, Z.~S. 2018.
+\newblock Preventing Fairness Gerrymandering: Auditing and Learning for
+  Subgroup Fairness.
+\newblock In \emph{Proceedings of the 35th International Conference on Machine
+  Learning (ICML)}, 2564--2572.
+
+\bibitem[{Mahdavi, Jin, and Yang(2012)}]{mahdavi2012trading}
+Mahdavi, M.; Jin, R.; and Yang, T. 2012.
+\newblock Trading Regret for Efficiency: Online Convex Optimization with Long
+  Term Constraints.
+\newblock \emph{Journal of Machine Learning Research}, 13: 2503--2528.
+
+\bibitem[{Menon and Williamson(2018)}]{menon2018cost}
+Menon, A.~K.; and Williamson, R.~C. 2018.
+\newblock The Cost of Fairness in Binary Classification.
+\newblock In \emph{Proceedings of the 1st Conference on Fairness,
+  Accountability and Transparency (FAccT)}, 107--118.
+
+\bibitem[{Moro, Cortez, and Rita(2014)}]{moro2014data}
+Moro, S.; Cortez, P.; and Rita, P. 2014.
+\newblock A Data-Driven Approach to Predict the Success of Bank Telemarketing.
+\newblock \emph{Decision Support Systems}, 62: 22--31.
+
+\bibitem[{Pleiss et~al.(2017)Pleiss, Raghavan, Wu, Kleinberg, and
+  Weinberger}]{pleiss2017fairness}
+Pleiss, G.; Raghavan, M.; Wu, F.; Kleinberg, J.; and Weinberger, K.~Q. 2017.
+\newblock On Fairness and Calibration.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 5680--5689.
+
+\bibitem[{Raji et~al.(2020)Raji, Smart, White, Mitchell, Gebru, Hutchinson,
+  Smith-Loud, Theron, and Barnes}]{raji2020closing}
+Raji, I.~D.; Smart, A.; White, R.~N.; Mitchell, M.; Gebru, T.; Hutchinson, B.;
+  Smith-Loud, J.; Theron, D.; and Barnes, P. 2020.
+\newblock Closing the {AI} Accountability Gap: Defining an End-to-End Framework
+  for Internal Algorithmic Auditing.
+\newblock \emph{Proceedings of the Conference on Fairness, Accountability, and
+  Transparency (FAccT)}, 33--44.
+
+\bibitem[{Rezaei et~al.(2021)Rezaei, Liu, Memarrast, and
+  Ziebart}]{rezaei2021robust}
+Rezaei, A.; Liu, A.; Memarrast, K.; and Ziebart, B.~D. 2021.
+\newblock Robust Fairness under Covariate Shift.
+\newblock In \emph{Proceedings of the AAAI Conference on Artificial
+  Intelligence}, 9419--9427.
+
+\bibitem[{Roh et~al.(2021)Roh, Lee, Whang, and Suh}]{roh2021fairbatch}
+Roh, Y.; Lee, K.; Whang, S.~E.; and Suh, C. 2021.
+\newblock {FairBatch}: Batch Selection for Model Fairness.
+\newblock In \emph{International Conference on Learning Representations
+  (ICLR)}.
+
+\bibitem[{Selbst et~al.(2019)Selbst, Boyd, Friedler, Venkatasubramanian, and
+  Vertesi}]{selbst2019fairness}
+Selbst, A.~D.; Boyd, D.; Friedler, S.~A.; Venkatasubramanian, S.; and Vertesi,
+  J. 2019.
+\newblock Fairness and Abstraction in Sociotechnical Systems.
+\newblock In \emph{Proceedings of the Conference on Fairness, Accountability,
+  and Transparency (FAccT)}, 59--68.
+
+\bibitem[{Shalev-Shwartz(2012)}]{shalev2012online}
+Shalev-Shwartz, S. 2012.
+\newblock Online Learning and Online Convex Optimization.
+\newblock \emph{Foundations and Trends in Machine Learning}, 4(2): 107--194.
+
+\bibitem[{Singh et~al.(2024)Singh, Raghu, Srivastava, and
+  Agrawal}]{singh2024fairness}
+Singh, A.; Raghu, D.; Srivastava, S.; and Agrawal, P. 2024.
+\newblock Supervised Algorithmic Fairness in Distribution Shifts: A Survey.
+\newblock In \emph{Proceedings of the International Joint Conference on
+  Artificial Intelligence (IJCAI)}.
+
+\bibitem[{Sloane et~al.(2022)Sloane, Moss, Awomolo, and
+  Forlano}]{sloane2022participation}
+Sloane, M.; Moss, E.; Awomolo, O.; and Forlano, L. 2022.
+\newblock Participation Is Not a Design Fix for Machine Learning.
+\newblock In \emph{Proceedings of the 2nd ACM Conference on Equity and Access
+  in Algorithms, Mechanisms, and Optimization (EAAMO)}.
+
+\bibitem[{{Synthetic Recruitment Dataset}(2023)}]{recruitment2023}
+{Synthetic Recruitment Dataset}. 2023.
+\newblock Recruitment Dataset.
+\newblock Kaggle.
+
+\bibitem[{Wachter, Mittelstadt, and Russell(2021)}]{wachter2021bias}
+Wachter, S.; Mittelstadt, B.; and Russell, C. 2021.
+\newblock Bias Preservation in Machine Learning: The Legality of Fairness
+  Metrics Under {EU} Non-Discrimination Law.
+\newblock \emph{West Virginia Law Review}, 123(3): 735--790.
+
+\bibitem[{Zhang and Shah(2020)}]{zhang2020fairness}
+Zhang, X.; and Shah, M. 2020.
+\newblock Fair Decision-Making under Uncertainty.
+\newblock In \emph{IEEE International Conference on Data Mining (ICDM)},
+  886--895.
+
+\end{thebibliography}

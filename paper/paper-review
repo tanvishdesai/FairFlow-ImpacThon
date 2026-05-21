@@ -1,0 +1,835 @@
+sonnet 4.6
+Here is a thorough review of the paper, along with everything you need to know about AIES.
+
+---
+
+## ⏰ Critical Timing Note First
+
+The next AIES edition (AIES 2026) is in Malmö, Sweden (October 12–14, 2026). The abstract registration deadline is **May 14, 2026**, and the full paper submission deadline is **May 21, 2026**. That means you have roughly **8 days to register an abstract** and 15 days to submit. This is very tight but still achievable.
+
+---
+
+## Registration Costs (AIES 2025 — 2026 not yet posted)
+
+For in-person attendance, early registration fees (on or before September 15) are: **$350** for AAAI/ACM members, **$400** for non-members, **$225** for student members, and **$260** for student non-members. Virtual attendance is substantially cheaper: **$95** (member), **$125** (non-member), **$60** (student member), and **$110** (student non-member). At least one author per accepted paper must register at the in-person rate and present in person. Expect 2026 fees to be similar or slightly higher.
+
+Also worth noting: the student track offers free conference registration plus a travel stipend for accepted PhD students. If you are a PhD student, apply separately once/if your paper is accepted.
+
+---
+
+## Paper Review: CODA
+
+### Overall Assessment: **Strong submission — estimated 55–65% acceptance probability**
+
+This is a genuinely solid paper that lands in AIES's sweet spot: a technical contribution with substantive governance analysis. Here is a detailed breakdown.
+
+---
+
+### Strengths
+
+**Technical contribution is real.** The primal-dual formulation is principled, and the O(√T) cumulative fairness violation guarantee is meaningful. The ablation study is thorough and the result that calibrated initialization is by far the most important component (Table 3, −12.4pp DPR without it) is a useful, honest finding. The order-stress robustness results in Table 2 are arguably the paper's most compelling empirical story — Universal RL collapsing to DPR > 2.3 under adversarial ordering is striking and well-motivated by the theory.
+
+**Multi-group extension is valuable.** Most fairness post-processing literature is stuck at k=2. The O(1)-per-timestep extremal-pair update for k > 2 groups is practically motivated and the 31% DPR gap reduction on the 5-group racial task is a strong result.
+
+**Regulatory framing is timely and accurate.** The EU AI Act and CFPB/ECOA framing in Section 8.1 is appropriate and not superficial — the paper correctly identifies the gap between one-time validation and continuous monitoring obligations.
+
+**Venue fit is excellent.** AIES specifically values papers that bridge technical contributions and sociotechnical/governance analysis. This paper does that more carefully than most.
+
+---
+
+### Weaknesses and Missing Elements
+
+These are ordered by how likely they are to cause a reviewer to reject or request major revisions.
+
+**1. Theorem 4's proof has a subtle gap (High risk).** The O(√T) bound is derived from the standard online mirror descent analysis. However, your algorithm includes a decay factor γ applied when fairness is satisfied (Line 14), which is not accounted for in the proof. The standard OMD regret inequality (which you cite as Theorem 3.1 of Hazan 2016) assumes a clean projected gradient ascent update — the decay term breaks this assumption. The proof as written essentially ignores γ in the analysis and then invokes the standard bound. A rigorous reviewer will flag this. You should either prove the bound holds with decay (likely it does, and it may actually tighten the bound), or remove the decay from the theoretical analysis and note it as a practical stabilization heuristic.
+
+**2. The societal implications section reads as a checklist (Medium risk).** Section 8 hits all the expected notes — who benefits, who is harmed, regulatory alignment, deployment prerequisites — but AIES reviewers from social science and law backgrounds will find it somewhat formulaic. In particular, Section 8.3 raises the important question of who should set δmax and ε, but then immediately deflects to "deliberative processes involving compliance officers and affected communities." This is correct but underspecified. A stronger version would engage with existing participatory AI governance literature (e.g., Sloane et al. on participatory approaches, or Kalluri's "Don't ask if AI is good for society") and say something more concrete about what those deliberative processes should look like and what barriers exist.
+
+**3. COMPAS dataset usage needs more careful justification (Medium risk).** The paper uses COMPAS for a recidivism fairness benchmark without engaging with the substantial literature arguing that recidivism prediction tools should not exist at all (most prominently, Dressel & Farid 2018 and the work by AbdulNasser et al.). AIES reviewers are likely to flag this. You don't have to abandon the dataset, but you should add a paragraph acknowledging this debate and explaining why you use COMPAS as a benchmark despite these concerns (e.g., it is a widely-used research benchmark for comparing post-processing methods, not an endorsement of its real-world use).
+
+**4. Universal RL's DPR > 2.0 under adversarial ordering looks like an implementation bug (Medium risk).** A DPR of 2.3–2.5 in Table 2 is not physically meaningful (DPR is a ratio of positive rates, so values > 1.0 are already unusual under your definition in Eq. 2). You should either clarify what is happening (is the rolling estimator going above 1.0 because the numerator/denominator swap?), or reframe this as a "disparity ratio" that can exceed 1.0 in either direction. As written, reviewers may suspect a bug rather than a genuine failure mode of RL.
+
+**5. No reproducibility statement or code release (Low-medium risk).** AIES does not formally require code, but the community norm is moving toward reproducibility. A sentence noting that code will be released upon acceptance would strengthen the submission.
+
+**6. Missing: stakeholder or practitioner perspectives (Low risk for acceptance, but shapes reviewer scoring).** AIES 2026's CFP explicitly emphasizes work "grounded in real-world AI deployments and institutional settings." The paper is entirely simulation-based. Adding even a brief discussion of what deployment in a real lending or hiring institution would actually require — the organizational, legal, and data infrastructure — would strengthen the paper's alignment with AIES 2026's stated priorities.
+
+**7. EO Gap does not improve (worth flagging proactively).** Table 1 shows CODA's EO Gap (0.101) is not better than the base model (0.106) and is worse than Universal RL (0.082). The paper acknowledges this but somewhat buries it. A reviewer focused on equalized opportunity rather than demographic parity will notice. A proactive framing — "CODA is designed for settings where DPR is the binding regulatory constraint; organizations where EO Gap is primary should consider X" — would be stronger than the current treatment.
+
+---
+
+### On the Empirical Gains
+
+The aggregate DPR improvement of 0.979 vs. 0.958 for static thresholding (Table 1) is modest — about 2 percentage points — and the accuracy cost of −0.4% is real. The Adult dataset result (DPR 0.957 vs. 0.822, +13.5pp) is much more compelling and is where CODA shines. The paper would benefit from leading with the per-dataset results more prominently rather than aggregates, since the aggregate masks significant variance across datasets.
+
+---
+
+### What to Expect at AIES
+
+AIES is genuinely interdisciplinary: roughly half the program committee comes from CS/ML and half from law, philosophy, social science, and policy. This means your paper will likely be reviewed by at least one reviewer who cannot evaluate Theorem 4 and at least one who can. The CS reviewer will appreciate the formal guarantees and ablation study. The sociotechnical reviewer will scrutinize Section 8. The make-or-break issue is usually whether reviewers believe the paper "speaks across disciplinary boundaries" — AIES 2026's CFP specifically calls this out.
+
+Historical acceptance rates at AIES have been in the 25–30% range. Your paper is above median quality, which puts it in competitive territory. The two things most likely to cause rejection are: (1) the proof gap in Theorem 4, which an expert reviewer will catch, and (2) the societal implications section feeling insufficiently engaged with the social science literature.
+
+---
+
+### Recommended Pre-Submission Fixes (in priority order)
+
+Patch the Theorem 4 proof to address the decay factor. Add a COMPAS disclaimer. Clarify the DPR > 1.0 issue in Table 2. Deepen Section 8.3 with at least 2–3 concrete citations from the participatory AI governance literature. Add a reproducibility note.
+
+If you can do those four things in the next two weeks, your submission will be substantially stronger and I would revise the acceptance estimate upward to 65–70%.
+
+
+
+
+gpt 5.5
+Here’s a **serious, reviewer-style evaluation** of your paper targeting **AIES**. I’ll be direct and calibrated to how program committee members actually think.
+
+---
+
+# 📄 Paper: *CODA: Continuous Online Dual-Adaptive Thresholding*
+
+(Your submission: )
+
+---
+
+# 🧠 Overall Verdict (Brutally Honest)
+
+**Quality level:**
+👉 *Borderline AIES accept / strong workshop / solid AAAI workshop / weak FAccT main*
+
+**Estimated acceptance probability at AIES:**
+👉 **35–55% (realistic range)**
+
+* If reviewers are **technically inclined + appreciate guarantees** → *lean accept*
+* If reviewers are **socially critical / FAccT-style mindset** → *lean reject*
+
+---
+
+# ⭐ Strengths (What Works Really Well)
+
+### 1. 🔥 Clear Problem Framing (Big Win)
+
+You correctly identify a **real gap**:
+
+> Static fairness methods ≠ deployment reality
+> → fairness drift + regulatory mismatch 
+
+This is **exactly the kind of framing AIES likes**:
+
+* Deployment-time issues
+* Governance + regulation tie-in
+* Practical relevance (lending, compliance)
+
+👉 This is one of your strongest assets.
+
+---
+
+### 2. 🧮 Solid Technical Core
+
+* Clean formulation: **online constrained optimization**
+* Use of **primal-dual updates** is principled
+* Theoretical guarantee:
+
+[
+O(\sqrt{T}) \text{ fairness violation}
+]
+
+* Nice **separation result vs static thresholds** 
+
+👉 This is legit contribution—not trivial.
+
+---
+
+### 3. 📊 Empirical Coverage is Good (for AIES)
+
+* 5 datasets, 2 models, 3 seeds
+* Baselines include:
+
+  * static thresholds
+  * RL-based method
+* Includes:
+
+  * ablation
+  * adversarial ordering test (nice touch)
+  * multi-group extension
+
+👉 This is **above average for AIES** (but below top-tier ML conferences).
+
+---
+
+### 4. 🏛️ Governance Section is Strong (Very Important for AIES)
+
+Section 8–9 is **well done**:
+
+* EU AI Act discussion
+* fairness metric as normative choice
+* deployment risks (fairness-washing, metric gaming)
+
+👉 This alignment with **policy + sociotechnical framing** is exactly what AIES wants.
+
+---
+
+# ⚠️ Weaknesses (These WILL be raised by reviewers)
+
+## 1. 🚨 Incremental Novelty (Biggest Risk)
+
+Your core idea is:
+
+> “Online adaptive thresholding using primal-dual updates”
+
+A reviewer might say:
+
+* “This is just applying **online constrained optimization** to fairness thresholds”
+* “Conceptually straightforward extension”
+
+Even your own paper hints at this lineage:
+
+* Mahdavi et al. (online constraints)
+* Hardt et al. (thresholding)
+
+👉 Translation:
+**Strong engineering + theory combo, but not clearly a *breakthrough***.
+
+---
+
+## 2. ⚖️ Fairness Scope is Narrow (AIES reviewers WILL push this)
+
+You optimize **only demographic parity (DPR)**:
+
+> “CODA optimizes DPR… does not address calibration or individual fairness” 
+
+Expected reviewer critique:
+
+* Why not:
+
+  * Equalized odds?
+  * Individual fairness?
+  * Multi-metric tradeoffs?
+* Is DPR even appropriate in all domains?
+
+👉 This is a **classic AIES criticism vector**.
+
+---
+
+## 3. 🧪 Experimental Limitations (Moderate Concern)
+
+### Missing:
+
+* Real-world deployment logs (everything is benchmark datasets)
+* Stronger baselines:
+
+  * no comparison with:
+
+    * conformal fairness
+    * distributionally robust methods
+* No **statistical significance tests**
+
+Also:
+
+* Improvements are **moderate**:
+
+  * DPR: 0.958 → 0.979 (not huge)
+  * Accuracy drop: small but present
+
+👉 Reviewers may say:
+
+> “Incremental empirical gains + synthetic setting”
+
+---
+
+## 4. 🤖 “Controller” Framing May Be Overstated
+
+You position CODA as:
+
+> “governance mechanism for fairness compliance”
+
+A skeptical reviewer will say:
+
+* It’s still just **threshold tuning**
+* Doesn’t address:
+
+  * data bias
+  * causal fairness
+  * structural inequity
+
+👉 This creates a **perception gap** between claim vs impact.
+
+---
+
+## 5. 🧩 Missing Human-in-the-loop / Institutional Design
+
+Even though you mention governance:
+
+You don’t actually show:
+
+* how humans interact with CODA
+* audit workflows
+* decision override mechanisms
+
+AIES reviewers love:
+
+* sociotechnical systems
+* institutional integration
+
+👉 This is a **missed opportunity**.
+
+---
+
+# 📊 Score Breakdown (Typical Reviewer View)
+
+| Category             | Score (out of 10) |
+| -------------------- | ----------------- |
+| Novelty              | 6.5               |
+| Technical Quality    | 8                 |
+| Empirical Evaluation | 7                 |
+| Clarity              | 8.5               |
+| Societal Impact      | 8                 |
+| Overall              | **7.3 / 10**      |
+
+👉 That maps to **borderline accept at AIES**
+
+---
+
+# 🎯 What Happens at AIES Review Time
+
+You’ll likely get:
+
+### Reviewer 1 (Technical-positive)
+
+> “Strong formulation, nice guarantees, relevant problem → Accept”
+
+### Reviewer 2 (Skeptical)
+
+> “Incremental, limited fairness scope → Weak Reject”
+
+### Reviewer 3 (Policy-focused)
+
+> “Good governance discussion but lacks real deployment grounding → Borderline”
+
+👉 Final outcome = **coin flip leaning accept**
+
+---
+
+# 🔧 What You MUST Fix Before Submission
+
+If you want to push acceptance to **60–75%**, do this:
+
+---
+
+## 1. Add ONE killer experiment
+
+Pick one:
+
+* Simulated **real deployment drift scenario over time**
+* OR industry-like dataset (credit, hiring logs)
+* OR long-horizon streaming experiment
+
+👉 This alone can flip reviewers.
+
+---
+
+## 2. Expand fairness beyond DPR
+
+Even minimally:
+
+* Add:
+
+  * Equalized odds constraint experiment
+  * Calibration analysis
+
+👉 You already mention it—just **implement a small extension**.
+
+---
+
+## 3. Strengthen novelty positioning
+
+Clarify:
+
+* Why this is NOT just:
+
+  * standard OCO + thresholds
+* Emphasize:
+
+  * deployment-time control framing
+  * regulatory compliance angle
+
+👉 This is narrative—but critical.
+
+---
+
+## 4. Add statistical rigor
+
+* confidence intervals (you partially have)
+* significance tests
+* robustness checks
+
+---
+
+## 5. Add “human governance loop”
+
+Even conceptual:
+
+* who sets ε?
+* audit dashboards?
+* override conditions?
+
+👉 This screams “AIES-ready”.
+
+---
+
+# 💰 AIES Conference Registration Cost (Typical)
+
+AIES (ACM conference) usually falls in this range:
+
+### 🎓 Student Registration
+
+* **~$400 – $700 USD**
+  (₹33,000 – ₹58,000 approx)
+
+### 👤 Regular Registration
+
+* **~$700 – $1000 USD**
+
+### 💻 Virtual (if offered)
+
+* **~$100 – $300 USD**
+
+👉 Exact numbers vary yearly, but this is the **realistic band**.
+
+---
+
+# 🧾 Final Verdict
+
+👉 **Will it be accepted at AIES?**
+**Yes, but not comfortably.**
+
+👉 **Your position right now:**
+
+* Not weak
+* Not strong
+* **Classic borderline paper**
+
+👉 **If you improve experiments + fairness scope:**
+You can push this into **solid accept territory**.
+
+---
+
+If you want, I can:
+
+* simulate actual **3 reviewer reports + meta-review**
+* or suggest **specific rebuttal responses** (very useful for borderline papers)
+
+
+SONAR:
+Your paper looks **well aligned** with AIES and has a credible chance, but I would not call it a sure accept yet. Based on the draft, I’d rate it around **7.5/10 in fit** for AIES and **6.5–7/10 in current paper quality**, with the main risk being whether the paper feels sufficiently rigorous, well-positioned, and empirically convincing for a multidisciplinary audience. 
+
+## Fit for AIES
+
+AIES explicitly welcomes work on fairness, governance, post-deployment accountability, institutional context, and technical work that speaks across disciplinary boundaries. Your paper does exactly that: it combines online fairness control, deployment-time governance, and regulatory framing, which is a strong thematic match. The strongest fit point is that you are not just proposing a model; you are framing fairness as a continuous governance problem, which AIES tends to value. [aies-conference](https://www.aies-conference.com/2026/)
+
+## Paper quality
+
+The paper has several strong qualities. It has a clear problem statement, a technically interesting method, formal guarantees, experiments across multiple datasets, an ablation study, a multi-group extension, and a broader societal discussion. That is much stronger than a purely conceptual or purely empirical submission, and it will read as more complete than many venue-fit papers. The topic is timely, and the governance angle is especially well suited to AIES. 
+
+That said, the current draft also has some weaknesses that reviewers may notice quickly. The most important concern is whether the empirical evaluation is deep enough to justify the technical claims, especially the order-stress setting and the stability claims across datasets. Another likely concern is whether the fairness objective is too narrow if the venue expects a stronger ethical or sociotechnical analysis than a mostly optimization-driven paper. [aies-conference](https://www.aies-conference.com/2026/)
+
+## Missing pieces
+
+A few things appear underdeveloped or risky in the current version.
+
+- The paper seems heavily optimized around demographic parity ratio, but AIES reviewers may want a stronger justification for why that metric is the right one in your target deployment context.
+- The discussion of limitations is good, but it could be even more concrete about when CODA should not be used and what failure modes are most dangerous. 
+- The experiments would benefit from clearer reporting of variance, confidence intervals, and practical significance across more realistic deployment streams. ould help to include more explicit stakeholder and institutional analysis, not just regulatory references. [aies-conference](https://www.aies-conference.com/2026/)
+- The writing should be checked carefully for consistency and presentation quality, because AIES says submissions that do not follow formatting guidelines can be desk rejected, and papers are expected to be publication-ready. [aies-conference](https://www.aies-conference.com/2026/)
+
+## Acceptance chances
+
+I cannot predict acceptance with certainty, but I can give you a realistic read. At AIES, a paper like this is most likely to succeed if reviewers see it as **technically sound, clearly motivated, and genuinely relevant to AI ethics and society**. Right now, I would describe it as a **plausible accept if polished well**, not a safe accept. [aies-conference](https://www.aies-conference.com/2026/)
+
+My rough estimate:
+- **Strong chance** if you tighten the narrative, strengthen the empirical validation, and make the governance contribution more explicit.
+- **Moderate chance** in its current form.
+- **Weak chance** only if the final submission still feels like a technical ML paper with a light ethics overlay rather than an AIES paper. [aies-conference](https://www.aies-conference.com/2026/)
+
+In practical terms, I would say the paper is in the range where a careful revision could move it from “borderline good” to “competitive.” AIES also emphasizes multidisciplinary clarity, so the framing matters almost as much as the method. [aies-conference](https://www.aies-conference.com/2026/)
+
+## Registration costs
+
+I could not verify a final registration fee table for **AIES 2026** from the official call-for-papers page; the official site I checked gives the dates, submission rules, and conference location, but not the registration prices. The AIES 2026 call states the conference will be in Malmö, Sweden, on October 12–14, 2026, and that at least one author of each accepted paper must register and attend. Since the official registration fees were not present in the retrieved conference pages, I cannot give you a reliable cost figure for AIES 2026 from the available source material. [aies-conference](https://www.aies-conference.com/2026/)
+
+## What to expect
+
+If you submit, expect reviewers to care about three things most:
+- Whether the fairness problem is important and current.
+- Whether the method is technically defensible.
+- Whether the paper speaks to real deployment, policy, or governance implications in a way a mixed audience can understand. [aies-conference](https://www.aies-conference.com/2026/)
+
+Your paper already has the right ingredients, so the main question is refinement rather than reinvention. The submission is **worth pursuing**, but I would revise it with the expectation that reviewers will probe the novelty versus prior post-processing work, the realism of the deployment setting, and the ethical adequacy of optimizing a single fairness metric. 
+
+If you want, I can next give you a **review-style breakdown in the format of AIES reviewers**: strengths, weaknesses, novelty, technical soundness, ethics/societal contribution, and an estimated accept/reject recommendation.
+
+
+
+DEEPSEEK:
+Thank you for sharing this manuscript—it tackles a genuinely important problem at the intersection of algorithmic fairness, online learning, and AI governance. The work is substantial and well-executed overall, but a few targeted improvements could meaningfully strengthen its case.
+
+## Overall Assessment
+
+**Summary:** The paper proposes CODA (Continuous Online Dual-Adaptive Thresholding), a principled online controller that adjusts per-group decision thresholds during deployment to maintain demographic parity under distributional shifts and adversarial stream orderings. It uses a primal-dual optimization framework, initializes from calibrated static thresholds, and adapts online by tracking cumulative fairness constraint violations via a dual variable. The authors prove \(O(\sqrt{T})\) cumulative fairness violation, establish a worst-case asymptotic separation from static thresholding, and demonstrate empirically across five datasets and two model families that CODA achieves higher DPR than static thresholds while maintaining comparable accuracy. A multi-group extension and a substantial governance analysis are also provided.
+
+**Quality Level:** This is a strong paper. The technical contribution is rigorous, the empirical evaluation is thorough (datasets, models, seeds, ablations, stress tests), and the engagement with regulatory and ethical dimensions is substantial. I would place the paper in the top 30–40% of AIES submissions in terms of technical depth and policy relevance. It is not flawless, but the core ideas and execution are solid.
+
+## Strengths
+
+1. **Compelling Motivation and Real-World Framing**  
+   The paper opens with a concrete, legally grounded scenario (mortgage lending, four-fifths rule, ECOA) that immediately establishes why static fairness validation is insufficient. The connection to regulatory developments (EU AI Act, CFPB guidance) is precise and well-researched.
+
+2. **Rigorous Theoretical Analysis**  
+   - Proof of \(O(\sqrt{T})\) cumulative fairness violation (Theorem 4) with a transparent primal-dual analysis.  
+   - Formal separation from static thresholding (Proposition 6, Corollary 7), showing \(\Omega(T)\) worst-case violation for any fixed threshold.  
+   - Bounded accuracy safety guarantee (Proposition 8) that provides a predictable accuracy-fairness trade-off.  
+   - The theoretical assumptions are clearly stated, and the plain-language interpretations ("Over 10,000 decisions, the average per-decision violation shrinks to \(1/\sqrt{T} \approx 0.01\)") aid accessibility.
+
+3. **Comprehensive Empirical Evaluation**  
+   - Five benchmark datasets, two model families (logistic regression, XGBoost), three random seeds → 30 runs.  
+   - Multiple baselines: Base Model, Group Threshold, Guard Threshold, Universal RL.  
+   - Order stress experiments that empirically validate the theoretical separation (Universal RL collapses catastrophically under adversarial ordering).  
+   - Ablation study isolating the contribution of each design component (calibrated initialization is the most critical).  
+   - Multi-group results showing 31% DPR gap reduction on a 5-group racial fairness task.  
+   - Dynamics visualization of threshold trajectories and dual variable evolution.  
+   - Hyperparameter sensitivity analysis demonstrating robustness across most parameters.
+
+4. **Thoughtful Societal Implications Section (Section 8)**  
+   - Concrete alignment with EU AI Act continuous monitoring requirements and U.S. fair lending law.  
+   - Explicit discussion of who benefits and who is harmed, including risks of fairness-washing, metric gaming, and automation complacency.  
+   - Nuanced treatment of normative choices embedded in CODA’s parameters (\(\epsilon\), \(\delta_{\text{max}}\), intervention rate penalty) and who should set them.  
+   - Clear deployment prerequisites and limitations (GDPR constraints, flawed base models, ambiguous group membership).
+
+5. **Clear Writing and Structure**  
+   The paper is well-organized, the notation is clean, and the plain-language summaries after theoretical results effectively bridge the gap between formal analysis and practical understanding.
+
+## Weaknesses and Missing Elements
+
+### 1. Theoretical Gap: Unbiased DPR Estimation Assumed
+The \(O(\sqrt{T})\) bound in Theorem 4 treats the rolling DPR estimate \(\widehat{\text{DPR}}_t\) as given, without accounting for estimation noise. In practice, the quality of this estimate depends on:
+- **Window size \(w\):** Too small → high variance; too large → slow to detect shifts.  
+- **Group representation:** Underrepresented groups may have very few observations in a given window, producing unstable estimates that could mislead the dual update.
+
+The paper does not analyze how estimation error propagates through the primal-dual updates, nor does it provide guidance on selecting \(w\) or a minimum group sample size beyond the warmup parameter. A brief discussion—or even a sensitivity experiment varying window size—would substantially strengthen the theoretical story.
+
+### 2. Missing Baselines in Experimental Comparison
+The paper cites FairBatch (Roh et al. 2021) and acknowledges online fairness methods, but does not compare against them. While the authors correctly note that FairBatch requires training-loop access (in-processing), other relevant online methods exist that could serve as baselines:
+- **Online primal-dual fairness methods** (e.g., "Online Decision Making with Fairness over Time," arXiv 2026) that directly compete with CODA’s formulation.  
+- **Robust fairness under distribution shift** (e.g., Rezaei et al. 2021, which is cited but not compared).
+
+Including at least one more contemporary online baseline would make the empirical claims more compelling, especially for readers familiar with the online fairness literature.
+
+### 3. Narrow Fairness Metric Focus (DPR Only)
+CODA exclusively optimizes demographic parity ratio (DPR). The paper acknowledges that DPR is not the only appropriate fairness criterion and reports Equalized Opportunity (EO) Gap in the tables, but:
+- The dual variable and primal updates are hard-coded to DPR. Extending to equalized odds or equal opportunity would require a fundamentally different constraint structure—tracking per-group confusion matrices, not just positive rates.  
+- The paper’s claim that "CODA’s DPR improvements do not substantially worsen EO Gap" (Section 9.1) relies on the empirical observation that EO Gap remains similar. But if an adversary (or deployment context) deliberately creates a trade-off between DPR and equal opportunity, CODA has no mechanism to detect or respond to that conflict.
+
+A brief discussion—or even a preliminary experiment—showing how the framework might accommodate a second fairness constraint via an additional dual variable would demonstrate awareness of the multi-criterion nature of fairness.
+
+### 4. Societal Implications Could Go Deeper on Potential Harms
+Section 8 is strong but could benefit from:
+- **More concrete examples of harm scenarios:** For instance, if CODA systematically lowers thresholds for a historically disadvantaged group in a lending context, it may increase approval rates but also increase default rates for that group—potentially reinforcing cycles of financial distress.  
+- **A discussion of procedural fairness:** CODA operates entirely on group-level statistical parity. It has no mechanism to ensure that individual decisions are justifiable or contestable—a concern prominent in GDPR’s Article 22 (automated decision-making rights) and in the AI Act’s emphasis on human oversight.  
+- **Engagement with Selbst et al. (2019) “traps” more directly:** The paper cites the five traps but does not explicitly analyze whether CODA risks falling into, say, the “portability trap” (assuming thresholds learned on one population transfer to another) or the “framing trap” (abstracting away the social system that generates the data). A few sentences connecting CODA’s design to those traps would elevate the governance analysis.
+
+### 5. Minor Technical and Presentation Issues
+- **Algorithm 1 duplication:** Lines 18–27 are duplicated in the PDF, which appears to be a formatting artifact. This should be cleaned up.  
+- **Missing computational cost analysis:** What is the per-timestep overhead of CODA relative to static thresholding? For high-throughput decision systems (e.g., real-time lending), even \(O(1)\) overhead matters.  
+- **Limited discussion of cold-start behavior:** How does CODA perform when validation data is scarce or unrepresentative? The calibrated initialization assumes representative validation data; a brief discussion of robustness to poor initialization would be useful.
+
+## Fit for AIES
+
+This paper is **highly suited** for the AAAI/ACM Conference on AI, Ethics, and Society (AIES). The 2026 Call for Papers explicitly invites work that:
+- Is “grounded in real-world AI deployments and institutional settings.”  
+- “Connects normative or ethical claims to concrete sociotechnical, organizational, legal, or policy contexts.”  
+- Addresses “fairness, bias, equity, and equality” and “post-deployment accountability, harm, and mechanisms for redress.”
+
+CODA satisfies all three criteria: it targets a concrete deployment-time fairness problem, provides formal guarantees with regulatory relevance, and includes a dedicated governance analysis. The interdisciplinary framing—combining online convex optimization with regulatory compliance and normative reflection—is precisely what AIES values.
+
+**Page Limit Check:** The AIES 2026 call specifies **10 pages maximum** (excluding references) in AAAI 2-column format. The current manuscript appears to be 10 pages of content; if the references and appendices push it over, the authors will need to condense or move supplementary material to an appendix (which does not count toward the page limit per the call).
+
+## Chances of Acceptance
+
+Given the paper’s strengths and fit, I would estimate:
+
+| Factor | Assessment |
+|--------|------------|
+| Technical quality | Top quartile |
+| Relevance to AIES | Very high |
+| Completeness of evaluation | Strong baseline |
+| Theoretical rigor | Strong (with minor gaps noted) |
+| Societal/ethical engagement | Above average for a technical paper |
+| **Estimated acceptance probability** | **60–75%** |
+
+The primary risk factors are:
+- **Reviewer concern about the narrow metric focus (DPR only).** If a reviewer is deeply committed to equalized odds or individual fairness frameworks, they may view CODA’s contribution as insufficiently general.  
+- **Missing contemporary baselines.** A reviewer familiar with the online fairness literature may note the absence of direct comparisons.  
+- **Theoretical gap regarding estimation noise.** A theoretically inclined reviewer may question whether the \(O(\sqrt{T})\) bound holds under realistic noisy estimates.
+
+Mitigating these risks (see suggestions below) could push the estimated acceptance probability toward the upper end of the range.
+
+## Suggestions for Improvement Before Submission
+
+1. **Add a discussion of estimation bias and window size** (1–2 paragraphs in Section 5 or 9): Acknowledge that the theoretical analysis assumes unbiased \(\widehat{\text{DPR}}_t\), discuss how window size and group representation affect estimation quality, and suggest a practical heuristic (e.g., requiring \(\geq 30\) observations per group per window before the dual update is active).
+
+2. **Include at least one more online baseline** (if feasible): Even a preliminary comparison against a primal-dual online fairness method would preempt reviewer concerns about completeness. Alternatively, acknowledge the limitation explicitly and commit to future comparisons.
+
+3. **Expand the normative discussion of DPR vs. other metrics** (Sections 9.1 and 9.4): Briefly discuss how the framework could be extended to handle a second fairness constraint (e.g., equal opportunity) via an additional dual variable, and what trade-offs that would entail.
+
+4. **Add procedural fairness considerations** (Section 8): Mention GDPR Article 22 rights (contestability of automated decisions) and how CODA’s threshold adjustments interact—or fail to interact—with individual-level fairness guarantees.
+
+5. **Fix the duplicate lines in Algorithm 1** and proofread for any other formatting artifacts.
+
+6. **Condense if necessary to meet the 10-page limit**, ensuring all core contributions (theory, experiments, governance) remain clearly represented.
+
+## Registration Costs for AIES
+
+Based on the most recently published fee schedule (AIES-25, which is likely to be similar for AIES-26):
+
+| Category | Early (Member) | Early (Non-member) | Late (Member) | Late (Non-member) |
+|----------|:---:|:---:|:---:|:---:|
+| **In-Person Regular** | $350 | $400 | $400 | $450 |
+| **In-Person Student** | $225 | $260 | $250 | $280 |
+| **Virtual Regular** | $95 | $125 | $125 | $150 |
+| **Virtual Student** | $60 | $110 | $85 | $135 |
+
+**Key points:**  
+- At least one author of each accepted paper **must register at the in-person rate** and present the work on-site. Virtual-only registration is not available for presenting authors.  
+- Member rates require a valid AAAI or ACM membership number.  
+- The AIES 2026 registration page has not yet published final fees, but the 2025 figures above are a reliable guide.  
+- A $50 processing fee is assessed for all registration refunds.
+
+---
+
+**Overall**, this is a well-crafted paper with a solid chance of acceptance at AIES. Addressing the identified gaps—particularly the estimation-noise discussion and expanding the normative treatment—would meaningfully improve the submission. I would be happy to review a revised version.
+
+
+GEMINI 3.1 PRO:
+
+
+
+Based on a detailed review of your paper, **"CODA: Continuous Online Dual-Adaptive Thresholding for Deployment-Time Fairness Governance,"** here is an assessment of its quality, fit, and chances for the AAAI/ACM Conference on Artificial Intelligence, Ethics, and Society (AIES), along with the requested conference logistics. 
+
+### 1. Chances of Acceptance at AIES
+**Your chances of acceptance at AIES are very high.** 
+AIES is a highly interdisciplinary venue that seeks to bridge rigorous technical AI research with law, policy, philosophy, and societal impact. Papers that are purely mathematical often struggle there if they lack societal context, and purely qualitative papers can struggle if they lack technical depth. Your paper hits the "sweet spot" perfectly. 
+
+By grounding a strong technical contribution (online primal-dual optimization with theoretical guarantees) in real-world governance requirements (EU AI Act, ECOA) and including a dedicated "Societal Implications" section that critically examines normative choices, you have tailored this work brilliantly for the AIES audience. 
+
+### 2. Quality of the Paper (Strengths)
+The overall quality of the paper is **excellent**. It is well-motivated, mathematically sound, and exceptionally well-contextualized. 
+*   **Strong Motivation & Regulatory Alignment:** Framing the problem around "deployment-time fairness" and "fairness debt" directly addresses a massive gap in current MLOps and AI governance. Tying this to specific regulations (like the EU AI Act's continuous monitoring mandate) provides immediate real-world value.
+*   **Solid Theoretical Foundation:** Formulating the thresholding problem as online constrained optimization and proving $O(\sqrt{T})$ cumulative fairness violations is a rigorous approach. The worst-case separation from static thresholding (Corollary 7) is a compelling theoretical result. 
+*   **Practical Multi-Group Extension:** Extending fairness post-processing beyond binary attributes ($k>2$) is a known pain point in the literature. Your extremal-pair update is an elegant, computationally cheap solution.
+*   **Self-Awareness & Ethical Context:** Section 8 (Societal Implications) and Section 9 (Discussion on normative metrics) elevate the paper. AIES reviewers heavily penalize papers that treat fairness as an abstracted math problem; your explicit acknowledgment of the limitations of DPR and the traps of "fairness-washing" will be highly appreciated.
+
+### 3. Missing Things / Areas for Improvement
+While the paper is strong, AIES reviewers (particularly those from the technical track) might critique a few areas. Addressing these could upgrade your paper from a "Accept" to an "Oral Presentation":
+*   **Lack of a "Naïve Adaptive" Baseline:** You compare CODA against static thresholds and "Universal RL." However, an obvious baseline for a practitioner would be *Rolling Window Recalibration* (i.e., simply refitting the Hardt et al. static thresholds every $W$ timesteps). Showing why CODA is better than simply re-calibrating periodically would strengthen your empirical claims. 
+*   **Artificial Temporal Drift:** In Section 7.3, you simulate distribution shifts via "adversarial orderings" (e.g., privileged-first). While this proves worst-case robustness, AIES reviewers often critique the use of static datasets (like Adult and COMPAS) for temporal problems. Evaluating CODA on a dataset with *natural temporal drift* (such as the **Folktables ACS PUMS** dataset, ordered sequentially by year/month) would make the empirical section bulletproof. 
+*   **Intersectionality:** You rightly note in the limitations that your method does not handle intersectional or fluid identities. Because AIES places a heavy emphasis on intersectionality, adding a brief empirical experiment evaluating how CODA performs on an intersectional group (e.g., Black Women in the Adult/Folktables dataset) as a $k$-group setup could be a massive value-add.
+
+### 4. General Expectations for Submission
+*   **Reviewer Demographics:** You will likely get a mix of reviewers—one ML theoretician, one fairness/HCI practitioner, and one policy/ethics scholar. 
+*   **Feedback to Expect:** The technical reviewer will verify your mirror descent bounds and might ask about edge cases in your EMA smoothing. The ethics/policy reviewer will love Section 8 but might push you to expand on *who* gets to decide the hyperparameter $\delta_{max}$ in a real-world corporate hierarchy.
+*   **Final Verdict:** Assuming the math holds up to peer review, this paper is on track for a strong acceptance. It has the exact DNA of an AIES spotlight paper. 
+
+---
+
+### 5. AIES Registration Costs
+If your paper is accepted, at least one author must register to present the work. While specific pricing for the upcoming 2026 conference is typically announced closer to the event, the rates based on the most recent AIES conferences (2024/2025) are structured as follows [1, 2]:
+
+**In-Person Registration:**
+*   **Regular AAAI or ACM Member:** $350 (Early Bird) / $400 (Late)
+*   **Regular Non-Member:** $400 (Early Bird) / $450 (Late)
+*   **Student Member:** $225 (Early Bird) / $250 (Late)
+*   **Student Non-Member:** $260 (Early Bird) / $280 (Late)
+
+**Virtual Attendance** *(Note: AIES usually requires presenting authors to attend in-person unless special accommodations are made)*:
+*   **Regular AAAI or ACM Member:** $95 (Early) / $125 (Late)
+*   **Regular Non-Member:** $125 (Early) / $150 (Late)
+*   **Student Member:** $60 (Early) / $85 (Late)
+*   **Student Non-Member:** $110 (Early) / $135 (Late)
+
+*Note: AIES also offers a highly competitive **Student Track / Program** which, if accepted, includes free conference registration and a travel stipend based on financial need [1]. If you are a PhD student, it is highly recommended to apply for this alongside your main track submission.*
+
+
+
+
+
+GROK 4.2
+**Paper Review & AIES Submission Assessment**
+
+**Overall Quality: Strong (Top 30-35% of AIES submissions)**
+
+This is a **genuinely good paper** — significantly above the average quality seen at AIES in recent years. It combines non-trivial technical contribution, rigorous theory, strong empirical work, and thoughtful governance/societal analysis. Very few papers at AIES manage this balance this cleanly.
+
+### Core Strengths
+
+- **Technical Novelty & Rigor**: The primal-dual online controller with the specific engineering (calibrated initialization, EMA smoothing, accuracy-aware damping, anti-overshoot, asymmetric scaling) is clever. The theoretical results (sublinear cumulative violation, worst-case separation from static thresholds under adversarial ordering, bounded accuracy degradation) are meaningful. This is real theory, not toy theory.
+- **Empirical Thoroughness**: 5 datasets, multiple models, adversarial stream ordering, multi-group extension, ablation studies, hyperparameter sensitivity, and dynamics visualizations. This is excellent.
+- **Governance & Societal Analysis**: Section 8 and the ethical statement are unusually strong for a technically heavy paper. The discussion of regulatory alignment (EU AI Act, CFPB, Equal Credit Opportunity Act), normative choices in the fairness metric, power/accountability, deployment prerequisites, and potential misuse ("fairness-washing", metric gaming, automation complacency) is mature and nuanced.
+- **Honesty**: You clearly articulate limitations (DPR focus, group vs individual fairness, assumptions about observable protected attributes, etc.). This builds credibility.
+
+### Weaknesses / Missing Pieces
+
+1. **Positioning of Novelty** (Most Important)
+   - The paper sometimes sells itself as more revolutionary than it is. The core is online mirror descent applied to threshold adaptation. Reviewers may say "this is just primal-dual online learning with some domain-specific tricks." You need to **own this framing** more explicitly and sell the *specific instantiation* harder — particularly the combination of techniques that makes it stable and practical.
+
+2. **Connection to Existing Online Fairness Literature**
+   - You cite some of it, but the related work could more aggressively distinguish CODA from prior online/adaptive fairness work (e.g., the FairBatch line, adaptive classifiers, etc.). Some reviewers will come from this literature.
+
+3. **Individual Fairness / Intersectionality**
+   - You acknowledge this, but given AIES's audience, you might want one additional paragraph on why group parity remains valuable *despite* these limitations in consequential domains (lending, hiring).
+
+4. **Minor Presentation Issues**
+   - Some figures (especially the dynamics ones) are quite dense. Consider moving some to appendix or creating cleaner versions for the main paper.
+   - The title is a bit long and clunky. Something punchier might help ("CODA: Online Fairness Controllers with Formal Guarantees" or similar).
+
+### Acceptance Chances at AIES
+
+**Estimated probability: 55-70%.**
+
+This is a **competitive** submission. AIES acceptance rates have hovered in the 25-35% range recently, but this paper has several advantages:
+
+- Perfect topical fit (technical fairness + governance + regulatory alignment).
+- AIES loves papers that bridge CS theory with law/policy. Your regulatory alignment section is excellent here.
+- The combination of strong theory *and* deep societal analysis is relatively rare.
+
+**Risk factors:**
+- If the pool has several strong "sociotechnical" papers that critique the entire fairness paradigm, yours could be seen as too "solutionist."
+- Reviewers who dislike post-processing approaches entirely (a real faction in the community).
+
+**Prediction**: Likely to get **2 Accept / 1 Weak Accept** or **3 Weak Accept** type scores. Borderline accept that could go either way depending on AC and discussion. With good rebuttal (especially addressing the "is this just online mirror descent?" critique), it has a legitimate shot at acceptance. It is *not* a sure thing, but it's clearly in the conversation.
+
+### What to Expect at AIES
+
+- **Review process**: 3-4 reviews + meta-review. Area chairs are generally reasonable.
+- **Common reviewer types**:
+  - The "this should be at NeurIPS/ICML" reviewer (ignore the score, address technically).
+  - The sociotechnical reviewer who wants more stakeholder engagement (you handle this well).
+  - The theory reviewer who will scrutinize your proofs.
+
+The rebuttal phase is quite useful at AIES. Use it aggressively.
+
+### Registration Costs (AIES 2025)
+
+As of latest available data (AIES 2024 in San Francisco), costs were approximately:
+
+- **Early Bird (ACM Member)**: $650–$750 (academic), $850–$950 (industry)
+- **Early Bird Student**: $350–$450
+- **Regular registration**: +$150–200
+- Virtual options are usually ~40-50% cheaper.
+
+**Exact numbers for 2025 have not been announced yet.** Check the official AIES website when registration opens (typically 2-3 months before the conference). Many universities will cover this for students/faculty. ACM membership ($99/year, $49 for students) usually saves money.
+
+### Final Recommendation
+
+**Submit it.** This is a strong AIES paper. Revise the positioning/novelty framing and related work slightly, clean up a couple figures, and strengthen the rebuttal strategy around the "online optimization" critique.
+
+This work is clearly in the tradition of serious, careful fairness research (Hardt, Price, Srebro; Pleiss et al.; Menon & Williamson; etc.) while pushing it into the online/regulatory monitoring setting that is increasingly relevant. That matters.
+
+Would you like specific suggestions on how to reframe the introduction/abstract to maximize AIES chances? I can also give more targeted feedback on particular sections if you share specific concerns.
+
+
+KIMI2.6:
+Here is a structured review and assessment of your paper, targeted specifically at the **AIES** (AAAI/ACM Conference on AI, Ethics, and Society) venue.
+
+---
+
+## 1. Executive Verdict
+
+**Paper Quality:** **Solid to Strong.** The manuscript presents a principled, well-executed technical contribution (an online primal-dual controller for fairness thresholding) that is explicitly and thoughtfully connected to governance and regulatory compliance. It is well-organized, clearly written, and technically competent.
+
+**Fit for AIES:** **Good, but not perfect.** The topic—deployment-time fairness governance—is squarely in AIES’s scope. The paper goes beyond pure ML optimization by including regulatory alignment, an analysis of power/accountability, and a dedicated Ethical Statement. However, the societal analysis leans more toward “compliance and risk management” than toward deep critical or interdisciplinary engagement, which is the primary differentiator at AIES.
+
+**Estimated Acceptance Chance:** **Moderate-to-Good (~60–75%).** With the current draft, I would place this in the **“Weak Accept” to “Accept”** range. It is a competitive submission, but acceptance will depend heavily on whether your reviewer pool values the technical-governance bridge or demands deeper critical social analysis.
+
+---
+
+## 2. Strengths (What Works Well)
+
+| Strength | Why It Matters for AIES |
+|---|---|
+| **Timely, high-stakes problem** | You directly address the gap between one-time validation fairness and continuous deployment-time fairness, which is a pressing regulatory issue (EU AI Act, ECOA). |
+| **Principled technical mechanism** | The primal-dual formulation with an explicit dual variable tracking cumulative violation is elegant and provides interpretable audit trails—something governance practitioners actually need. |
+| **Formal guarantees + empirical validation** | The $O(\sqrt{T})$ bound and the extensive experiments (5 datasets, multi-group extension, ablation, adversarial ordering) give the work credibility. |
+| **Explicit governance analysis (Sec. 8)** | Discussing regulatory alignment, fairness washing, metric gaming, and automation complacency signals that you understand AIES is not just an ML accuracy venue. |
+| **Ethical Statement** | This is increasingly expected at AIES and demonstrates reflexivity that separates serious work from “ethics washing.” |
+| **Multi-group extension** | Moving beyond binary protected attributes is practically important and shows the method is not artificially restricted to a toy setting. |
+
+---
+
+## 3. Weaknesses & Missing Elements (What to Strengthen)
+
+The following are the most likely reasons an AIES reviewer might argue for rejection or a low score:
+
+### A. Depth of Critical Engagement
+Your Section 8 (“Societal Implications”) is **descriptive rather than critical**. You correctly identify that CODA embeds normative choices (the fairness target $\varepsilon$, the maximum deviation $\delta_{\max}$, etc.), but you treat them primarily as *parameters to be set by deliberative processes*. An AIES reviewer from a social science or critical data studies background will ask: *Deliberative among whom?* The paper lacks engagement with:
+- **Participatory design or community accountability**: How do affected populations challenge or audit CODA’s threshold trajectories?
+- **Algorithmic reparation**: Is maintaining DPR sufficient, or does it merely “manage” disparity without addressing structural causes?
+- **Power asymmetries**: The framework positions the deployer as the agent of fairness. A deeper interrogation of institutional power (drawing more heavily on authors like **Eubanks**, **Benjamin**, or **Green & Chen**) would strengthen the paper’s AIES credentials significantly.
+
+### B. Positionality
+AIES has increasingly come to expect a **positionality statement**. Your Ethical Statement is good, but a brief reflection on *who the authors are* and *what relationship they have to the communities affected by lending/hiring algorithms* would signal awareness of situated knowledge.
+
+### C. Theoretical Novelty Framing
+Your theoretical guarantee ($O(\sqrt{T})$ cumulative violation) is a relatively direct application of standard online convex optimization / primal-dual methods (Mahdavi et al., 2012). **This is not a flaw**, but the paper would benefit from being more explicit about what is *novel in the application domain* versus what is *imported from online learning theory*. Otherwise, a technically minded reviewer might undervalue the contribution.
+
+### D. Stakeholder and Practical Realism
+While you note limitations (discrete group labels, known attributes), the experimental setup remains a **benchmark stream**. For AIES, even a small amount of discussion on how CODA would interface with real-world loan officers, compliance officers, or affected applicants would ground the work. For example:
+- How should a lender explain a changing threshold to a denied applicant?
+- What happens when group labels are self-reported, missing, or contested at decision time?
+
+### E. Normative Justification of DPR
+You acknowledge that DPR is a legal convention (the four-fifths rule) and cite Chouldechova and Corbett-Davies & Goel. However, the paper could more prominently discuss **why DPR is an insufficient but necessary proxy** and how optimizing it might trade off with individual fairness or calibration in ways that harm the very groups you aim to protect.
+
+---
+
+## 4. What to Expect If You Submit to AIES
+
+- **Reviewer Pool:** AIES uses a mix of computer scientists, ethicists, legal scholars, and social scientists. Your paper will likely receive at least one review from a non-technical reader who will focus almost entirely on Sections 1, 8, and the Ethical Statement.
+- **Common Reviewer Archetypes:**
+  - *The Technical Reviewer:* Will praise the primal-dual mechanism and the multi-group extension. Likely scores “Accept.”
+  - *The Critical Reviewer:* Will ask why you chose DPR, who gets to set $\varepsilon$, and whether this is just “fairness theater.” If this reviewer feels the governance section is thin, they may score “Weak Reject” or “Borderline.”
+  - *The Pragmatic Reviewer:* Will love the regulatory alignment (EU AI Act, ECOA) and the auditability of the dual variable. Likely scores “Accept.”
+- **Acceptance Dynamics:** AIES is competitive. Full-paper acceptance rates often hover in the **20–30%** range. Papers that bridge technical and ethical contributions often do well, but they need to satisfy *both* camps. Your paper currently satisfies the technical camp more thoroughly than the critical camp.
+
+---
+
+## 5. Actionable Recommendations Before Submission
+
+If you have time to revise before the deadline, prioritize these in order of AIES impact:
+
+1. **Expand Section 8.3 (Power, Accountability, and Governance)** to include a subsection on **Participatory Oversight**. Who should review the dual variable $\lambda_t$ logs? How can civil society or affected groups demand intervention?
+2. **Add a Positionality Paragraph** (3–4 sentences) in the Ethical Statement or Introduction.
+3. **Deepen the DPR critique** in Section 9.1. Explicitly state that demographic parity is a *legal-statistical proxy* that does not guarantee justice, and discuss what is lost by optimizing it.
+4. **Clarify theoretical novelty** in Section 5. Explicitly state that the *contribution* is not a new regret bound, but the formulation of deployment-time fairness enforcement as an online constrained optimization problem with a dual variable that serves as an auditable fairness debt counter.
+5. **Add one “deployment scenario” paragraph** in the Introduction or Experiments describing how CODA would integrate into a real mortgage lender’s MLOps and compliance workflow.
+
+---
+
+## 6. Registration Costs for AIES
+
+**I do not have access to real-time, year-specific registration fees**, as costs change annually based on venue, co-location agreements, and ACM/AAAI pricing structures. However, based on typical ACM-sponsored conference registration in the United States (where AIES is frequently held):
+
+| Category | Typical In-Person Range | Typical Virtual Range |
+|---|---|---|
+| **Regular / Non-Student** | $600 – $950 USD | $250 – $450 USD |
+| **Student** | $300 – $600 USD | $150 – $300 USD |
+| **Early Bird** | Often 15–25% less than standard | Often 15–25% less than standard |
+
+**Important Notes:**
+- AIES is sometimes co-located with AAAI. If it is co-located, there may be a **joint registration option** that covers both conferences, or a reduced “workshop/conference add-on” fee.
+- ACM membership usually provides a discount ($50–$150).
+- You should check the official conference website (typically `aies-conference.org` or the specific year’s site) for exact early-bird deadlines and rates.
+
+---
+
+## Bottom Line
+
+Your paper is a **credible, competitive submission** for AIES. The technical core is sound, the experiments are thorough, and the explicit engagement with governance distinguishes it from a pure ML conference submission. To maximize your acceptance odds, **deepen the critical analysis of power and participation**—AIES reviewers are increasingly looking for work that questions *who governs the governor*, not just how to govern more efficiently.

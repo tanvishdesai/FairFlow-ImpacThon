@@ -1,0 +1,48 @@
+This is BibTeX, Version 0.99e
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: coda_aies.aux
+Reallocating 'name_of_file' (item size: 1) to 9 items.
+The style file: aaai2026.bst
+Reallocating 'name_of_file' (item size: 1) to 5 items.
+Database file #1: coda.bib
+You've used 34 entries,
+            2840 wiz_defined-function locations,
+            758 strings with 10544 characters,
+and the built_in function-call counts, 22640 in all, are:
+= -- 1896
+> -- 1077
+< -- 0
++ -- 400
+- -- 359
+* -- 1503
+:= -- 3654
+add.period$ -- 136
+call.type$ -- 34
+change.case$ -- 267
+chr.to.int$ -- 35
+cite$ -- 34
+duplicate$ -- 1550
+empty$ -- 1586
+format.name$ -- 436
+if$ -- 4494
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 315
+newline$ -- 174
+num.names$ -- 136
+pop$ -- 722
+preamble$ -- 1
+purify$ -- 234
+quote$ -- 0
+skip$ -- 778
+stack$ -- 0
+substring$ -- 1091
+swap$ -- 793
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 300
+warning$ -- 0
+while$ -- 197
+width$ -- 0
+write$ -- 436

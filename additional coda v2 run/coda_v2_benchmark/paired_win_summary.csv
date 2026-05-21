@@ -1,0 +1,13 @@
+method,against_method,metric,wins,losses,ties
+base_model,group_threshold,accuracy,22,6,2
+coda,group_threshold,accuracy,6,17,7
+guard_threshold,group_threshold,accuracy,22,5,3
+universal_rl,group_threshold,accuracy,7,22,1
+base_model,group_threshold,demographic_parity_ratio,10,18,2
+coda,group_threshold,demographic_parity_ratio,18,6,6
+guard_threshold,group_threshold,demographic_parity_ratio,9,19,2
+universal_rl,group_threshold,demographic_parity_ratio,19,11,0
+base_model,group_threshold,equalized_odds_gap,15,13,2
+coda,group_threshold,equalized_odds_gap,11,13,6
+guard_threshold,group_threshold,equalized_odds_gap,18,9,3
+universal_rl,group_threshold,equalized_odds_gap,10,20,0

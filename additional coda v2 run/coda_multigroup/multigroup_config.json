@@ -1,0 +1,21 @@
+{
+  "search_root": [
+    "/kaggle/input",
+    "data/raw",
+    "/kaggle/input"
+  ],
+  "output_dir": "research_outputs/coda_multigroup",
+  "datasets": [
+    "adult_race",
+    "recruitment_gender"
+  ],
+  "models": [
+    "logistic_regression",
+    "xgboost"
+  ],
+  "seeds": [
+    42,
+    52,
+    62
+  ]
+}

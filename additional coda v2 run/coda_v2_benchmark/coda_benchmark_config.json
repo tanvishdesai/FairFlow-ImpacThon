@@ -1,0 +1,31 @@
+{
+  "search_root": [
+    "/kaggle/input",
+    "data/raw",
+    "/kaggle/input"
+  ],
+  "output_dir": "research_outputs/coda_v2_benchmark",
+  "datasets": [
+    "adult",
+    "compas",
+    "german_credit",
+    "bank_marketing",
+    "recruitment"
+  ],
+  "models": [
+    "logistic_regression",
+    "xgboost"
+  ],
+  "seeds": [
+    42,
+    52,
+    62
+  ],
+  "order_protocols": [
+    "natural",
+    "privileged_first",
+    "unprivileged_first"
+  ],
+  "skip_rl": false,
+  "show_rl_progress": false
+}

@@ -1,5 +1,0 @@
-Dataset: Adult Census
-Model: Random Forest
-Protected Attribute: sex
-Training Samples: 22792
-Features: 13

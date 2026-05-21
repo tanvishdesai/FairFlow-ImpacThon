@@ -1,0 +1,23 @@
+{
+  "search_root": [
+    "/kaggle/input",
+    "data/raw",
+    "/kaggle/input"
+  ],
+  "output_dir": "research_outputs/coda_ablation",
+  "datasets": [
+    "adult",
+    "compas",
+    "german_credit",
+    "bank_marketing",
+    "recruitment"
+  ],
+  "models": [
+    "xgboost"
+  ],
+  "seeds": [
+    42,
+    52,
+    62
+  ]
+}
